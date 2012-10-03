@@ -1,0 +1,58 @@
+carpsd (0.17) lucid; urgency=low
+
+  * Make /etc/init.d/carpsd LSB compliant.
+  * Fix pid file when /var/run is on tmpfs.
+  * Added LED signalling system for the GS1.
+  * Optimization for waterfall images: significant speedup from using numpy
+    instead of pure python to color the pixels.
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sat, 01 October 2012 19:38:00 +0200
+
+carpsd (0.16) lucid; urgency=low
+
+  * Fix bug that broke the waterfall display when it was started more than once.
+  * Added experimental support for serial KISS TNCs.
+  * Config file is now sent to the server on startup.
+  * Fix upload bug in DummyReceiver.
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sat, 03 September 2012 02:25:00 +0200
+
+carpsd (0.15) lucid; urgency=low
+
+  * Removed dependency on GNU Radio for FCD.
+  * Added dependency on qthid and alsa-tools instead.
+  * Streams are now deleted once they've been uploaded.
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sat, 07 July 2012 21:10:00 +0200
+
+carpsd (0.14) lucid; urgency=low
+
+  * Increased the reconnect timeout
+  * Don't start if the station id and secret are missing from the config
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sun, 04 June 2012 02:22:00 +0200
+
+carpsd (0.13) lucid; urgency=low
+
+  * Better disconnection and timeout handling.
+  * Changed FCD output format to complex64 rather than WAV.
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sun, 04 June 2012 02:22:00 +0200
+
+carpsd (0.12-1ubuntu1) lucid; urgency=low
+
+  * Third release.
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sun, 13 May 2012 23:06:37 +0200
+
+carpsd (0.11-1ubuntu1) lucid; urgency=low
+
+  * Second release.
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sun, 13 May 2012 23:06:37 +0200
+
+carpsd (0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sat, 12 May 2012 21:55:27 +0200

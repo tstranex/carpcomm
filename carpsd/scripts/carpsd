@@ -1,0 +1,7 @@
+#!/usr/bin/python
+
+# Copyright 2012 Carpcomm GmbH
+# Author: Timothy Stranex <tstranex@carpcomm.com>
+
+import carpsd.main
+carpsd.main.main()

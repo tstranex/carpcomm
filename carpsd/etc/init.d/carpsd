@@ -1,0 +1,150 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          carpsd
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: initscript for the Carpcomm Station Daemon
+### END INIT INFO
+
+# File originally based on /etc/init.d/skeleton
+
+SERVER_USER=carpsd
+SERVER_GROUP=carpsd
+
+LOGDIR=/var/log/carpsd
+LOGBASE=$LOGDIR/carpsd.`date +%s`
+LOGLATEST=$LOGDIR/carpsd.latest
+
+CONFIG=/etc/carpsd/carpsd.conf
+
+PIDFILE=/var/run/carpsd.pid
+DESC="Carpcomm Station Daemon"
+DAEMON=/usr/bin/carpsd
+NAME=carpsd
+SCRIPTNAME=/etc/init.d/$NAME
+
+# Exit if the package is not installed.
+[ -x "$DAEMON" ] || exit 0
+
+# Read configuration variable file if it is present.
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+if ! getent passwd | grep -q "^${SERVER_USER}:"; then
+    echo "Server user does not exist. Aborting" >&2
+    exit 1
+fi
+if ! getent group | grep -q "^${SERVER_GROUP}:" ; then
+    echo "Server group does not exist. Aborting" >&2
+    exit 1
+fi
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
+
+
+do_start() {
+    # Return
+    #   0 if daemon has been started
+    #   1 if daemon was already running
+    #   2 if daemon could not be started
+
+    # Check if it's already running.
+    /sbin/start-stop-daemon \
+	--stop \
+	--pidfile $PIDFILE \
+	--test \
+	--quiet \
+	&& return 1
+
+    rm -f "${LOGLATEST}.stdout"
+    ln -s "${LOGBASE}.stdout" "${LOGLATEST}.stdout"
+
+    rm -f "${LOGLATEST}.stderr"
+    ln -s "${LOGBASE}.stderr" "${LOGLATEST}.stderr"
+
+    touch $PIDFILE
+    chown $SERVER_USER $PIDFILE
+    chmod 664 $PIDFILE
+
+    /sbin/start-stop-daemon \
+	--start \
+	--pidfile $PIDFILE \
+        --user $SERVER_USER \
+	--group $SERVER_GROUP \
+        --chuid $SERVER_USER \
+        --exec $DAEMON \
+	-- \
+	--daemon=true \
+	--pidfile=$PIDFILE \
+	--config=$CONFIG \
+	> "${LOGBASE}.stdout" \
+	2> "${LOGBASE}.stderr" \
+	|| return 2
+}
+
+do_stop() {
+    # Return
+    #   0 if daemon has been stopped
+    #   1 if daemon was already stopped
+    #   2 if daemon could not be stopped
+    #   other if a failure occurred
+
+    /sbin/start-stop-daemon \
+	--stop \
+	--pidfile $PIDFILE \
+	--retry=TERM/30/KILL/5 \
+	--verbose
+    RETVAL="$?"
+    [ "$RETVAL" = 2 ] && return 2
+
+    rm -f $PIDFILE
+    return "$RETVAL"
+}
+
+case "$1" in
+  start)
+	log_daemon_msg "Starting $DESC" "$NAME"
+	do_start
+	case "$?" in
+		0|1) log_end_msg 0 ;;
+		2) log_end_msg 1 ;;
+	esac
+	;;
+  stop)
+	log_daemon_msg "Stopping $DESC" "$NAME"
+	do_stop
+	case "$?" in
+		0|1) log_end_msg 0 ;;
+		2) log_end_msg 1 ;;
+	esac
+	;;
+  status)
+	status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?
+	;;
+  restart|force-reload)
+	log_daemon_msg "Restarting $DESC" "$NAME"
+	do_stop
+	case "$?" in
+	  0|1)
+		do_start
+		case "$?" in
+			0) log_end_msg 0 ;;
+			1) log_end_msg 1 ;; # Old process is still running
+			*) log_end_msg 1 ;; # Failed to start
+		esac
+		;;
+	  *)
+		# Failed to stop
+		log_end_msg 1
+		;;
+	esac
+	;;
+  *)
+	echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
