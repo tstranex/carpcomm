@@ -102,7 +102,8 @@ class _SerialReadThread(threading.Thread):
             data += self.serial.read(self.serial.inWaiting())
 
             if data:
-                logging.info('[debug] Recevied serial data: %s', `data`)
+                logging.info(
+                    '[debug] Recevied serial data: %s', data.encode('hex'))
 
             self.decoder.Write(data)
 
@@ -114,7 +115,8 @@ class _SerialReadThread(threading.Thread):
             for f in frames:
                 ok, status = self.api_client.PostPacket(
                     self.satellite_id, timestamp, f)
-                logging.info('[debug] Posted TNC frame: %s', `f`)
+                logging.info(
+                    '[debug] Posted TNC frame: %s', f.encode('hex'))
                 if not ok:
                     host, port = self.api_client.GetServer()
                     logging.info('Error uploading packet to %s:%d: %d, %s',
@@ -167,11 +169,13 @@ class SerialTNC(object):
         if api_host:
             self._api_client.SetServer(api_host, api_port)
             ac = self._api_client
+        else:
+            logging.info('TNC frame uploading disabled')
 
         self._thread = _SerialReadThread(self._OpenSerial(), ac, satellite_id)
         self._thread.start()
 
-        logging.info('Started serial TNC thread.')
+        logging.info('Started serial TNC thread for %s', satellite_id)
 
         return True
 
