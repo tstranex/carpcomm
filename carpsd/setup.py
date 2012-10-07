@@ -6,28 +6,28 @@
 from distutils.core import setup
 from distutils.command.build import build
 
-dependencies=['numpy']
+dependencies = ['numpy', 'Image']
 
-# Custom build class that checks for dependencies before building
 class Build(build):
+    """"Custom build class that checks for dependencies before building."""
     def run(self):
-        if not CheckDependencies():
+        if not check_dependencies():
             print('Unresolved dependencies. Exiting.')
             quit()
 
         build.run(self)
 
-def CheckDependencies():
-    noErrors = True
+def check_dependencies():
+    no_errors = True
 
     for d in dependencies:
         try:
             __import__(d)
-        except ImportError as ie:
-            print('The module \''+ d + '\' is not installed.')
-            noErrors = False
+        except ImportError:
+            print("The module '%s' is not installed." % d)
+            no_errors = False
 
-    return noErrors
+    return no_errors
 
 setup(name='carpsd',
       version='0.17',
