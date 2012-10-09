@@ -99,6 +99,10 @@ class DiSEqCMotorTest(unittest.TestCase):
              'halt',
              'hard_power_off'])
 
+    def testEmptyProgram(self):
+        m, c = self.create()
+        self.assertEquals(False, m.Start([]))
+
 
 if __name__ == '__main__':
     unittest.main()

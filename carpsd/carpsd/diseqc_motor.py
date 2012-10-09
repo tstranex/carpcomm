@@ -361,6 +361,8 @@ class DiSEqCMotor(motor.Motor):
     def Start(self, program):
         if not self.Stop():
             return False
+        if not program:
+            return False
 
         self._thread = _ControlThread(self._internal_motor, program)
         self._thread.start()
