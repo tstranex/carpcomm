@@ -1,1 +1,5 @@
 See http://carpcomm.com/carpsd/
+
+Coding style:
+We're following the Google Python Style Guide.
+http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
