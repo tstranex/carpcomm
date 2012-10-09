@@ -9,6 +9,7 @@ import logging
 
 import diseqc_motor
 import dummy_motor
+import hamlib_motor
 import dummy_receiver
 import fcd_receiver
 import rtlsdr_receiver
@@ -42,6 +43,9 @@ def _ConfigureReceiver(config):
 
 
 def _ConfigureMotor(config):
+    m = hamlib_motor.Configure(config)
+    if m:
+        return m
     m = diseqc_motor.Configure(config)
     if m:
         return m
