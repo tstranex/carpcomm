@@ -72,11 +72,8 @@ class MotorHandlers(object):
     def RegisterHandlers(self, client):
         client.RegisterHandler('/MotorGetInfo', self.MotorGetInfo)
         client.RegisterHandler('/MotorGetState', self.MotorGetState)
-        client.RegisterHandler('/MotorHalt', self.MotorHalt)
-        client.RegisterHandler('/MotorReset', self.MotorReset)
-        client.RegisterHandler('/MotorPowerOn', self.MotorPowerOn)
-        client.RegisterHandler('/MotorPowerOff', self.MotorPowerOff)
-        client.RegisterHandler('/MotorSetAzimuth', self.MotorSetAzimuth)
+        client.RegisterHandler('/MotorStart', self.MotorStart)
+        client.RegisterHandler('/MotorStop', self.MotorStop)
 
     def MotorGetInfo(self, params):
         return OK, 'application/json', json.dumps(self.m.GetInfoDict())
@@ -84,26 +81,12 @@ class MotorHandlers(object):
     def MotorGetState(self, params):
         return OK, 'application/json', json.dumps(self.m.GetStateDict())
 
-    def MotorHalt(self, params):
-        return self.m.Halt()
+    def MotorStart(self, params):
+        program = json.loads(params['program'][0])
+        return self.m.Start(program)
 
-    def MotorReset(self, params):
-        return self.m.Reset()
-
-    def MotorPowerOn(self, params):
-        return self.m.PowerOn()
-
-    def MotorPowerOff(self, params):
-        return self.m.PowerOff()
-
-    def MotorSetAzimuth(self, params):
-        if 'azimuth' not in params:
-            return False
-        try:
-            azimuth = float(params['azimuth'][0])
-        except ValueError:
-            return False
-        return self.m.SetAzimuthDegrees(azimuth)
+    def MotorStop(self, params):
+        return self.m.Stop()
 
 
 class TNCHandlers(object):

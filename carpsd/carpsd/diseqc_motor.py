@@ -162,32 +162,18 @@ class DiSEqCController(object):
 
 
 # TODO(tstranex): Need to implement locking.
-class DiSEqCMotor(motor.Motor):
+class _InternalDiSEqCMotor(object):
 
-    CALIBRATED_RATE = 1.45  # [degrees / second]
-    REFERENCE_ZERO = -30.0  # [degrees] east of true north
-    MIN_LIMIT = -80.0  # [degrees] wrt reference
-    MAX_LIMIT = +80.0  # [degrees] wrt reference
-    SERIAL_DEVICE = '/dev/ttyUSB0'
+    reset_time = 60.0
 
-    def __init__(self, config):
+    def __init__(self, controller,
+                 calibrated_rate, reference_zero, min_limit, max_limit):
+        self.controller = controller
+        self.calibrated_rate = calibrated_rate  # [degrees / second]
+        self.reference_zero = reference_zero  # [degrees] east of true north
+        self.min_limit = min_limit  # [degrees] wrt reference
+        self.max_limit = max_limit  # [degrees] wrt reference
 
-        def get(name, cast, default):
-            if not config.has_section(DiSEqCMotor.__name__):
-                return default
-            if not config.has_option(DiSEqCMotor.__name__, name):
-                return default
-            return cast(config.get(DiSEqCMotor.__name__, name))
-
-        self.CALIBRATED_RATE = get(
-            'calibrated_rate', float, self.CALIBRATED_RATE)
-        self.REFERENCE_ZERO = get(
-            'reference_zero', float, self.REFERENCE_ZERO)
-        self.MIN_LIMIT = get('min_limit', float, self.MIN_LIMIT)
-        self.MAX_LIMIT = get('max_limit', float, self.MAX_LIMIT)
-        self.SERIAL_DEVICE = get('serial_device', str, self.SERIAL_DEVICE)
-
-        self.controller = DiSEqCController(self.SERIAL_DEVICE)
         self.current = None
         self.target = None
         self.timer = None
@@ -211,7 +197,7 @@ class DiSEqCMotor(motor.Motor):
         return self.power
 
     def Reset(self):
-        return self._Command(self.REFERENCE_ZERO, 60.0,
+        return self._Command(self.reference_zero, self.reset_time,
                              self.controller.goto_stored_position, 0)
 
     def IsReady(self):
@@ -273,8 +259,24 @@ class DiSEqCMotor(motor.Motor):
         return self.current
 
     def GetAzimuthLimitsDegrees(self):
-        return (self.MIN_LIMIT + self.REFERENCE_ZERO,
-                self.MAX_LIMIT + self.REFERENCE_ZERO)
+        return (self.min_limit + self.reference_zero,
+                self.max_limit + self.reference_zero)
+
+    def IsAllowedAzimuthDegrees(self, azimuth_degrees):
+        """Return true if azimuth_degrees is within the limits returned by
+        GetAzimuthDegreesLimits.
+        azimuth_degrees >= 0 and is measured from clockwise from North
+        elevation_degrees >= 0 and is measured upward from the horizon
+
+        The azimuth and elevation must vary continuously over the pass.
+        e.g. a north to south pass which passes directly overhead should have
+        azimuth_degrees = 0 and elevation_degrees varying from 0 to 180.
+        azimuth_degrees should not dicontinuously switch to 180 in this case.
+
+        Returns True if successful.
+        """
+        min_limit, max_limit = self.GetAzimuthLimitsDegrees()
+        return min_limit <= azimuth_degrees and azimuth_degrees <= max_limit
 
     def SetAzimuthDegrees(self, azimuth_degrees):
         if self.current is None:
@@ -286,7 +288,7 @@ class DiSEqCMotor(motor.Motor):
         def CloseEnough(a):
             if a is None:
                 return False
-            return abs(a - azimuth_degrees) < self.CALIBRATED_RATE
+            return abs(a - azimuth_degrees) < self.calibrated_rate
         if self.target is None:
             if CloseEnough(self.current):
                 return True
@@ -299,12 +301,91 @@ class DiSEqCMotor(motor.Motor):
         delta = azimuth_degrees - self.current
         if delta > 0:
             return self._Command(azimuth_degrees,
-                                 delta / self.CALIBRATED_RATE,
+                                 delta / self.calibrated_rate,
                                  self.controller.drive_east)
         else:
             return self._Command(azimuth_degrees,
-                                 -delta / self.CALIBRATED_RATE,
+                                 -delta / self.calibrated_rate,
                                  self.controller.drive_west)
+
+
+class _ControlThread(threading.Thread):
+    """Thread that executes a motor program using the DiSEqC controller."""
+
+    def __init__(self, internal_motor, program):
+        threading.Thread.__init__(self)
+        self.internal_motor = internal_motor
+        self.program = program
+        self.should_stop = False
+        self.start_time = time.time()
+
+    def run(self):
+        self.internal_motor.PowerOn()
+
+        if not self.internal_motor.IsReady():
+            logging.info('Resetting motor.')
+            self.internal_motor.Reset()
+            time.sleep(self.internal_motor.reset_time)
+        
+        for t, az, el in self.program:
+            dt = self.start_time + t - time.time()
+            if dt < 0:
+                continue
+            time.sleep(dt)
+            if self.should_stop:
+                return
+            self.internal_motor.SetAzimuthDegrees(az)
+
+        self.internal_motor.PowerOff()
+
+    def Stop(self):
+        self.should_stop = True
+
+
+class DiSEqCMotor(motor.Motor):
+
+    def __init__(self, config, controller=None):
+        def get(name):
+            return config.get(DiSEqCMotor.__name__, name)
+        if controller is None:
+            controller = DiSEqCController(get('serial_device'))
+        self._internal_motor = _InternalDiSEqCMotor(
+            controller,
+            float(get('calibrated_rate')),
+            float(get('reference_zero')),
+            float(get('min_limit')),
+            float(get('max_limit')))
+
+        self._thread = None
+
+    def Start(self, program):
+        if not self.Stop():
+            return False
+
+        self._thread = _ControlThread(self._internal_motor, program)
+        self._thread.start()
+        logging.info('Started motor control thread.')
+        return True
+
+    def Stop(self):
+        if self._thread is None:
+            return True
+
+        self._thread.Stop()
+        self._thread = None
+        self.internal_motor.PowerOff()
+        logging.info('Stopped motor control thread.')
+        return True
+
+    def GetStateDict(self):
+        d = {}
+        d['is_moving'] = self._internal_motor.IsMoving()
+       
+        azimuth_degrees = self._internal_motor.GetAzimuthDegrees()
+        if azimuth_degrees is not None:
+            d['azimuth_degrees'] = azimuth_degrees
+
+        return d
 
 
 def Configure(config):
