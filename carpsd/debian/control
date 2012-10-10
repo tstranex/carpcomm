@@ -9,7 +9,7 @@ Homepage: http://carpcomm.com/carpsd
 Package: carpsd
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, curl (>= 7), python-serial (>= 2.3), python-numpy (>= 1), python-imaging (>= 1.1), alsa-utils (>= 1)
-Suggests: rtl-sdr (>= 0.01)
+Suggests: rtl-sdr (>= 0.01), libhamlib-utils (>= 1.2.10)
 Description: Carpcomm Station Daemon
  This is a daemon which connects to the Carpcomm satellite ground station
  network.
