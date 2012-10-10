@@ -15,7 +15,7 @@ import time
 import StringIO
 import signalling
 
-VERSION = '0.17'
+VERSION = '0.18'
 CLIENT_NAME = 'carpsd'
 
 PING_TIMEOUT = 3600  # [seconds]
