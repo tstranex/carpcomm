@@ -22,7 +22,7 @@ class _HamlibRotator(object):
         self.device = device
         self.conf = ','.join(['%s=%s' % p for p in params.items()])
 
-    def _check_output(args):
+    def _check_output(self, args):
         return subprocess.check_output(args)
 
     def _RunCommand(self, command):
@@ -56,6 +56,9 @@ class _HamlibRotator(object):
         ok, output = self._RunCommand('S')
         return ok
 
+    def GetInfo(self):
+        return self._RunCommand('_')
+
 
 class _MotorThread(threading.Thread):
 
@@ -76,8 +79,6 @@ class _MotorThread(threading.Thread):
             if self.should_stop:
                 return
             self.rotator.SetAzimuthElevation(az, el)
-
-        self.rotator.Stop()
 
     def Stop(self):
         self.should_stop = True
@@ -100,6 +101,8 @@ class HamlibMotor(motor.Motor):
 
         self.rotator = _HamlibRotator(model, device, params)
         self.thread = None
+
+        logging.info('HamlibMotor created.')
 
     def Start(self, program):
         if not program:
@@ -126,6 +129,13 @@ class HamlibMotor(motor.Motor):
         if el is not None:
             result['elevation_degrees'] = el
         return result
+
+    def GetInfoDict(self):
+        d = {'driver': HamlibMotor.__name__}
+        ok, info = self.rotator.GetInfo()
+        if ok:
+            d['hamlib_info'] = info
+        return d
 
 
 def Configure(config):

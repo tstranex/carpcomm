@@ -52,6 +52,14 @@ class HamlibMotorTest(unittest.TestCase):
             m.GetStateDict())
         self.expectCommands(commands, ['p'])
 
+    def testGetInfoDict(self):
+        m, commands = self.create()
+        self.assertEquals(
+            {'driver': 'HamlibMotor',
+             'hamlib_info': '124.0\n64.0\n'},
+            m.GetInfoDict())
+        self.expectCommands(commands, ['_'])
+
     def testStartEmpty(self):
         m, commands = self.create()
         self.assertEquals(False, m.Start([]))
@@ -76,8 +84,7 @@ class HamlibMotorTest(unittest.TestCase):
              'P 20.000000 30.000000',
              'P 40.000000 20.000000',
              'P 60.000000 15.000000',
-             'P 80.000000 10.000000',
-             'S'])
+             'P 80.000000 10.000000'])
 
 
 if __name__ == '__main__':
