@@ -37,12 +37,12 @@ class HamlibMotorTest(unittest.TestCase):
                 '--set-conf=max_az=80.0,min_az=10.0']
         self.assertEquals(len(actual), len(expected))
         for a, e in zip(actual, expected):
-            self.assertEquals(a, base + [e])        
+            self.assertEquals(a, base + e)        
 
     def testAlreadyStopped(self):
         m, commands = self.create()
         self.assertEquals(True, m.Stop())
-        self.expectCommands(commands, ['S'])
+        self.expectCommands(commands, [['S']])
 
     def testGetStateDict(self):
         m, commands = self.create()
@@ -50,7 +50,7 @@ class HamlibMotorTest(unittest.TestCase):
             {'azimuth_degrees': 124.0,
              'elevation_degrees': 64.0},
             m.GetStateDict())
-        self.expectCommands(commands, ['p'])
+        self.expectCommands(commands, [['p']])
 
     def testGetInfoDict(self):
         m, commands = self.create()
@@ -58,7 +58,7 @@ class HamlibMotorTest(unittest.TestCase):
             {'driver': 'HamlibMotor',
              'hamlib_info': '124.0\n64.0\n'},
             m.GetInfoDict())
-        self.expectCommands(commands, ['_'])
+        self.expectCommands(commands, [['_']])
 
     def testStartEmpty(self):
         m, commands = self.create()
@@ -73,18 +73,18 @@ class HamlibMotorTest(unittest.TestCase):
                    (0.8, 80.0, 10.0)]
         self.assertEquals(True, m.Start(program))
 
-        self.expectCommands(commands, ['S'])
+        self.expectCommands(commands, [['S']])
 
         # This is pretty fragile. :(
         time.sleep(1.0)
 
         self.expectCommands(
             commands,
-            ['S',
-             'P 20.000000 30.000000',
-             'P 40.000000 20.000000',
-             'P 60.000000 15.000000',
-             'P 80.000000 10.000000'])
+            [['S'],
+             ['P', '20.0', '30.0'],
+             ['P', '40.0', '20.0'],
+             ['P', '60.0', '15.0'],
+             ['P', '80.0', '10.0']])
 
 
 if __name__ == '__main__':

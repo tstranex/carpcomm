@@ -31,8 +31,7 @@ class _HamlibRotator(object):
                 '--rot-file=%s' % self.device]
         if self.conf:
             args.append('--set-conf=%s' % self.conf)
-        if command:
-            args.append(command)
+        args += command
         logging.info('Sending hamlib rotator command: %s', ' '.join(args))
         try:
             result = self._check_output(args)
@@ -43,22 +42,22 @@ class _HamlibRotator(object):
         return True, result
 
     def SetAzimuthElevation(self, az, el):
-        ok, output = self._RunCommand('P %f %f' % (az, el))
+        ok, output = self._RunCommand(['P', str(az), str(el)])
         return ok
 
     def GetAzimuthElevation(self):
-        ok, output = self._RunCommand('p')
+        ok, output = self._RunCommand(['p'])
         if not ok:
             return False, (None, None)
         az, el = map(float, output.split())
         return True, (az, el)
 
     def Stop(self):
-        ok, output = self._RunCommand('S')
+        ok, output = self._RunCommand(['S'])
         return ok
 
     def GetInfo(self):
-        return self._RunCommand('_')
+        return self._RunCommand(['_'])
 
 
 class _MotorThread(threading.Thread):
