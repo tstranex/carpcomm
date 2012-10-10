@@ -37,7 +37,8 @@ class _HamlibRotator(object):
         try:
             result = self._check_output(args)
         except subprocess.CalledProcessError, e:
-            logging.exception('Error calling hamlib rotator controller.')
+            logging.info('Error calling hamlib rotator controller: %s',
+                         e.output)
             return False, e.output
         return True, result
 
