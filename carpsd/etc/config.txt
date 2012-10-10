@@ -1,0 +1,23 @@
+[Client]
+
+#######################################
+# id and secret for your station.
+# These can be found on your station page at http://carpcomm.com
+#
+#id: put_your_id_here
+#secret: put_your_secret_here
+#
+#######################################
+
+server: mux.carpcomm.com:1234
+ca_certificate: carpsd/etc/ca_cert.pem
+
+[DummyReceiver]
+
+[SerialTNC]
+device: COM3
+baud: 9600
+
+[HamlibMotor]
+model: 603
+device: COM5
