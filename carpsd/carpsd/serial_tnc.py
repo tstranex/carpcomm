@@ -137,13 +137,21 @@ class SerialTNC(object):
     def __init__(self, config):
         self._device = config.get(SerialTNC.__name__, 'device')
         self._baud = int(config.get(SerialTNC.__name__, 'baud'))
+
+        self._rtscts = False
+        if config.has_option(SerialTNC.__name__, 'rtscts'):
+            self._rtscts = config.get(SerialTNC.__name__, 'rtscts') == 'true'
+
         self._api_client = upload.APIClient(config)
         self._thread = None
 
     def _OpenSerial(self):
         # We need the timeout otherwise the read thread cannot be stopped.
         return serial.Serial(
-            self._device, self._baud, timeout=SERIAL_READ_TIMEOUT)
+            self._device,
+            self._baud,
+            rtscts=self._rtscts,
+            timeout=SERIAL_READ_TIMEOUT)
 
     def Verify(self):
         """Do some quick checks to make sure the configuration works."""

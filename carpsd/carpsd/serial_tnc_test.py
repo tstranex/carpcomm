@@ -82,15 +82,16 @@ class _MockSerial:
 
 class SerialTNCTest(unittest.TestCase):
 
-    def create(self):
-        conf = testing.GetConfigForTesting()
-
+    def config(self):
         section = serial_tnc.SerialTNC.__name__
+        conf = testing.GetConfigForTesting()
         conf.add_section(section)
         conf.set(section, 'device', '/dev/null')
         conf.set(section, 'baud', '9600')
-        
-        return serial_tnc.SerialTNC(conf)
+        return conf
+
+    def create(self):
+        return serial_tnc.SerialTNC(self.config())
 
     def testStartStop(self):
         s = self.create()
@@ -128,6 +129,17 @@ class SerialTNCTest(unittest.TestCase):
     def testOutOfOrderStop(self):
         s = self.create()
         self.assertTrue(s.Stop())
+
+    def testRTSCTS(self):
+        conf = self.config()
+
+        conf.set(serial_tnc.SerialTNC.__name__, 'rtscts', 'true')
+        t = serial_tnc.SerialTNC(conf)
+        self.assertTrue(t._rtscts)
+
+        conf.set(serial_tnc.SerialTNC.__name__, 'rtscts', 'false')
+        t = serial_tnc.SerialTNC(conf)
+        self.assertFalse(t._rtscts)
 
 
 if __name__ == '__main__':
