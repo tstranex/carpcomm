@@ -24,8 +24,10 @@ class KISSDecoder(object):
     TFEND = '\xdc'
     TFESC = '\xdd'
 
+    SIZE_LIMIT = 8192
+
     def __init__(self):
-        self.current_frame = None
+        self.current_frame = ''
         self.state = 0
         self.frames = []
 
@@ -33,39 +35,41 @@ class KISSDecoder(object):
         # We extract KISS frames using a state machine.
         # KISS protocol documentation:
         # http://www.ka9q.net/papers/kiss.html
+        # Also relevant is the SLIP protocol:
+        # http://tools.ietf.org/html/rfc1055
+
+        if c == self.FEND:
+            if len(self.current_frame) > 1:  # Ignore empty frames.
+                data_type = self.current_frame[0]
+                if data_type != '\x00':
+                    logging.info(
+                        'Received unknown KISS frame data type from TNC: ' +
+                        '%x', ord(data_type))
+                self.frames.append(self.current_frame[1:])
+            self.state = 0
+            self.current_frame = ''
+            return
 
         if self.state == 0:
-            # We're waiting for a frame to start.
-            if c == self.FEND:
+            if c == self.FESC:
                 self.state = 1
-                self.current_frame = ''
-        elif self.state == 1:
-            # We're inside a frame.
-            if c == self.FEND:
-                if len(self.current_frame) > 1:  # Ignore empty frames.
-                    data_type = self.current_frame[0]
-                    if data_type != '\x00':
-                        logging.info(
-                            'Received unknown KISS frame data type from TNC: ' +
-                            '%x', ord(data_type))
-                    self.frames.append(self.current_frame[1:])
-                self.state = 0
-                self.current_frame = None
-            elif c == self.FESC:
-                self.state = 2
             else:
-                self.current_frame += c
-        elif self.state == 2:
+                if len(self.current_frame) < self.SIZE_LIMIT:
+                    self.current_frame += c
+                self.state = 0
+        elif self.state == 1:
             # We're in escape mode.
             if c == self.TFEND:
-                self.current_frame += self.FEND
-                self.state = 1
+                if len(self.current_frame) < self.SIZE_LIMIT:
+                    self.current_frame += self.FEND
+                self.state = 0
             elif c == self.TFESC:
-                self.current_frame += self.FESC
-                self.state = 1
+                if len(self.current_frame) < self.SIZE_LIMIT:
+                    self.current_frame += self.FESC
+                self.state = 0
             else:
                 # Error, ignore it.
-                self.state = 1
+                self.state = 0
                 logging.info(
                     'Received invalid KISS escape char from TNC: %x', ord(c))
         else:

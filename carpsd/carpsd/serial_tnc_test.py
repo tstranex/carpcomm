@@ -21,16 +21,29 @@ class KISSDecoderTest(unittest.TestCase):
         self.assertEquals(['testframe123'], d.ReadFrames())
         self.assertEquals([], d.ReadFrames())
 
+    def testBasicWithoutPadding(self):
+        d = serial_tnc.KISSDecoder()
+        d.Write('\x00test1\xc0\x00test2\xc0')
+        self.assertEquals(['test1', 'test2'], d.ReadFrames())
+        self.assertEquals([], d.ReadFrames())
+
+    def testStartAndEndFraming(self):
+        d = serial_tnc.KISSDecoder()
+        d.Write('\xc0\x00test1\xc0\xc0\x00test2\xc0')
+        self.assertEquals(['test1', 'test2'], d.ReadFrames())
+        self.assertEquals([], d.ReadFrames())
+
     def testIgnoreEmptyFrames(self):
         d = serial_tnc.KISSDecoder()
         d.Write('\xc0\x00\xc0\xc0\x00test\xc0\x00\xc0')
         self.assertEquals(['test'], d.ReadFrames())
         self.assertEquals([], d.ReadFrames())
 
-    def testIgnoreGarbage(self):
+    def testGarbage(self):
         d = serial_tnc.KISSDecoder()
         d.Write('abjkdfdf\xc0\x00test1\xc0dfdfdfddfdf\xc0\x00test2\xc0sss')
-        self.assertEquals(['test1', 'test2'], d.ReadFrames())
+        self.assertEquals(['bjkdfdf', 'test1', 'fdfdfddfdf', 'test2'],
+                          d.ReadFrames())
         self.assertEquals([], d.ReadFrames())
 
     def testEscapeChars(self):
@@ -56,6 +69,28 @@ class KISSDecoderTest(unittest.TestCase):
         d = serial_tnc.KISSDecoder()
         d.Write('\xc0\x01test1\xc0 \xc0\xfftest2\xc0')
         self.assertEquals(['test1', 'test2'], d.ReadFrames())
+
+    def testDoubleStart(self):
+        d = serial_tnc.KISSDecoder()
+        d.Write('\xc0\x00test1\xc0\x00\xc0\xc0\x00test2\xc0\xc0')
+        self.assertEquals(['test1', 'test2'], d.ReadFrames())
+        self.assertEquals([], d.ReadFrames())
+
+    def testEscapeWithFEND(self):
+        d = serial_tnc.KISSDecoder()
+        d.Write('\xc0\x00test1\xdb\xc0')
+        self.assertEquals(['test1'], d.ReadFrames())
+        self.assertEquals([], d.ReadFrames())
+
+    def testTruncateOversize(self):
+        large_frame = '1234' + 't' * (2*serial_tnc.KISSDecoder.SIZE_LIMIT)
+        data = '\x00test1\xc0\x00' + large_frame + '\xc0\x00test2\xc0'
+        truncated_frame = large_frame[:serial_tnc.KISSDecoder.SIZE_LIMIT-1]
+
+        d = serial_tnc.KISSDecoder()
+        d.Write(data)
+        self.assertEquals(['test1', truncated_frame, 'test2'], d.ReadFrames())
+        self.assertEquals([], d.ReadFrames())
 
 
 class _MockSerial:
