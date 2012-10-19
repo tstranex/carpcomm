@@ -7,8 +7,6 @@ import fcd_receiver
 import config
 
 import unittest
-import os
-import struct
 import tempfile
 
 

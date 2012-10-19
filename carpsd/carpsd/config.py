@@ -13,6 +13,7 @@ import hamlib_motor
 import dummy_receiver
 import fcd_receiver
 import rtlsdr_receiver
+import usrp_receiver
 import serial_tnc
 import signalling
 
@@ -34,6 +35,9 @@ def _ConfigureReceiver(config):
     if r:
         return r
     r = rtlsdr_receiver.Configure(config)
+    if r:
+        return r
+    r = usrp_receiver.Configure(config)
     if r:
         return r
     r = dummy_receiver.Configure(config)

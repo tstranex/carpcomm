@@ -3,24 +3,23 @@
 # Copyright 2012 Carpcomm GmbH
 # Author: Timothy Stranex <tstranex@carpcomm.com>
 
-import rtlsdr_receiver
+import usrp_receiver
 import config
 import tempfile
 
 import unittest
 
 
-class RTLSDRReceiverTest(unittest.TestCase):
+class USRPReceiverTest(unittest.TestCase):
 
     def Create(self):
         conf = config.GetDefaultConfig()
-        section = rtlsdr_receiver.RTLSDRReceiver.__name__
+        section = usrp_receiver.USRPReceiver.__name__
         conf.add_section(section)
         conf.set(section, 'recording_dir', tempfile.mkdtemp())
-        conf.set(section, 'device_index', '0')
-        conf.set(section, 'tuner_gain_db', '0.1')
-        conf.set(section, 'sample_rate_hz', '96000')
-        return rtlsdr_receiver.RTLSDRReceiver(conf)
+        conf.set(section, 'device_address', 'test')
+        conf.set(section, 'sample_rate_hz', '32000')
+        return usrp_receiver.USRPReceiver(conf)
 
     def testSetHardwareTunerHz(self):
         r = self.Create()
