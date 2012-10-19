@@ -36,13 +36,13 @@ class _PipeWaitThread(threading.Thread):
         os.remove(self.path)
 
 
-def UploadAndDeleteFile(path, stream_url):
+def UploadAndDeleteFile(path, stream_url, rate, dtype):
     """Upload the finalized file in another process."""
 
-    args = ['curl',
-            '--upload-file',
-            path,
-            stream_url]
+    query = '?rate=%d&type=%s' % (rate, dtype)
+    url = stream_url + query
+
+    args = ['curl', '--upload-file', path, url]
     logging.info('Starting upload: %s', ' '.join(args))
     try:
         pipe = subprocess.Popen(args)

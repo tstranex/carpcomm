@@ -98,7 +98,8 @@ class FCDReceiver(receiver.Receiver):
         # Start is called.
         if not self._stream_url:
             return True
-        return upload.UploadAndDeleteFile(self._output_path, self._stream_url)
+        return upload.UploadAndDeleteFile(
+            self._output_path, self._stream_url, 96000, 'SINT16')
 
     def IsStarted(self):
         if self._fcd_pipe is None:

@@ -95,7 +95,10 @@ class RTLSDRReceiver(receiver.Receiver):
         # Start is called.
         if not self._stream_url:
             return True
-        return upload.UploadAndDeleteFile(self._output_path, self._stream_url)
+        # TODO(tstranex): We should use self._sample_rate_hz as the rate here.
+        # However, first rtl_sdr needs to use the specified rate correctly.
+        return upload.UploadAndDeleteFile(
+            self._output_path, self._stream_url, 250977, 'UINT8')
 
     def IsStarted(self):
         if self._pipe is None:
