@@ -1,0 +1,113 @@
+<html>
+<body>
+
+<h1>Carpcomm Telemetry System</h1>
+
+<p>The telemetry system is responsible for transforming raw packets into a
+human-readable form.</p>
+
+<p>We start by defining the <i>schema</i> of the satellite. Here's an example of
+some schema:</p>
+
+<pre>datum &lt;
+  key: "d:hrbe:bat1_c"
+  type: DOUBLE
+  unit: AMPERE
+  name &lt;
+    text: "Battery 1 Current"
+    lang: "en"
+  &gt;
+  confidence: 4e-5
+&gt;</pre>
+
+<p>This means means that data with key <code>d:hrbe:bat1_c</code>
+has an English name "Battery 1 Current", is represented using a double-precision
+floating-point value, and measures current in units of Amps.</p>
+
+<p>Next, we write a function which takes a raw packet and produces TelemtryDatum
+instances conforming to the schema. For example, a raw packet like this:</p>
+
+<pre>337205024b374d53552d312009200800841dc63d3c0020fecd290c31309090bb000ff08f11d7da5c
+fd005b80fe3e0453f62504805ba0fc0709060607070352210267026ed3d45055d5a0000000000000
+00bf0258353535353535000000000000000000000000000000000000000000000001000100000000
+000000000000000000000000000000000000000000000001000000010000</pre>
+
+<p>should produce several TelemtryDatum instances, including one for
+<code>d:hrbe:bat1_c</code>:</p>
+
+<pre>key: "d:hrbe:bat1_c"
+timestamp: 1351613685
+double: -0.01758</pre>
+
+<p>Whenever a packet is received, Carpcomm will call the decoder function and
+store the resulting TelemtryDatum instances in a database. They will then be
+recalled and formatted for users. In this case, we'd show something like
+this:</p>
+
+<span>Battery 1 Current: -17.6 mA (2012-10-30 16:16:29 UTC)</span>
+
+
+<h2>Writing the schema</h2>
+
+FIXME: link to example
+
+<p>The schema is represented as an ASCII Google Protocol Buffer. The full
+format is defined in telemetry.proto.</p>
+FIXME: link to telemetry.proto
+
+<p>Here are the most important fields:</p>
+<p><code>type</code>: This is the data type of the value. Possible types
+include: boolean, double, interval, integer, timestamp.</p>
+<p><code>unit</code>: This is the physical unit of the value. It should only
+be used when the type is double. Only SI base units are used. Possible units
+include: Kelvin, volts, amps, watts, Hz, seconds.</p>
+<p><code>confidence</code>: The 95% confience interval around the value.
+For example, if the value is measuring volts, and an the voltmeter has a
+resolution of 0.1V, then this would be set to 0.1. It is important to set some
+value here (even if it's an estimate) so that the human readable output looks
+sane.</p>
+<p><code>name</code>: It's possible to add names in multiple languages if
+they are known.</p>
+
+
+<h2>Writing the decoder function</h2>
+
+FIXME: link to example
+
+<p>The decoder functions are usually written in Go. The function signature
+should look like this:</p>
+<pre>func DecodeFrame_hrbe(frame []byte, timestamp int64) (
+	data []pb.TelemetryDatum, err error) {</pre>
+
+<p>There are some utility functions in datum.go (FIXME link) that can be used
+to construct the TelemetryDatum instances.</p>
+
+<p>After writing the decoder function, it's a good idea to write a unit test
+to make sure it works as expected.
+The easiest way is to take call the decoder function on an example raw packet
+and explicitly verify the results.</p>
+
+
+<h2>Rules for compatibility</h2>
+
+<p>Once a decoder has been deployed in production, it's important not to change
+any keys in the schema. This is because if a key is changed, old TelemetryDatum
+instances will no longer be readable.</p>
+
+<h2>Conventions</h2>
+
+<p>Keys are always lower case. They have the form
+<code>d:satellite_id:value_name</code>.
+It's useful to use a suffix depending on the type of unit. For example:
+<ul>
+<li><code>_c</code> means current,</li>
+<li><code>_t</code> means temperature,</li>
+<li><code>_s</code> means seconds,</li>
+<li><code>_v</code> means voltage.</li>
+</ul>
+
+
+<p>2012-10-30</p>
+
+</body>
+</html>

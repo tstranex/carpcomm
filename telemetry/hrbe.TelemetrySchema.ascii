@@ -1,0 +1,25 @@
+# Author: Timothy Stranex <tstranex@carpcomm.com>
+# Copyright 2012 Carpcomm GmbH
+
+# Schema for Hiscock Radiation Belt Explorer (hrbe).
+
+datum <
+  key: "d:hrbe:bat1_c"
+  type: DOUBLE
+  unit: AMPERE
+  name <
+    text: "Battery 1 Current"
+    lang: "en"
+  >
+  confidence: 4e-5
+>
+datum <
+  key: "d:hrbe:bat2_c"
+  type: DOUBLE
+  unit: AMPERE
+  name <
+    text: "Battery 2 Current"
+    lang: "en"
+  >
+  confidence: 4e-5
+>
