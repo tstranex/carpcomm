@@ -7,12 +7,11 @@
 package telemetry
 
 import "errors"
-import "carpcomm/pb"
 
 const hrbeCallsign = "K7MSU-1"
 
 func DecodeFrame_hrbe(frame []byte, timestamp int64) (
-	data []pb.TelemetryDatum, err error) {
+	data []TelemetryDatum, err error) {
 
 	// First do some quick validation.
 	if len(frame) < 81 {

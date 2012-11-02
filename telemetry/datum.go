@@ -5,20 +5,19 @@
 
 package telemetry
 
-import "carpcomm/pb"
 import "code.google.com/p/goprotobuf/proto"
 import "testing"
 import "math"
 import "time"
 
-func NewBoolDatum(key string, timestamp int64, b bool) (d pb.TelemetryDatum) {
+func NewBoolDatum(key string, timestamp int64, b bool) (d TelemetryDatum) {
 	d.Key = proto.String(key)
 	d.Timestamp = proto.Int64(timestamp)
 	d.Boolean = proto.Bool(b)
 	return d
 }
 
-func NewInt64Datum(key string, timestamp int64, i int64) (d pb.TelemetryDatum) {
+func NewInt64Datum(key string, timestamp int64, i int64) (d TelemetryDatum) {
 	d.Key = proto.String(key)
 	d.Timestamp = proto.Int64(timestamp)
 	d.Int64 = proto.Int64(i)
@@ -26,7 +25,7 @@ func NewInt64Datum(key string, timestamp int64, i int64) (d pb.TelemetryDatum) {
 }
 
 func NewDoubleDatum(key string, timestamp int64, v float64) (
-	d pb.TelemetryDatum) {
+	d TelemetryDatum) {
 	d.Key = proto.String(key)
 	d.Timestamp = proto.Int64(timestamp)
 	d.Double = proto.Float64(v)
@@ -34,7 +33,7 @@ func NewDoubleDatum(key string, timestamp int64, v float64) (
 }
 
 func NewIntervalDatum(key string, timestamp int64, minmax [2]float64) (
-	d pb.TelemetryDatum) {
+	d TelemetryDatum) {
 	d.Key = proto.String(key)
 	d.Timestamp = proto.Int64(timestamp)
 	d.IntervalMin = proto.Float64(minmax[0])
@@ -43,7 +42,7 @@ func NewIntervalDatum(key string, timestamp int64, minmax [2]float64) (
 }
 
 func NewTimestampDatum(key string, timestamp int64, t time.Time) (
-	d pb.TelemetryDatum) {
+	d TelemetryDatum) {
 	d.Key = proto.String(key)
 	d.Timestamp = proto.Int64(timestamp)
 	d.UnixTimestamp = proto.Int64(t.Unix())
@@ -54,7 +53,7 @@ func NewTimestampDatum(key string, timestamp int64, t time.Time) (
 
 const testEps = 1e-5
 
-func ExpectBoolDatum(t *testing.T, d pb.TelemetryDatum,
+func ExpectBoolDatum(t *testing.T, d TelemetryDatum,
 	key string, b bool) {
 	if *d.Key != key {
 		t.Errorf("Expected key %s, found %s", key, *d.Key)
@@ -68,7 +67,7 @@ func ExpectBoolDatum(t *testing.T, d pb.TelemetryDatum,
 	}
 }
 
-func ExpectInt64Datum(t *testing.T, d pb.TelemetryDatum,
+func ExpectInt64Datum(t *testing.T, d TelemetryDatum,
 	key string, i int64) {
 	if *d.Key != key {
 		t.Errorf("Expected key %s, found %s", key, *d.Key)
@@ -82,7 +81,7 @@ func ExpectInt64Datum(t *testing.T, d pb.TelemetryDatum,
 	}
 }
 
-func ExpectDoubleDatum(t *testing.T, d pb.TelemetryDatum,
+func ExpectDoubleDatum(t *testing.T, d TelemetryDatum,
 	key string, v float64) {
 	if *d.Key != key {
 		t.Errorf("Expected key %s, found %s", key, *d.Key)
@@ -96,7 +95,7 @@ func ExpectDoubleDatum(t *testing.T, d pb.TelemetryDatum,
 	}
 }
 
-func ExpectTimestampDatum(t *testing.T, d pb.TelemetryDatum,
+func ExpectTimestampDatum(t *testing.T, d TelemetryDatum,
 	key string, ts time.Time) {
 	v := ts.Unix()
 	if *d.Key != key {
@@ -112,7 +111,7 @@ func ExpectTimestampDatum(t *testing.T, d pb.TelemetryDatum,
 	}
 }
 
-func ExpectIntervalDatum(t *testing.T, d pb.TelemetryDatum,
+func ExpectIntervalDatum(t *testing.T, d TelemetryDatum,
 	key string, min, max float64) {
 	if *d.Key != key {
 		t.Errorf("Expected key %s, found %s", key, *d.Key)

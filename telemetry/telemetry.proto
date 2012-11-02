@@ -1,7 +1,7 @@
 // Author: Timothy Stranex <tstranex@carpcomm.com>
 // Copyright 2012 Carpcomm GmbH
 
-package carpcomm.telemetry;
+package telemetry;
 
 message TextWithLang {
 	optional string text = 1;
