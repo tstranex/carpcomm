@@ -1,3 +1,5 @@
+  * Refactored Motor interface.
+
 carpsd (0.17) lucid; urgency=low
 
   * Make /etc/init.d/carpsd LSB compliant.

@@ -1,5 +1,9 @@
 See http://carpcomm.com/carpsd/
 
+How to run CarpSD during development:
+cd carpcomm/carpsd/carpsd
+PYTHONPATH=`dirname $PWD` python main.py --config=../etc/carpsd.conf
+
 Coding style:
 We're following the Google Python Style Guide.
 http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
