@@ -17,6 +17,8 @@ import httplib
 import socket
 import ssl
 import signalling
+import urllib
+import datetime
 
 
 class _PipeWaitThread(threading.Thread):
@@ -80,22 +82,7 @@ class APIClient:
     def GetServer(self):
         return self.host, self.port
 
-    def _GetPostPacketRequest(self, satellite_id, timestamp, frame):
-        req = {
-            'station_id': self._station_id,
-            'station_secret': self._secret,
-            'timestamp': timestamp,
-            'satellite_id': satellite_id,
-            'format': 'FRAME',
-            'frame_base64': base64.b64encode(frame),
-            }
-        body = json.dumps(req)
-        return 'POST', '/PostPacket', body
-
-    def PostPacket(self, satellite_id, timestamp, frame):
-        method, path, body = self._GetPostPacketRequest(
-            satellite_id, timestamp, frame)
-
+    def _SendRequest(self, method, path, body):
         s = socket.create_connection((self.host, self.port))
         s = ssl.wrap_socket(
             s,
@@ -111,6 +98,37 @@ class APIClient:
         c.request(method, path, body)
         r = c.getresponse()
         if r.status != httplib.OK:
-            return False, (r.status, r.reason)
+            return False, (r.status, r.reason), None
 
-        return True, (r.status, r.reason)
+        return True, (r.status, r.reason), r.read()
+
+    def PostPacket(self, satellite_id, timestamp, frame):
+        req = {
+            'station_id': self._station_id,
+            'station_secret': self._secret,
+            'timestamp': timestamp,
+            'satellite_id': satellite_id,
+            'format': 'FRAME',
+            'frame_base64': base64.b64encode(frame),
+            }
+        body = json.dumps(req)
+        ok, status, body = self._SendRequest('POST', '/PostPacket', body)
+        return ok, status
+
+    def GetLatestPackets(self, satellite_id, limit):
+        req = {
+            'group_id': self._station_id,
+            'group_secret': self._secret,
+            'satellite_id': satellite_id,
+            'limit': limit,
+            }
+        params = urllib.urlencode(req)
+        ok, status, body = self._SendRequest(
+            'GET', '/GetLatestPackets?%s' % params, '')
+        packets = []
+        if ok:
+            for p in json.loads(body):
+                timestamp = datetime.datetime.fromtimestamp(int(p['timestamp']))
+                frame = base64.b64decode(p['frame_base64'])
+                packets.append((timestamp, frame))
+        return ok, status, packets
