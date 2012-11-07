@@ -117,8 +117,8 @@ class APIClient:
 
     def GetLatestPackets(self, satellite_id, limit):
         req = {
-            'group_id': self._station_id,
-            'group_secret': self._secret,
+            'station_id': self._station_id,
+            'station_secret': self._secret,
             'satellite_id': satellite_id,
             'limit': limit,
             }

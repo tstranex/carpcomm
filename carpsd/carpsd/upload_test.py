@@ -53,10 +53,10 @@ class APIClientTest(unittest.TestCase):
             self.assertEquals(
                 path,
                 '/GetLatestPackets?'
-                'satellite_id=test&'
-                'group_id=test_station_id&'
-                'group_secret=test_station_secret&'
-                'limit=100')
+                'station_secret=test_station_secret&'
+                'limit=100&'
+                'station_id=test_station_id&'
+                'satellite_id=test')
             self.assertEquals(body, '')
             return True, (200, ''), (
                 '[{"timestamp":1351737353,'
@@ -80,7 +80,7 @@ class APIClientTest(unittest.TestCase):
 def liveTest():
     conf = testing.GetConfigForTesting()
     c = upload.APIClient(conf)
-    c.SetServer('localhost', 5051)
+    c.SetServer('api.carpcomm.com', 5051)
 
     print c.PostPacket(
         'test_satellite', 569, '\xab\x00\x5a')
