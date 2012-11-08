@@ -3,7 +3,7 @@
 # Copyright 2012 Carpcomm GmbH
 # Author: Timothy Stranex <tstranex@carpcomm.com>
 
-import upload
+import api
 import config
 import testing
 
@@ -15,7 +15,7 @@ class APIClientTest(unittest.TestCase):
 
     def create(self):
         conf = testing.GetConfigForTesting()
-        c = upload.APIClient(conf)
+        c = api.APIClient(conf)
         c.SetServer('host.example.com', 123)
         return c
 
@@ -79,7 +79,7 @@ class APIClientTest(unittest.TestCase):
 
 def liveTest():
     conf = testing.GetConfigForTesting()
-    c = upload.APIClient(conf)
+    c = api.APIClient(conf)
     c.SetServer('api.carpcomm.com', 5051)
 
     print c.PostPacket(

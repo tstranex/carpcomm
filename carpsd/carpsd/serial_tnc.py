@@ -5,7 +5,7 @@
 
 """Controller for KISS TNCs connected via a serial device."""
 
-import upload
+import api
 
 import serial
 import threading
@@ -146,7 +146,7 @@ class SerialTNC(object):
         if config.has_option(SerialTNC.__name__, 'rtscts'):
             self._rtscts = config.get(SerialTNC.__name__, 'rtscts') == 'true'
 
-        self._api_client = upload.APIClient(config)
+        self._api_client = api.APIClient(config)
         self._thread = None
 
     def _OpenSerial(self):
