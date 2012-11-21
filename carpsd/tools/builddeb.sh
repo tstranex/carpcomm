@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 1. Update version:
-VERSION=0.17
+VERSION=0.18
 # 2. Update version in setup.py.
 # 3. Update version in client.py.
 # 4. Update debian/changelog with new version.
