@@ -136,8 +136,11 @@ class SerialTNCTest(unittest.TestCase):
         s._OpenSerial = lambda: ms
 
         self.assertTrue(s.Verify())
+        self.assertEquals(s.GetStateDict(), {'started': False})
         self.assertTrue(s.Start('', 0, ''))
+        self.assertEquals(s.GetStateDict(), {'started': True})
         self.assertTrue(s.Stop())
+        self.assertEquals(s.GetStateDict(), {'started': False})
         self.assertTrue(ms.close_called)
 
     def testGetLatestFrames(self):

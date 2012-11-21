@@ -209,6 +209,14 @@ class SerialTNC(object):
         logging.info('Stopped serial TNC thread.')
         return True
 
+    def GetStateDict(self):
+        """Return a dictionary with info about the current state of the device.
+        """
+        started = self._thread is not None
+        return {
+            'started': started,
+            }
+
     def GetLatestFrames(self):
         if self._thread is not None:
             return True, self._thread.GetLatestFrames()

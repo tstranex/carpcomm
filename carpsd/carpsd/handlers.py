@@ -98,6 +98,7 @@ class TNCHandlers(object):
         client.RegisterHandler('/TNCStart', self.TNCStart)
         client.RegisterHandler('/TNCStop', self.TNCStop)
         client.RegisterHandler('/TNCGetLatestFrames', self.TNCGetLatestFrames)
+        client.RegisterHandler('/TNCGetState', self.TNCGetState)
 
     def TNCStart(self, params):
         api_host = params['api_host'][0]
@@ -119,3 +120,6 @@ class TNCHandlers(object):
             return OK, 'application/json', json.dumps(b64_frames)
         else:
             return False
+
+    def TNCGetState(self, params):
+        return OK, 'application/json', json.dumps(self.t.GetStateDict())
