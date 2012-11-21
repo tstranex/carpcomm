@@ -19,8 +19,19 @@ class FCDReceiverTest(unittest.TestCase):
         conf.set(section, 'recording_dir', tempfile.mkdtemp())
         conf.set(section, 'alsa_device', 'hw:1')
         conf.set(section, 'frequency_correction', '-12')
-        return fcd_receiver.FCDReceiver(conf)
+        r = fcd_receiver.FCDReceiver(conf)
 
+    def testInvalidModel(self):
+        conf = config.GetDefaultConfig()
+        section = fcd_receiver.FCDReceiver.__name__
+        conf.add_section(section)
+        conf.set(section, 'recording_dir', tempfile.mkdtemp())
+        conf.set(section, 'alsa_device', 'hw:1')
+        conf.set(section, 'frequency_correction', '-12')
+        conf.set(section, 'model', 'unknownmodel')
+        self.assertRaises(fcd_receiver.FCDReceiverError,
+                          fcd_receiver.FCDReceiver, conf)
+        
 
 if __name__ == '__main__':
     unittest.main()

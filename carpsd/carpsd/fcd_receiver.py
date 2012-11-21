@@ -19,6 +19,10 @@ QTHID_BINARY = 'qthid-cli'
 ARECORD_BINARY = 'arecord'
 
 
+class FCDReceiverError(Exception):
+    pass
+
+
 class FCDReceiver(receiver.Receiver):
     """Receiver implementation for the FUNcube Dongle."""
 
@@ -34,6 +38,16 @@ class FCDReceiver(receiver.Receiver):
         self._alsa_device = config.get(FCDReceiver.__name__, 'alsa_device')
         self._frequency_correction = int(config.get(
                 FCDReceiver.__name__, 'frequency_correction'))
+
+        self._sample_rate = 96000
+        if config.has_option(FCDReceiver.__name__, 'model'):
+            model = config.get(FCDReceiver.__name__, 'model')
+            if model == 'pro':
+                self._sample_rate = 96000
+            elif model == 'proplus':
+                self._sample_rate = 192000
+            else:
+                raise FCDReceiverError('Unknown FCDReceiver model: %s' % model)
 
     def SetHardwareTunerHz(self, freq_hz):
         args = [QTHID_BINARY, '--set_freq_hz', '%d' % freq_hz]
@@ -62,7 +76,7 @@ class FCDReceiver(receiver.Receiver):
         args = [ARECORD_BINARY,
                 '-D', self._alsa_device,
                 '-f', 'S16_LE',
-                '-r', '96000',
+                '-r', '%d' % self._sample_rate,
                 '-c', '2',
                 '-t', 'raw',
                 self._output_path]
@@ -99,7 +113,7 @@ class FCDReceiver(receiver.Receiver):
         if not self._stream_url:
             return True
         return upload.UploadAndDeleteFile(
-            self._output_path, self._stream_url, 96000, 'SINT16')
+            self._output_path, self._stream_url, self._sample_rate, 'SINT16')
 
     def IsStarted(self):
         if self._fcd_pipe is None:
