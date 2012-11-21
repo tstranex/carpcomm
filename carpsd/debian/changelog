@@ -1,4 +1,15 @@
+carpsd (0.18) lucid; urgency=low
+
   * Refactored Motor interface.
+  * Check that numpy and Image modules are available in setup.py.
+  * Added a new Motor implementation based on Hamlib.
+  * Added RTS/CTS hardware flow control option for SerialTNC.
+  * Added a run script and config file for Windows.
+  * Added experimental driver for USRP receivers.
+  * Send the sample rate and sample type when uploading IQ data.
+  * Moved APIClient to its own module and added the GetLatestPackets call.
+  * Added FUNcube Dongle Pro+ support.
+  * Added TNCGetState handler.
 
 carpsd (0.17) lucid; urgency=low
 
