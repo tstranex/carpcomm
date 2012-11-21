@@ -27,7 +27,5 @@ debuild -us -uc
 # cd ~/tmp/gs1/apt
 # reprepro --ask-passphrase -Vb . includedeb gs1 carpsd_0.1-1_all.deb
 
-# 7. Copy source tarball to docs/dist/
-# 8. Update version in docs/index.html.
-# 9. Update date at the bottom of docs/index.html.
-# 10. Update files on live http server.
+# 7. Update date at the bottom of docs/index.html.
+# 8. Update files on live http server.
