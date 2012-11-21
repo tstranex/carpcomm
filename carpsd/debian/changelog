@@ -11,6 +11,8 @@ carpsd (0.18) lucid; urgency=low
   * Added FUNcube Dongle Pro+ support.
   * Added TNCGetState handler.
 
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Wed, 21 November 2012 23:43:00 +0100
+
 carpsd (0.17) lucid; urgency=low
 
   * Make /etc/init.d/carpsd LSB compliant.
