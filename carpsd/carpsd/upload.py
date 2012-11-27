@@ -35,7 +35,10 @@ class _PipeWaitThread(threading.Thread):
         self.pipe.wait()
         logging.info('Upload complete.')
         signalling.Get().SignalUploadStop()
-        os.remove(self.path)
+        try:
+            os.remove(self.path)
+        except OSError:
+            logging.exception('Error removing file: %s', self.path)
 
 
 def UploadAndDeleteFile(path, stream_url, rate, dtype):
