@@ -54,6 +54,7 @@ void FCDClose(FCD* dev) {
   } else if (dev->driver == DRIVER_FCD_PRO_PLUS) {
     fcdProPlusClose(dev->dev);
   }
+  free(dev);
 }
 
 long long FCDGetFreqHz(FCD* dev) {
