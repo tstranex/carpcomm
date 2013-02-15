@@ -3,6 +3,7 @@
 #include "fcdproplus/fcd_pro_plus.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 struct FCD_ {
   enum {
@@ -73,5 +74,28 @@ int FCDGetFreqHz(FCD* dev) {
 
   } else {
     return -1;
+  }
+}
+
+const char* FCDGetType(FCD* dev) {
+  if (dev->driver == DRIVER_FCD_PRO) {
+    return "FUNcube Dongle Pro";
+  } else if (dev->driver == DRIVER_FCD_PRO_PLUS) {
+    return "FUNcube Dongle Pro+";
+  } else {
+    return NULL;
+  }
+}
+
+const char* FCDGetFirmwareVersion(FCD* dev) {
+  char version[6];
+  if (dev->driver == DRIVER_FCD_PRO) {
+    fcdProGetFwVerStr(dev->dev, version);
+    return strdup(version);
+  } else if (dev->driver == DRIVER_FCD_PRO_PLUS) {
+    fcdProPlusGetFwVerStr(dev->dev, version);
+    return strdup(version);
+  } else {
+    return NULL;
   }
 }
