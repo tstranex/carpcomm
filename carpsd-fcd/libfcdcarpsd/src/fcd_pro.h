@@ -4,6 +4,7 @@
  *  Copyright (C) 2010  Howard Long, G6LVB
  *  CopyRight (C) 2011  Alexandru Csete, OZ9AEC
  *                      Mario Lorenz, DL5MLO
+ *  Copyright (C) 2013  Timothy Stranex, HB9FFH
  *
  *  Qthid is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

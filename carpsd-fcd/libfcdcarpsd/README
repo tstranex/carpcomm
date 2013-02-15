@@ -1,2 +1,24 @@
-Dependencies:
-libusb-1.0.0-dev
+libfcdcarpsd - FUNcube Dongle controller library.
+
+Description
+-----------
+
+This library provides a uniform way to access both FCD Pro and FCD Pro+ devices.
+See fcdcarpsd.h for the API.
+
+
+Building
+--------
+
+First install the dependencies:
+ - libusb-1.0.0-dev
+
+Then type "make".
+It should produce the static library "libfcdcarpsd.a" which you can link into
+your program.
+
+
+License
+-------
+
+GNU General Public License
