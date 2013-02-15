@@ -1,4 +1,4 @@
-// Command-line interface for the FCD.
+// carpsd-fcd: command-line interface for the FCD.
 // Copyright (C) 2013 Timothy Stranex <tstranex@carpcomm.com>
 
 #include "fcdcarpsd.h"
