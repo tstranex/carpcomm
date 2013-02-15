@@ -55,32 +55,37 @@ typedef enum {
 extern "C" {
 #endif
 
+struct hid_device;
+
+hid_device* fcdProPlusOpen();
+void fcdProPlusClose(hid_device* dev);
+
 /* Application functions */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusGetMode(void);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusGetFwVerStr(char *str);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppReset(void);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusGetMode(hid_device* phd);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusGetFwVerStr(hid_device* phd, char *str);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppReset(hid_device* phd);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetFreqKhz(int nFreq);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetFreq(unsigned int uFreq, unsigned int *rFreq);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetFreq(unsigned int *rFreq);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetFreqKhz(hid_device* phd, int nFreq);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetFreq(hid_device* phd, unsigned int uFreq, unsigned int *rFreq);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetFreq(hid_device* phd, unsigned int *rFreq);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetLna(char enabled);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetLna(char *enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetLna(hid_device* phd, char enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetLna(hid_device* phd, char *enabled);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetRfFilter(tuner_rf_filter_t filter);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetRfFilter(tuner_rf_filter_t *filter);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetRfFilter(hid_device* phd, tuner_rf_filter_t filter);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetRfFilter(hid_device* phd, tuner_rf_filter_t *filter);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetMixerGain(char enabled);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetMixerGain(char *enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetMixerGain(hid_device* phd, char enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetMixerGain(hid_device* phd, char *enabled);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetIfGain(unsigned char gain);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetIfGain(unsigned char *gain);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetIfGain(hid_device* phd, unsigned char gain);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetIfGain(hid_device* phd, unsigned char *gain);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetIfFilter(tuner_if_filter_t filter);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetIfFilter(tuner_if_filter_t *filter);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetIfFilter(hid_device* phd, tuner_if_filter_t filter);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetIfFilter(hid_device* phd, tuner_if_filter_t *filter);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetBiasTee(char enabled);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetBiasTee(char *enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetBiasTee(hid_device* phd, char enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetBiasTee(hid_device* phd, char *enabled);
 
 #ifdef __cplusplus
 }
