@@ -31,6 +31,7 @@
 #include "fcd_pro.h"
 #include "fcd_pro_hidcmd.h"
 #include <stdio.h>
+#include <string.h>
 
 
 #define FALSE 0
@@ -38,27 +39,47 @@
 typedef int BOOL;
 
 
-const unsigned short _usVID=0x04D8;  /*!< USB vendor ID. */
-const unsigned short _usPID=0xFB56;  /*!< USB product ID. */
+const unsigned short fcdProUSBVendorId = 0x04D8;
+const unsigned short fcdProUSBProductId = 0xFB56;
 
 
+int fcdProCountDevices() {
+  struct hid_device_info* info =
+    hid_enumerate(fcdProUSBVendorId, fcdProUSBProductId);
+
+  int count = 0;
+  for (struct hid_device_info* p = info; p != NULL; p = p->next) {
+    count++;
+  }
+
+  hid_free_enumeration(info);
+  return count;
+}
 
 /** \brief Open FCD device.
-  * \return Pointer to the FCD HID device or NULL if none found
+  * \return Pointer to the FCD HID device or NULL if not found
   *
   * This function looks for FCD devices connected to the computer and
-  * opens the first one found.
+  * opens the index-th one.
   */
-hid_device* fcdProOpen()
+hid_device* fcdProOpen(int index)
 {
-    struct hid_device_info *phdi=NULL;
     hid_device *phd=NULL;
     char *pszPath=NULL;
 
-    phdi=hid_enumerate(_usVID,_usPID);
-    if (phdi==NULL)
-    {
-        return NULL; // No FCD device found
+    struct hid_device_info* info =
+      hid_enumerate(fcdProUSBVendorId, fcdProUSBProductId);
+    if (!info) {
+      return NULL; // No FCD device found
+    }
+
+    struct hid_device_info* phdi = info;
+    for (int i = 0; i < index; i++) {
+      phdi = phdi->next;
+      if (!phdi) {
+	hid_free_enumeration(info);
+	return NULL;
+      }
     }
 
     pszPath=strdup(phdi->path);
@@ -67,8 +88,7 @@ hid_device* fcdProOpen()
         return NULL;
     }
 
-    hid_free_enumeration(phdi);
-    phdi=NULL;
+    hid_free_enumeration(info);
 
     if ((phd=hid_open_path(pszPath)) == NULL)
     {
@@ -472,9 +492,6 @@ FCD_MODE_ENUM fcdProBlErase(hid_device* phd)
 
     if (aucBufIn[0]==FCD_CMD_BL_ERASE && aucBufIn[1]==1)
     {
-        fcdClose(phd);
-        phd = NULL;
-
         return FCD_MODE_BL;
     }
 
@@ -514,9 +531,6 @@ FCD_MODE_ENUM fcdProBlWriteFirmware(hid_device* phd, char *pc, int64_t n64Size)
 
     if (aucBufIn[0]!=FCD_CMD_BL_GET_BYTE_ADDR_RANGE || aucBufIn[1]!=1)
     {
-        fcdClose(phd);
-        phd = NULL;
-
         return FCD_MODE_APP;
     }
 

@@ -28,6 +28,7 @@
     #include <stdlib.h>
 #endif
 #include <stdio.h>
+#include <string.h>
 #include "hidapi.h"
 #include "fcd_pro_plus_hidcmd.h"
 #include "fcd_pro_plus.h"
@@ -38,27 +39,47 @@
 typedef int BOOL;
 
 
-const unsigned short _usVID=0x04D8;  /*!< USB vendor ID. */
-const unsigned short _usPID=0xFB31;  /*!< USB product ID. */
+const unsigned short fcdProPlusUSBVendorId = 0x04D8;
+const unsigned short fcdProPlusUSBProductId = 0xFB31;
 
 
+int fcdProPlusCountDevices() {
+  struct hid_device_info* info =
+    hid_enumerate(fcdProPlusUSBVendorId, fcdProPlusUSBProductId);
+
+  int count = 0;
+  for (struct hid_device_info* p = info; p != NULL; p = p->next) {
+    count++;
+  }
+
+  hid_free_enumeration(info);
+  return count;
+}
 
 /** \brief Open FCD device.
-  * \return Pointer to the FCD HID device or NULL if none found
+  * \return Pointer to the FCD HID device or NULL if not found
   *
   * This function looks for FCD devices connected to the computer and
-  * opens the first one found.
+  * opens the index-th one.
   */
-hid_device* fcdProPlusOpen(void)
+hid_device* fcdProPlusOpen(int index)
 {
-    struct hid_device_info *phdi=NULL;
     hid_device *phd=NULL;
     char *pszPath=NULL;
 
-    phdi=hid_enumerate(_usVID,_usPID);
-    if (phdi==NULL)
-    {
-        return NULL; // No FCD device found
+    struct hid_device_info* info =
+      hid_enumerate(fcdProPlusUSBVendorId, fcdProPlusUSBProductId);
+    if (!info) {
+      return NULL; // No FCD device found
+    }
+
+    struct hid_device_info* phdi = info;
+    for (int i = 0; i < index; i++) {
+      phdi = phdi->next;
+      if (!phdi) {
+	hid_free_enumeration(info);
+	return NULL;
+      }
     }
 
     pszPath=strdup(phdi->path);
@@ -67,8 +88,7 @@ hid_device* fcdProPlusOpen(void)
         return NULL;
     }
 
-    hid_free_enumeration(phdi);
-    phdi=NULL;
+    hid_free_enumeration(info);
 
     if ((phd=hid_open_path(pszPath)) == NULL)
     {

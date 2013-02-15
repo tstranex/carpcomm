@@ -41,14 +41,9 @@
 #endif
 
 #include <inttypes.h>
+#include "hidapi.h"
+#include "fcd_common.h"
 
-
-/** \brief FCD mode enumeration. */
-typedef enum {
-    FCD_MODE_NONE,  /*!< No FCD detected. */
-    FCD_MODE_BL,    /*!< FCD present in bootloader mode. */
-    FCD_MODE_APP    /*!< FCD present in application mode. */
-} FCD_MODE_ENUM; // The current mode of the FCD: none inserted, in bootloader mode or in normal application mode
 
 /** \brief FCD capabilities that depend on both hardware and firmware. */
 typedef struct {
@@ -60,9 +55,8 @@ typedef struct {
 extern "C" {
 #endif
 
-struct hid_device;
-
-hid_device* fcdProOpen();
+int fcdProCountDevices();
+hid_device* fcdProOpen(int index);
 void fcdProClose(hid_device* phd);
 
 /* Application functions */

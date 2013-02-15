@@ -42,22 +42,15 @@
 
 #include <inttypes.h>
 #include "fcd_pro_plus_hidcmd.h"
-
-
-/** \brief FCD mode enumeration. */
-typedef enum {
-    FCD_MODE_NONE,  /*!< No FCD detected. */
-    FCD_MODE_BL,    /*!< FCD present in bootloader mode. */
-    FCD_MODE_APP    /*!< FCD present in application mode. */
-} FCD_MODE_ENUM; // The current mode of the FCD: no FCD, in bootloader mode or in normal application mode
+#include "hidapi.h"
+#include "fcd_common.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-struct hid_device;
-
-hid_device* fcdProPlusOpen();
+int fcdProPlusCountDevices();
+hid_device* fcdProPlusOpen(int index);
 void fcdProPlusClose(hid_device* dev);
 
 /* Application functions */
