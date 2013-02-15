@@ -1,6 +1,6 @@
 #include "fcdcarpsd.h"
-#include "fcdpro/fcd_pro.h"
-#include "fcdproplus/fcd_pro_plus.h"
+#include "fcd_pro.h"
+#include "fcd_pro_plus.h"
 
 #include <stdlib.h>
 #include <string.h>
