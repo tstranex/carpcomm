@@ -56,10 +56,10 @@ void FCDClose(FCD* dev) {
   }
 }
 
-int FCDGetFreqHz(FCD* dev) {
+long long FCDGetFreqHz(FCD* dev) {
   if (dev->driver == DRIVER_FCD_PRO) {
     unsigned char buf[4];
-    int freq = 0;
+    unsigned int freq = 0;
     fcdProAppGetParam(dev->dev, FCD_CMD_APP_GET_FREQ_HZ, buf, 4);
     freq += buf[0];
     freq += buf[1] << 8;
@@ -68,12 +68,33 @@ int FCDGetFreqHz(FCD* dev) {
     return freq;
 
   } else if (dev->driver == DRIVER_FCD_PRO_PLUS) {
-    unsigned int freq_hz;
-    fcdProPlusAppGetFreq(dev->dev, &freq_hz);
-    return freq_hz;
+    unsigned int freq;
+    fcdProPlusAppGetFreq(dev->dev, &freq);
+    return freq;
 
   } else {
-    return -1;
+    return 0;
+  }
+}
+
+long long FCDSetFreqHz(FCD* dev, long long freq_hz) {
+  if (dev->driver == DRIVER_FCD_PRO) {
+    int freq_khz = (int)(freq_hz / 1000);
+    if (fcdProAppSetFreqkHz(dev->dev, freq_khz) != FCD_MODE_APP) {
+      return 0;
+    }
+    return FCDGetFreqHz(dev);
+
+  } else if (dev->driver == DRIVER_FCD_PRO_PLUS) {
+    unsigned int actual_freq_hz;
+    if (fcdProPlusAppSetFreq(dev->dev, freq_hz, &actual_freq_hz)
+	!= FCD_MODE_APP) {
+      return 0;
+    }
+    return actual_freq_hz;
+
+  } else {
+    return 0;
   }
 }
 
