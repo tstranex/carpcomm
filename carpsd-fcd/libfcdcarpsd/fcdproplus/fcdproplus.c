@@ -29,8 +29,8 @@
 #endif
 #include <stdio.h>
 #include "hidapi.h"
-#include "fcdhidcmd.h"
-#include "fcd.h"
+#include "fcdproplushidcmd.h"
+#include "fcdproplus.h"
 
 
 #define FALSE 0

@@ -41,7 +41,7 @@
 #endif
 
 #include <inttypes.h>
-#include "fcdhidcmd.h"
+#include "fcdproplushidcmd.h"
 
 
 /** \brief FCD mode enumeration. */
@@ -56,31 +56,31 @@ extern "C" {
 #endif
 
 /* Application functions */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdGetMode(void);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdGetFwVerStr(char *str);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppReset(void);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusGetMode(void);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusGetFwVerStr(char *str);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppReset(void);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetFreqKhz(int nFreq);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetFreq(unsigned int uFreq, unsigned int *rFreq);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetFreq(unsigned int *rFreq);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetFreqKhz(int nFreq);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetFreq(unsigned int uFreq, unsigned int *rFreq);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetFreq(unsigned int *rFreq);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetLna(char enabled);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetLna(char *enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetLna(char enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetLna(char *enabled);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetRfFilter(tuner_rf_filter_t filter);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetRfFilter(tuner_rf_filter_t *filter);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetRfFilter(tuner_rf_filter_t filter);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetRfFilter(tuner_rf_filter_t *filter);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetMixerGain(char enabled);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetMixerGain(char *enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetMixerGain(char enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetMixerGain(char *enabled);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetIfGain(unsigned char gain);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetIfGain(unsigned char *gain);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetIfGain(unsigned char gain);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetIfGain(unsigned char *gain);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetIfFilter(tuner_if_filter_t filter);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetIfFilter(tuner_if_filter_t *filter);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetIfFilter(tuner_if_filter_t filter);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetIfFilter(tuner_if_filter_t *filter);
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetBiasTee(char enabled);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetBiasTee(char *enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetBiasTee(char enabled);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetBiasTee(char *enabled);
 
 #ifdef __cplusplus
 }
