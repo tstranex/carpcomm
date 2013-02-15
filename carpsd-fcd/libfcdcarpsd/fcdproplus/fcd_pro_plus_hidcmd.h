@@ -19,8 +19,8 @@
  *  along with Qthid.  If not, see <http://www.gnu.org/licenses/>.
  *
  ***************************************************************************/
-#ifndef FCD_HID_CMD_H
-#define FCD_HID_CMD_H 1
+#ifndef FCD_PRO_PLUS_HIDCMD_H
+#define FCD_PRO_PLUS_HIDCMD_H 1
 
 
 /* Commands applicable in bootloader mode */
@@ -75,4 +75,4 @@ typedef enum
 } tuner_if_filter_t;
 
 
-#endif // FCD_HID_CMD_H
+#endif // FCD_PRO_PLUS_HIDCMD_H

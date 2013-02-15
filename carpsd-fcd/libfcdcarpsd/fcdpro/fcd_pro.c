@@ -28,8 +28,8 @@
     #include <stdlib.h>
 #endif
 #include "hidapi.h"
-#include "fcdpro.h"
-#include "fcdprohidcmd.h"
+#include "fcd_pro.h"
+#include "fcd_pro_hidcmd.h"
 #include <stdio.h>
 
 

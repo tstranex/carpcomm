@@ -29,8 +29,8 @@
 #endif
 #include <stdio.h>
 #include "hidapi.h"
-#include "fcdproplushidcmd.h"
-#include "fcdproplus.h"
+#include "fcd_pro_plus_hidcmd.h"
+#include "fcd_pro_plus.h"
 
 
 #define FALSE 0
@@ -96,7 +96,7 @@ static void fcdClose(hid_device *phd)
   * \return The current FCD mode.
   * \sa FCD_MODE_ENUM
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdGetMode(void)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusGetMode(void)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -147,7 +147,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdGetMode(void)
   * \return The current FCD mode.
   * \sa FCD_MODE_ENUM
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdGetFwVerStr(char *str)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusGetFwVerStr(char *str)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -200,7 +200,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdGetFwVerStr(char *str)
   * This function is used to switch the FCD into bootloader mode in which
   * various firmware operations can be performed.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppReset(void)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppReset(void)
 {
     hid_device *phd=NULL;
     //unsigned char aucBufIn[65];
@@ -259,7 +259,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppReset(void)
   *
   * \sa fcdAppSetFreq
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetFreqKhz(int nFreq)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetFreqKhz(int nFreq)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -305,7 +305,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetFreqKhz(int nFreq)
   *
   * \sa fcdAppSetFreqKhz
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetFreq(unsigned int uFreq, unsigned int *rFreq)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetFreq(unsigned int uFreq, unsigned int *rFreq)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -358,7 +358,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetFreq(unsigned int uFre
   *
   * \sa fcdAppSetFreq
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetFreq(unsigned int *rFreq)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetFreq(unsigned int *rFreq)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -404,7 +404,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetFreq(unsigned int *rFr
   * \param enabled Whether to enable or disable the LNA (1=ON 0=OFF).
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetLna(char enabled)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetLna(char enabled)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -434,7 +434,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetLna(char enabled)
   * \param enabled The current staus of the LNA (1=ON 0=OFF).
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetLna(char *enabled)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetLna(char *enabled)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -474,7 +474,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetLna(char *enabled)
   * \note RF filter is selected by the FCD; using this function may not be very useful, except when
   *       firmware selects wrong filter.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetRfFilter(tuner_rf_filter_t filter)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetRfFilter(tuner_rf_filter_t filter)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -508,7 +508,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetRfFilter(tuner_rf_filt
   * \param filter The current RF filter selection.
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetRfFilter(tuner_rf_filter_t *filter)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetRfFilter(tuner_rf_filter_t *filter)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -544,7 +544,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetRfFilter(tuner_rf_filt
   * \param enabled Whether to enable or disable the mixer gain (1=ON 0=OFF).
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetMixerGain(char enabled)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetMixerGain(char enabled)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -574,7 +574,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetMixerGain(char enabled
   * \param enabled The current staus of the mixer gain (1=ON 0=OFF).
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetMixerGain(char *enabled)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetMixerGain(char *enabled)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -611,7 +611,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetMixerGain(char *enable
   * \param gain The new IF gain between 0 and 59 dB.
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetIfGain(unsigned char gain)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetIfGain(unsigned char gain)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -645,7 +645,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetIfGain(unsigned char g
   * \param filter The current IF gain between 0 and 59 dB.
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetIfGain(unsigned char *gain)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetIfGain(unsigned char *gain)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -685,7 +685,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetIfGain(unsigned char *
   * \note IF filter is selected by the FCD; using this function may not be very useful, except when
   *       firmware selects the wrong filter.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetIfFilter(tuner_if_filter_t filter)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetIfFilter(tuner_if_filter_t filter)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -719,7 +719,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetIfFilter(tuner_if_filt
   * \param filter The current IF filter selection.
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetIfFilter(tuner_if_filter_t *filter)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetIfFilter(tuner_if_filter_t *filter)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -756,7 +756,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetIfFilter(tuner_if_filt
   * \param enabled Whether to enable or disable the Bias T (1=ON 0=OFF).
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetBiasTee(char enabled)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppSetBiasTee(char enabled)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];
@@ -786,7 +786,7 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppSetBiasTee(char enabled)
   * \param enabled The current staus of the Bias T (1=ON 0=OFF).
   * \return The FCD mode.
   */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdAppGetBiasTee(char *enabled)
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetBiasTee(char *enabled)
 {
     hid_device *phd=NULL;
     unsigned char aucBufIn[65];

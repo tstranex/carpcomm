@@ -20,8 +20,8 @@
  *
  ***************************************************************************/
 
-#ifndef FCD_H
-#define FCD_H 1
+#ifndef FCD_PRO_H
+#define FCD_PRO_H 1
 
 
 #ifdef FCD
@@ -83,4 +83,4 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlVerifyFirmware(char *pc
 }
 #endif
 
-#endif // FCD_H
+#endif // FCD_PRO_H

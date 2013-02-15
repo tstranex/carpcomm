@@ -1,7 +1,7 @@
 LIBS=`pkg-config libusb-1.0 --libs`
 CFLAGS=`pkg-config libusb-1.0 --cflags` -I. -Wall
 
-OBJECTS=hid-libusb.o fcdpro.o fcdproplus.o
+OBJECTS=hid-libusb.o fcd_pro.o fcd_pro_plus.o
 
 libfcdcarpsd.a: $(OBJECTS)
 	ar rcs libfcdcarpsd.a $(OBJECTS)
@@ -9,8 +9,8 @@ libfcdcarpsd.a: $(OBJECTS)
 hid-libusb.o: hid-libusb.c
 	gcc $(CFLAGS) -c -o hid-libusb.o hid-libusb.c
 
-fcdpro.o: fcdpro/fcdpro.c
-	gcc $(CFLAGS) -c -o fcdpro.o fcdpro/fcdpro.c
+fcd_pro.o: fcdpro/fcd_pro.c
+	gcc $(CFLAGS) -c -o fcd_pro.o fcdpro/fcd_pro.c
 
-fcdproplus.o: fcdproplus/fcdproplus.c
-	gcc $(CFLAGS) -c -o fcdproplus.o fcdproplus/fcdproplus.c
+fcd_pro_plus.o: fcdproplus/fcd_pro_plus.c
+	gcc $(CFLAGS) -c -o fcd_pro_plus.o fcdproplus/fcd_pro_plus.c

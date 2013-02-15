@@ -20,8 +20,8 @@
  *
  ***************************************************************************/
 
-#ifndef FCD_H
-#define FCD_H 1
+#ifndef FCD_PRO_PLUS_H
+#define FCD_PRO_PLUS_H 1
 
 
 #ifdef FCD
@@ -41,7 +41,7 @@
 #endif
 
 #include <inttypes.h>
-#include "fcdproplushidcmd.h"
+#include "fcd_pro_plus_hidcmd.h"
 
 
 /** \brief FCD mode enumeration. */
@@ -86,4 +86,4 @@ EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProPlusAppGetBiasTee(char *e
 }
 #endif
 
-#endif // FCD_H
+#endif // FCD_PRO_PLUS_H
