@@ -60,23 +60,28 @@ typedef struct {
 extern "C" {
 #endif
 
-/* Application functions */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProGetMode(void);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProGetFwVerStr(char *str);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProGetCaps(FCD_CAPS_STRUCT *fcd_caps);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProGetCapsStr(char *caps_str);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProAppReset(void);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProAppSetFreqkHz(int nFreq);
+struct hid_device;
 
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProAppSetParam(uint8_t u8Cmd, uint8_t *pu8Data, uint8_t u8len);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProAppGetParam(uint8_t u8Cmd, uint8_t *pu8Data, uint8_t u8len);
+hid_device* fcdProOpen();
+void fcdProClose(hid_device* phd);
+
+/* Application functions */
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProGetMode(hid_device* phd);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProGetFwVerStr(hid_device* phd, char *str);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProGetCaps(hid_device* phd, FCD_CAPS_STRUCT *fcd_caps);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProGetCapsStr(hid_device* phd, char *caps_str);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProAppReset(hid_device* phd);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProAppSetFreqkHz(hid_device* phd, int nFreq);
+
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProAppSetParam(hid_device* phd, uint8_t u8Cmd, uint8_t *pu8Data, uint8_t u8len);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProAppGetParam(hid_device* phd, uint8_t u8Cmd, uint8_t *pu8Data, uint8_t u8len);
 
 
 /* Bootloader functions */
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlReset(void);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlErase(void);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlWriteFirmware(char *pc, int64_t n64Size);
-EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlVerifyFirmware(char *pc, int64_t n64Size);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlReset(hid_device* phd);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlErase(hid_device* phd);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlWriteFirmware(hid_device* phd, char *pc, int64_t n64Size);
+EXTERN FCD_API_EXPORT FCD_API_CALL FCD_MODE_ENUM fcdProBlVerifyFirmware(hid_device* phd, char *pc, int64_t n64Size);
 
 
 #ifdef __cplusplus
