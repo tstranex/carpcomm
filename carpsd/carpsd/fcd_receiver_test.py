@@ -10,6 +10,12 @@ import unittest
 import tempfile
 
 
+class TestFCDReceiver(fcd_receiver.FCDReceiver):
+    def _GetStatus(self):
+        return {'Type': 'FUNcube Dongle Pro+',
+                'Frequency [Hz]': '144000000'}
+
+
 class FCDReceiverTest(unittest.TestCase):
 
     def testCreate(self):
@@ -18,19 +24,10 @@ class FCDReceiverTest(unittest.TestCase):
         conf.add_section(section)
         conf.set(section, 'recording_dir', tempfile.mkdtemp())
         conf.set(section, 'alsa_device', 'hw:1')
-        conf.set(section, 'frequency_correction', '-12')
-        r = fcd_receiver.FCDReceiver(conf)
 
-    def testInvalidModel(self):
-        conf = config.GetDefaultConfig()
-        section = fcd_receiver.FCDReceiver.__name__
-        conf.add_section(section)
-        conf.set(section, 'recording_dir', tempfile.mkdtemp())
-        conf.set(section, 'alsa_device', 'hw:1')
-        conf.set(section, 'frequency_correction', '-12')
-        conf.set(section, 'model', 'unknownmodel')
-        self.assertRaises(fcd_receiver.FCDReceiverError,
-                          fcd_receiver.FCDReceiver, conf)
+        r = TestFCDReceiver(conf)
+        self.assertEquals(r._sample_rate, 192000)
+        self.assertEquals(r.GetHardwareTunerHz(), 144000000)
         
 
 if __name__ == '__main__':

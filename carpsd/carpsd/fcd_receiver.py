@@ -15,7 +15,7 @@ import spectrum
 import upload
 
 
-QTHID_BINARY = 'qthid-cli'
+FCD_CONTROL_BINARY = 'carpsd-fcd'
 ARECORD_BINARY = 'arecord'  # We could also try using 'parec' for pulseaudio.
 
 
@@ -32,36 +32,59 @@ class FCDReceiver(receiver.Receiver):
         self._spectrum_path = None
         self._fcd_pipe = None
         self._upload_pipe = None
-        self._freq_hz = 145500000
         self._spectrum = None
         self._dir = config.get(FCDReceiver.__name__, 'recording_dir')
         self._alsa_device = config.get(FCDReceiver.__name__, 'alsa_device')
-        self._frequency_correction = int(config.get(
-                FCDReceiver.__name__, 'frequency_correction'))
 
-        self._sample_rate = 96000
-        if config.has_option(FCDReceiver.__name__, 'model'):
-            model = config.get(FCDReceiver.__name__, 'model')
-            if model == 'pro':
-                self._sample_rate = 96000
-            elif model == 'proplus':
-                self._sample_rate = 192000
-            else:
-                raise FCDReceiverError('Unknown FCDReceiver model: %s' % model)
+        params = self._GetStatus()
+        if not params:
+            raise FCDReceiverError('Unable to get FCD device status.')
+        
+        if 'Pro+' in params['Type']:
+            logging.info('Detected FCD Pro+')
+            self._sample_rate = 192000
+        else:
+            logging.info('Detected FCD Pro')
+            self._sample_rate = 96000
 
     def SetHardwareTunerHz(self, freq_hz):
-        args = [QTHID_BINARY, '--set_freq_hz', '%d' % freq_hz]
+        args = [FCD_CONTROL_BINARY,
+                '--device', '0',
+                '--set_freq_hz', '%d' % freq_hz]
         logging.info('Setting FCD frequency: %s', ' '.join(args))
         try:
             subprocess.check_call(args)
         except subprocess.CalledProcessError:
             logging.exception('Error tuning FCD')
             return False
-        self._freq_hz = freq_hz
         return True
 
     def GetHardwareTunerHz(self):
-        return self._freq_hz
+        params = self._GetStatus()
+        if not params:
+            return 0
+        return int(params['Frequency [Hz]'])
+
+    def _GetStatus(self):
+        args = [FCD_CONTROL_BINARY, '--device', '0']
+        logging.info('Getting FCD status: %s', ' '.join(args))
+        p = subprocess.Popen(args, stdout=subprocess.PIPE)
+        stdout, stderr = p.communicate()
+        if p.returncode != 0:
+            logging.error('Error getting FCD status. Return code: %d',
+                          p.returncode)
+            return False
+
+        params = {}
+        for line in stdout.split('\n'):
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split(': ')
+            if len(parts) != 2:
+                continue
+            params[parts[0]] = parts[1]
+        return params
 
     def WaterfallImage(self):
         if self._spectrum is None:
