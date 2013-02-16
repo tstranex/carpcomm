@@ -1,0 +1,12 @@
+Source: carpsd-fcd
+Maintainer: Timothy Stranex <tstranex@carpcomm.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 7)
+Homepage: http://carpcomm.com/carpsd/
+
+Package: carpsd-fcd
+Architecture: i386 amd64 armhf
+Depends: ${shlibs:Depends}, ${misc:Depends}, libusb-1.0-0 (>= 1)
+Description: Command-line interface for the FUNcube Dongle.
