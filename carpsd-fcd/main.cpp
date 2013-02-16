@@ -11,29 +11,44 @@ using std::cerr;
 using std::endl;
 using std::string;
 
-static int PrintInfo() {
-  int num = FCDCountDevices();
-  cout << "Number of devices: " << num << endl << endl;
-  for (int i = 0; i < num; i++) {
-    cout << "Device " << i << ":" << endl;
-
-    FCD* dev = FCDOpen(i);
-    if (!dev) {
-      cerr << "Error opening device." << endl;
-      continue;
-    }
-
-    cout << "Type: " << FCDGetType(dev) << endl;
-    cout << "Firmware version: " << FCDGetFirmwareVersion(dev) << endl;
-    cout << "Frequency: " << FCDGetFreqHz(dev) << endl;
-
-    FCDClose(dev);
+static int PrintDeviceInfo(int device_index) {
+  FCD* dev = FCDOpen(device_index);
+  if (!dev) {
+    cerr << "Error opening device " << device_index << endl;
+    return 1;
   }
+
+  cout << "Device: " << device_index << endl;
+  cout << "Type: " << FCDGetType(dev) << endl;
+  cout << "Firmware Version: " << FCDGetFirmwareVersion(dev) << endl;
+  cout << "Frequency [Hz]: " << FCDGetFreqHz(dev) << endl;
+
+  FCDClose(dev);
 
   return 0;
 }
 
+static int PrintInfo(int device_index) {
+  if (device_index >= 0) {
+    return PrintDeviceInfo(device_index);
+  }
+
+  int num = FCDCountDevices();
+  for (int i = 0; i < num; i++) {
+    if (!PrintDeviceInfo(i)) {
+      continue;
+    }
+    cout << endl;
+  }
+  return 0;
+}
+
 static int SetFreqHz(int device_index, const char* freq_hz_str) {
+  if (device_index < 0) {
+    cerr << "--device is missing." << endl;
+    return 1;
+  }
+
   long long freq_hz = atoll(freq_hz_str);
 
   FCD* dev = FCDOpen(device_index);
@@ -49,21 +64,21 @@ static int SetFreqHz(int device_index, const char* freq_hz_str) {
     return 1;
   }
 
-  cout << "Frequency set to: " << new_freq_hz << endl;
+  cout << "Frequency [Hz]: " << new_freq_hz << endl;
   return 0;
 }
 
 static void PrintHelp() {
   cout << "carpsd-fcd: Command-line FUNcube Dongle controller" << endl;
   cout << "Examples:" << endl;
-  cout << "$ carpsd-fcd" << endl;
+  cout << "$ carpsd-fcd [--device 1]" << endl;
   cout << "    Prints FCD status info." << endl;
   cout << "$ carpsd-fcd --device 1 --set_freq_hz 437505000" << endl;
   cout << "    Tunes to the given frequency." << endl;
 }
 
 int main(int argc, char* argv[]) {
-  int device_index = 0;
+  int device_index = -1;
 
   for (int i = 1; i < argc; i++) {
     string arg = argv[i];
@@ -95,5 +110,5 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  return PrintInfo();
+  return PrintInfo(device_index);
 }
