@@ -16,7 +16,7 @@ import upload
 
 
 QTHID_BINARY = 'qthid-cli'
-ARECORD_BINARY = 'arecord'
+ARECORD_BINARY = 'arecord'  # We could also try using 'parec' for pulseaudio.
 
 
 class FCDReceiverError(Exception):
