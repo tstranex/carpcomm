@@ -30,7 +30,7 @@ def check_dependencies():
     return no_errors
 
 setup(name='carpsd',
-      version='0.18',
+      version='0.19',
       description='Carpcomm Station Daemon',
       author='Carpcomm GmbH',
       author_email='info@carpcomm.com',

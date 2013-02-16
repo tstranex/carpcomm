@@ -1,3 +1,11 @@
+carpsd (0.19) lucid; urgency=low
+
+  * Prevent crash in upload thread when the file doesn't exist.
+  * Use carpsd-fcd instead of qthid-cli. This also allows us to get the actual
+    tuner frequency and autodetect the FCD model.
+
+ -- Carpcomm GmbH (Linux Packaging) <linux-packaging@carpcomm.com>  Sat, 16 February 2013 22:16:00 +0200
+
 carpsd (0.18) lucid; urgency=low
 
   * Refactored Motor interface.
