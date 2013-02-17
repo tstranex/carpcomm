@@ -16,6 +16,8 @@ import upload
 
 
 FCD_CONTROL_BINARY = 'carpsd-fcd'
+FCD_CONTROL_TIMEOUT = 3
+FCD_CONTROL_RETRIES = 5
 ARECORD_BINARY = 'arecord'  # We could also try using 'parec' for pulseaudio.
 
 
@@ -48,16 +50,9 @@ class FCDReceiver(receiver.Receiver):
             self._sample_rate = 96000
 
     def SetHardwareTunerHz(self, freq_hz):
-        args = [FCD_CONTROL_BINARY,
-                '--device', '0',
-                '--set_freq_hz', '%d' % freq_hz]
-        logging.info('Setting FCD frequency: %s', ' '.join(args))
-        try:
-            subprocess.check_call(args)
-        except subprocess.CalledProcessError:
-            logging.exception('Error tuning FCD')
-            return False
-        return True
+        ok, stdout = self._CommandWithTimeout([
+                '--device', '0', '--set_freq_hz', '%d' % freq_hz])
+        return ok
 
     def GetHardwareTunerHz(self):
         params = self._GetStatus()
@@ -65,14 +60,24 @@ class FCDReceiver(receiver.Receiver):
             return 0
         return int(params['Frequency [Hz]'])
 
+    def _CommandWithTimeout(self, arg):
+        for i in range(FCD_CONTROL_RETRIES):
+            args = ['timeout', str(FCD_CONTROL_TIMEOUT),
+                    FCD_CONTROL_BINARY] + arg
+            logging.info('Running command: %s', ' '.join(args))
+            p = subprocess.Popen(args, stdout=subprocess.PIPE)
+            stdout, stderr = p.communicate()
+            if p.returncode == 0:
+                return True, stdout
+            else:
+                logging.error('Error, return code: %d', p.returncode)
+
+        logging.error('Giving up.')
+        return False, ''
+
     def _GetStatus(self):
-        args = [FCD_CONTROL_BINARY, '--device', '0']
-        logging.info('Getting FCD status: %s', ' '.join(args))
-        p = subprocess.Popen(args, stdout=subprocess.PIPE)
-        stdout, stderr = p.communicate()
-        if p.returncode != 0:
-            logging.error('Error getting FCD status. Return code: %d',
-                          p.returncode)
+        ok, stdout = self._CommandWithTimeout(['--device', '0'])
+        if not ok:
             return False
 
         params = {}
