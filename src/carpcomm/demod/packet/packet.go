@@ -8,7 +8,7 @@ import "encoding/hex"
 import "fmt"
 import "log"
 import "os/exec"
-//import "os"
+import "os"
 
 const dopplerAnalysisPath = "src/carpcomm/demod/packet/doppler_analysis.py"
 const afsk1200LSBPath = "src/carpcomm/demod/packet/afsk1200_lsb.py"

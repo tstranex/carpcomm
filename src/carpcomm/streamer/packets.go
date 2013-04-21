@@ -12,6 +12,7 @@ import "io/ioutil"
 import "carpcomm/db"
 import "carpcomm/pb"
 import "carpcomm/streamer/contacts"
+import "carpcomm/scheduler"
 import "strconv"
 import "errors"
 import "fmt"
@@ -234,6 +235,157 @@ func getLatestPacketsHandler(
 	}
 }
 
+type GetLatestIQDataRequest struct {
+	StationId string
+	StationSecret string
+	SatelliteId string
+	Limit int
+}
+
+func parseGetLatestIQDataRequest(values url.Values) (
+	req GetLatestIQDataRequest, err error) {
+	limit, err := strconv.Atoi(values.Get("limit"))
+	if err != nil {
+		return req, err
+	}
+	req.Limit = limit
+
+	req.StationId = values.Get("station_id")
+	if req.StationId == "" {
+		return req, errors.New("Missing station_id")
+	}
+
+	req.StationSecret = values.Get("station_secret")
+	if req.StationSecret == "" {
+		return req, errors.New("Missing station_secret")
+	}
+
+	req.SatelliteId = values.Get("satellite_id")
+	if req.SatelliteId == "" {
+		return req, errors.New("Missing satellite_id")
+	}
+
+	return req, nil
+}
+
+type IQLink struct {
+	Timestamp int64 `json:"timestamp"`
+	URL string `json:"url"`
+	Type string `json:"type"`
+	SampleRate int `json:"sample_rate"`
+}
+type GetLatestIQDataResponse []IQLink
+
+func getLatestIQDataHandler(
+	sdb *db.StationDB, cdb *db.ContactDB,
+	w http.ResponseWriter, r *http.Request) {
+
+	log.Printf("Request: %s", r.URL.String())
+
+	req, err := parseGetLatestIQDataRequest(r.URL.Query())
+	if err != nil {
+		log.Printf("getLatestIQDataHandler: " +
+			"parse request error: %s", err.Error())
+		http.Error(w, "Error parsing request.",
+			http.StatusBadRequest)
+		return
+	}
+
+	sat := db.GlobalSatelliteDB().Map[req.SatelliteId]
+	if sat == nil {
+		http.Error(w, "Unknown satellite_id.", http.StatusBadRequest)
+		return
+	}
+
+	station, err := sdb.Lookup(req.StationId)
+	if err != nil {
+		log.Printf("Error looking up station: %s", err.Error())
+		http.Error(w, "", http.StatusUnauthorized)
+		return
+	}
+	if station == nil {
+		log.Printf("Error looking up station.")
+		http.Error(w, "", http.StatusUnauthorized)
+		return
+	}
+	// Authenticate the station.
+	if station.Secret == nil || *station.Secret != req.StationSecret {
+		log.Printf("Authentication failed.")
+		http.Error(w, "", http.StatusUnauthorized)
+		return
+	}
+
+	// Make sure that the user is authorized for the satellite.
+	found_good_id := false
+	for _, station_id := range sat.AuthorizedStationId {
+		if station_id == *station.Id {
+			found_good_id = true
+		}
+	}
+	if !found_good_id {
+		log.Printf("Authentication failed.")
+		http.Error(w, "", http.StatusUnauthorized)
+		return
+	}
+
+	contacts, err := cdb.SearchBySatelliteId(req.SatelliteId, req.Limit)
+	if err != nil {
+		log.Printf("getLatestIQDataHandler: " +
+			"SearchBySatelliteId error: %s", err.Error())
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+
+	packets := make(GetLatestIQDataResponse, 0)
+
+	for _, c := range contacts {
+		if c.StartTimestamp == nil {
+			continue
+		}
+		timestamp := *c.StartTimestamp
+		for _, b := range c.Blob {
+			if len(packets) >= req.Limit {
+				continue
+			}
+
+			if b.Format == nil ||
+				*b.Format != pb.Contact_Blob_IQ {
+				continue
+			}
+
+			var p IQLink
+			p.Timestamp = timestamp
+			p.URL = scheduler.GetStreamURL(*c.Id)
+
+			if b.IqParams != nil {
+				if b.IqParams.Type != nil {
+					p.Type = b.IqParams.Type.String()
+				}
+				if b.IqParams.SampleRate != nil {
+					p.SampleRate = int(
+						*b.IqParams.SampleRate)
+				}
+			}
+			
+			packets = append(packets, p)
+		}
+	}
+
+	json_body, err := json.Marshal(packets)
+	if err != nil {
+		log.Printf("json Marshal error: %s", err.Error())
+		http.Error(w, "", http.StatusInternalServerError)
+	}
+
+	w.Header().Add("Content-Length", fmt.Sprintf("%d", len(json_body)))
+	w.Header().Add("Content-Type", "application/json")
+	_, err = w.Write(json_body)
+	if err != nil {
+		log.Printf("Error writing response: %s", err.Error())
+	}
+}
+
+
 func AddPacketHttpHandlers(mux *http.ServeMux,
 	contactdb *db.ContactDB, 
 	stationdb *db.StationDB) {
@@ -245,5 +397,9 @@ func AddPacketHttpHandlers(mux *http.ServeMux,
 	mux.HandleFunc("/GetLatestPackets",
 		func(w http.ResponseWriter, r *http.Request) {
 		getLatestPacketsHandler(stationdb, contactdb, w, r)
+	})
+	mux.HandleFunc("/GetLatestIQData",
+		func(w http.ResponseWriter, r *http.Request) {
+		getLatestIQDataHandler(stationdb, contactdb, w, r)
 	})
 }
