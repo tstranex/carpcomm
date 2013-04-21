@@ -29,8 +29,11 @@ class SpectrumByte:
         return self.f
 
     def _NumFrames(self):
-        available_bytes = os.path.getsize(self.path) - self.f.tell()
-        return available_bytes / self.frame_bytes / self.skip
+        try:
+            available_bytes = os.path.getsize(self.path) - self.f.tell()
+            return available_bytes / self.frame_bytes / self.skip
+        except OSError:
+            return 0
 
     def _AdvanceFrames(self, num_frames):
         self.f.seek(num_frames * self.frame_bytes * self.skip, 1)
