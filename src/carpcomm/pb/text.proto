@@ -1,0 +1,6 @@
+package pb;
+
+message TextWithLang {
+	optional string text = 1;
+	optional string lang = 2;
+}

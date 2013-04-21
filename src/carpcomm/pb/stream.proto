@@ -1,0 +1,64 @@
+package pb;
+
+import "carpcomm/pb/telemetry.proto";
+
+message IQParams {
+	optional int32 sample_rate = 1;  // [samples per second]
+
+	// Warning: These string values are exposed in the external API!
+	enum Type {
+	     UINT8 = 1;
+	     SINT16 = 2;
+	     FLOAT32 = 3;
+	}
+	optional Type type = 2;
+}
+
+message Contact {
+	optional string id = 1;
+	optional string satellite_id = 9;
+
+	optional int64 start_timestamp = 6;
+	optional int64 end_timestamp = 8;
+
+	message Blob {
+		// Warning: These string values are exposed in the external API!
+		enum Format {
+		     IQ = 0x1;
+		     MORSE = 0x2;
+		     FRAME = 0x3;
+		     DATUM = 0x4;
+		     FREEFORM = 0x5;  // Entered by users on the website.
+		}
+		optional Format format = 2;
+
+		optional string path = 1;
+
+		// Small amounts of data (e.g. Morse words) can be stored here
+		// instead of a separate file.
+		// It should be less than 256 bytes.
+		optional bytes inline_data = 3;
+
+		optional TelemetryDatum datum = 4;
+
+		optional IQParams iq_params = 5;
+	}
+
+	repeated Blob blob = 10;
+
+
+	// Source information:
+	
+	optional string station_id = 2;
+	optional string user_id = 7;
+
+	// We copy this data from the station instead of referencing it by id
+	// because the station may be moved in the future.
+	optional double lat = 3;
+	optional double lng = 4;
+	optional double elevation = 5;
+
+	// NOTE: We may need to add references to other source contacts.
+	// In this case, derived contacts shouldn't replicate the other
+	// source data.
+}

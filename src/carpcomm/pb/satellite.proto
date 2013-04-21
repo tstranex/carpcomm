@@ -1,0 +1,103 @@
+// Important:
+// These protos may not be stored in any databases.
+// Backward-incompatible changes are allowed.
+
+package pb;
+
+import "carpcomm/pb/telemetry.proto";
+import "carpcomm/pb/text.proto";
+
+message Photo {
+	optional string url = 1;
+	optional string large_url = 2;
+
+	// A 64x64 square thumbnail image.
+	optional string thumbnail_url = 6;
+
+	optional string attribution = 5;
+
+	// For internal use only. Do not display to users.
+	optional string internal_original_url = 3;
+	optional string internal_permissions = 4;
+}
+
+message CWParams {
+	optional double dot_duration_s = 1;
+}
+
+message Channel {
+	optional double frequency_hz = 1;
+	optional bool uplink = 2;
+	optional bool downlink = 3;
+	optional double transmit_power_watts = 4;
+	
+	enum Modulation {
+	     CW = 0;
+	     BFSK = 1;
+	     BGFSK = 2;
+	     GMSK = 3;
+	     AM_BFSK = 4;
+	     BPSK = 5;
+	     FM_AFSK = 6;
+	     FM_ADPSK = 7;
+	     WIFI = 8;
+	     LSB_BFSK = 9;
+	     FM_GMSK = 10;
+	     FM_CW = 11;
+	     FM_MSK = 12;
+	}
+	optional Modulation modulation = 5;
+
+	optional double baud = 6;
+	optional CWParams cw_params = 9;
+
+	optional string notes = 7;
+	optional string documentation_url = 8;
+
+	enum DopplerStrategy {
+	     CONSTANT_BURST = 0;
+	     HRBE_LINEAR = 1;
+	     DISABLED = 2;
+	     SNAPS_FCD_OFFSET = 3;
+	}
+	optional DopplerStrategy doppler_strategy = 10;
+}
+
+message Satellite {
+	optional string id = 1;
+	repeated TextWithLang name = 2;
+
+	optional string website = 3;
+	optional string wikipedia_url = 14;
+
+	optional string callsign = 4;
+	optional string country_code = 8;  // 2-letter alpha code
+	repeated string organization = 15;
+
+	repeated TextWithLang description = 16;
+
+	// Either launch_timestamp or expected_launch_time should be filled in,
+	// but not both.
+	optional int64 launch_timestamp = 9;
+	optional string expected_launch_time = 12;
+
+	optional string oscar_id = 10;
+	repeated Photo photo = 13;
+
+	optional string tle = 5;
+	optional string celestrak_tle_label = 6;
+
+	optional bool disable_tracking = 17;
+
+	repeated Channel channels = 7;
+
+	// TODO: Add lint rule to enforce that keys being with the satellite id.
+	optional TelemetrySchema schema = 11;
+
+	// Users who are allowed to read frames from this satellite.
+	repeated string authorized_station_id = 18;
+}
+
+message SatelliteList {
+	repeated Satellite satellite = 1;
+}

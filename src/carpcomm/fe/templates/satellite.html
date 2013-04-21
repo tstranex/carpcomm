@@ -1,0 +1,356 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}{{RenderSatelliteName .Body.S.Name}}{{end}}
+{{define "navigation"}}<li><a href="/satellite/list">Satellites</a></li>{{end}}
+
+{{define "extra_head"}}
+<style>
+.section {
+  margin-left: 1em;
+  margin-right: 1em;
+  clear: both;
+}
+li {
+  margin-bottom: 1em;
+}
+
+.telemetryTail {
+  display: none;
+}
+
+#telemetryShowLess {
+  display: none;
+}
+.triangle {
+  font-size: 50%;
+}
+#telemetryButtons {
+  margin-top: 1em;
+  margin-left: 1em;
+}
+#telemetryButtons a {
+  text-decoration: none;
+}
+.closedPanel:before {
+  content: '▸ ';
+}
+.openPanel:before {
+  content: '▴ ';
+}
+.downPanel:before {
+  content: '▾ ';
+}
+
+.receivedby {
+  font-size: 75%;
+  margin-left: 0.25em;
+}
+
+.carpsdpromo {
+  font-style: italic;
+}
+.tip {
+  color: #f62217;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.commaList, .commaList li {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+.commaList li:after {
+  content: ',';
+}
+.commaList li:last-child:after {
+  content: '';
+}
+.notes {
+  color: #aaa;
+}
+
+.left {
+  float: left;
+  width: 8em;
+}
+#submitContact {
+  display: none;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.warning {
+  background-color: #fef1ec;
+  padding: 1em;
+  display: inline-block;
+
+  border: 1px solid #f62217;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.validationError {
+  display: none;
+  color: red;
+  font-weight: bold;
+  margin-left: 8em;
+}
+
+.description {
+  text-align: justify;
+}
+
+.satphoto {
+  padding: 0;
+  margin: 0;
+  margin-left: 1em;
+  float: right;
+}
+.satphoto figcaption {
+  font-size: 75%;
+  width: 300px;
+}
+</style>
+
+<script type="text/javascript">
+function submitContact() {
+  $('#submitContact').slideToggle(100);
+  $('#submitContactButton').toggleClass('downPanel');
+  $('#submitContactButton').toggleClass('closedPanel');
+}
+
+function showTelemetryTail() {
+  $('.telemetryTail').toggle();
+  $('#telemetryShowMore').toggle();
+  $('#telemetryShowLess').toggle();
+}
+
+function validateContact() {
+  $('#date_validation_error').hide();
+  $('#time_validation_error').hide();
+  $('#future1_validation_error').hide();
+  $('#future2_validation_error').hide();
+  $('#data_frame_validation_error').hide();
+
+  var date = $('#date').val().split('-');
+  if (date.length != 3) {
+    $('#date_validation_error').show();
+    return false;
+  }
+  var time = $('#time').val().split(':');
+  if (time.length != 3) {
+    $('#time_validation_error').show();
+    return false;
+  }
+
+  var t = new Date(date[0], date[1]-1, date[2], time[0], time[1], time[2], 0);
+  if (t.getTime() > (new Date()).getTime()) {
+    $('#future1_validation_error').show();
+    $('#future2_validation_error').show();
+    return false;
+  }
+
+  $('#timestamp').val(Math.round(t.getTime() / 1000));
+
+  return true;
+}
+
+function zpad(i) {
+  var s = '' + i;
+  if (s.length == 1) {
+    return '0' + s;
+  } else {
+    return s;
+  }
+}
+
+function init() {
+  var now = new Date();
+  $('#date').val(
+    now.getFullYear() + '-' + zpad(now.getMonth()+1) + '-' +
+    zpad(now.getDate()));
+  $('#time').val(zpad(now.getHours()) + ':' + zpad(now.getMinutes()) + ':' +
+    zpad(now.getSeconds()));
+}
+$(init);
+</script>
+
+{{end}}
+
+{{define "body"}}
+
+{{if .Body.S.Photo}}{{with index .Body.S.Photo 0}}
+<figure class="satphoto">
+<img src="{{.Url}}">
+{{if .Attribution}}<figcaption>{{.Attribution}}</figcaption>{{end}}
+</figure>
+{{end}}{{end}}
+
+<p>{{if .Body.S.ExpectedLaunchTime}}Expected launch:
+{{.Body.S.ExpectedLaunchTime}}{{end}}</p>
+
+{{/* TODO: handle localization properly */}}
+{{range .Body.S.Description}}<p class="description">{{.Text}}</p>{{end}}
+
+<p><a href="{{.Body.S.Website}}">{{GetURLHost .Body.S.Website}}</a></p>
+
+<h4>Telemetry</h4>
+
+{{if .Body.TelemetryHead}}
+<table>
+  {{range .Body.TelemetryHead}}
+  <tr>
+    <td class="telemetryLabel">{{.Label}}</td>
+    <td class="telemetryValue">{{.Value}}</td>
+    <td class="telemetryTimestamp">{{.Timestamp}}</td>
+  </tr>
+  {{end}}
+  {{range .Body.TelemetryTail}}
+  <tr class="telemetryTail">
+    <td class="telemetrySeparator"></td>
+    <td class="telemetrySeparator"></td>
+    <td class="telemetrySeparator"></td>
+  </tr>
+  {{range .}}
+  <tr class="telemetryTail">
+    <td class="telemetryLabel">{{.Label}}</td>
+    <td class="telemetryValue">{{.Value}}</td>
+    <td class="telemetryTimestamp">{{.Timestamp}}</td>
+  </tr>
+  {{end}}
+  {{end}}
+</table>
+{{if .Body.LatestContact}}{{with .Body.LatestContact}}
+<span class="receivedby">Received by
+<a href="/user/{{.User.Id}}">{{.User.Name}}</a>.</span>
+{{end}}{{end}}
+{{end}}
+
+<div id="telemetryButtons">
+{{if .Body.TelemetryTail}}
+<a href="javascript:showTelemetryTail();" id="telemetryShowMore"
+   class="closedPanel">Show more</a>
+<a href="javascript:showTelemetryTail();" id="telemetryShowLess"
+   class="openPanel">Show less</a>
+<br>
+{{end}}
+<a href="javascript:submitContact();" id="submitContactButton"
+   class="closedPanel">Submit data</a>
+</div>
+
+<div id="submitContact">
+
+<form action="/satellite/contact"
+      method="POST"
+      onsubmit="return validateContact()">
+
+  <input type="hidden" name="satellite_id" value="{{.Body.S.Id}}">
+  <input type="hidden" name="timestamp" id="timestamp">
+
+<label>
+  <span class="left">Date:</span>
+  <input name="date" id="date" required>
+  <span class="validationError" id="date_validation_error">
+    <br>Invalid value. Example: 2012-06-15
+  </span>
+  <span class="validationError" id="future1_validation_error">
+    <br>Time or date is in the future.
+  </span>
+</label>
+
+<label>
+  <span class="left">Time:</span>
+  <input name="time" id="time" required>
+  <span class="validationError" id="time_validation_error">
+    <br>Invalid value. Example: 21:36:28
+  </span>
+  <span class="validationError" id="future2_validation_error">
+    <br>Time or date is in the future.
+  </span>
+</label>
+
+<label>
+  <span class="left">Data:</span>
+  <textarea name="data" id="contact_data"
+	    rows="5" cols="80" maxlength="16384"
+	    placeholder="Enter data here e.g. Morse text, AX.25 packet payload, raw HDLC frame (ASCII or hex-encoded)."
+	    required></textarea>
+</label>
+
+{{if .User.Id}}
+<label>
+  <span class="left">Station:</span>
+  <select name="station_id" required>
+    {{range .Body.Stations}}<option value="{{.Id}}">{{.Name}}</option>{{end}}
+  </select>
+  {{if .Body.Stations}}{{else}}
+  <a href="/station/add">Create a station</a>
+  {{end}}
+</label>
+{{end}}
+
+<span class="left">&nbsp;</span>
+<p class="carpsdpromo"><span class="tip">Tip:</span>
+{{if .User.Id}}
+<a href="/carpsd">Install CarpSD</a> to collect and
+submit data automatically.</p>
+{{else}}
+<a href="javascript:login();">Sign in</a> to record your achievement!</p>
+{{end}}
+
+<label>
+  <span class="left">&nbsp;</span>
+  <button type="submit">Submit</button>
+</label>
+
+</form>
+</div>
+
+<h4>Radio downlink</h4>
+
+{{if .Body.S.Callsign}}Callsign: {{.Body.S.Callsign}}<br>{{end}}
+{{range .Body.S.Channels}}
+  {{if .Downlink}}
+{{EngNotationHz 100 .FrequencyHz}}:
+  <ul class="commaList">
+    {{if .Modulation}}<li>{{.Modulation}}</li>{{end}}
+    {{if .Baud}}<li>{{.Baud}} baud</li>{{end}}
+    {{if .TransmitPowerWatts}}
+    <li>{{EngNotationWatt 0.1 .TransmitPowerWatts}}</li>
+    {{end}}
+  </ul>
+  {{if .Notes}}<span class="notes">({{.Notes}})</span>{{end}}
+  <br>
+  {{end}}
+{{end}}
+
+{{if .Body.S.Tle}}
+<h4>Orbit</h4>
+
+<div style="width: 640px; height: 496px; margin: 0; padding: 0;">
+  <img src="/images/world_mercator.jpg"
+       width="640" height="496" style="position:absolute;">
+  <img src="/satellite/orbit?id={{.Body.S.Id}}"
+       width="640" height="496" style="position:absolute;">
+</div>
+
+{{end}}
+
+<h4>Discussion</h4>
+
+{{template "comments" .}}
+
+{{end}}

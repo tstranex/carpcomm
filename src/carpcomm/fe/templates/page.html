@@ -1,0 +1,46 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{define "page"}}<!DOCTYPE HTML>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>{{template "title" .}} - Carpcomm</title>
+
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+  {{template "extra_head"}}
+
+  <script type="text/javascript" src="/common.js"></script>
+</head>
+
+<body>
+  <header>
+  <a href="/"><img src="/carp_small.png" alt="Carpcomm logo"
+	 id="carplogo"></a><ol><li><a href="/">Carpcomm</a></li>
+    {{template "navigation" .}}
+  </ol>
+  <span id="signin">
+  {{if .User.Id}}
+    <a href="/user/{{.User.Id}}"><img
+      src="{{.User.PhotoUrl}}" class="headerPhoto"></a>
+    <span class="headerText"><a
+      href="/user/{{.User.Id}}">{{.User.Name}}</a> - </span>
+    <a class="headerText" href="/logout">Sign out</a>
+  {{else}}
+    <img src="/blank.png" class="headerPhoto">
+    <a href="javascript:login()" class="headerText">Sign in</a>
+  {{end}}
+  </span>
+</header>
+<div id="main">
+<h1>{{template "title" .}}</h1>
+{{template "body" .}}
+</div>
+
+<footer><p><a href="/about.html">Carpcomm GmbH</a></p></footer>
+</body>
+</html>{{end}}

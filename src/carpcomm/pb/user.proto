@@ -1,0 +1,19 @@
+package pb;
+
+message User {
+	optional string id = 8;
+
+	optional string google_key = 1;
+
+	optional int64 created = 2;
+	optional int64 last_login = 3;
+
+	// These fields are controlled by the auth provider e.g. Google.
+	optional string email = 4;
+	optional string display_name = 5;
+	optional string photo_url = 6;
+	optional string authority = 7;
+
+	// These fields are controlled by us.
+	optional string callsign = 9;
+}

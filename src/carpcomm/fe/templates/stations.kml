@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+  <Document>
+    <name>Carpcomm Stations</name>
+    <description>http://www.carpcomm.com/</description>
+
+{{range .}}
+{{if and .Lat .Lng}}
+    <Placemark>
+      <name>{{.Name}}</name>
+      <description><![CDATA[
+      <a href="http://carpcomm.com/station?id={{.Id}}">More Info</a>
+      ]]></description>
+      <Point><coordinates>
+	{{.Lng}},{{.Lat}},{{if .Elevation}}{{.Elevation}}{{else}}0{{end}}
+      </coordinates></Point>
+    </Placemark>
+{{end}}
+{{end}}
+
+  </Document>
+</kml>

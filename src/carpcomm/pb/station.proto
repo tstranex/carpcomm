@@ -1,0 +1,48 @@
+package pb;
+
+message AzElLimits {
+	optional double min_azimuth_degrees = 1;
+	optional double max_azimuth_degrees = 2;
+	optional double min_elevation_degrees = 3;
+	optional double max_elevation_degrees = 4;
+}
+
+message Capabilities {
+	// FIXME: Rename vhf to limits_2m.
+	optional AzElLimits vhf_limits = 10;
+	// FIXME: Rename uhf to limits_70cm.
+	optional AzElLimits uhf_limits = 11;
+
+	// Deprecated:
+	optional bool has_receiver = 1;
+	optional double min_receiver_frequency_hz = 2;
+	optional double max_receiver_frequency_hz = 3;
+	optional double receiver_bandwidth_hz = 4;
+	optional bool has_motor = 5;
+	optional double min_azimuth_degrees = 6;
+	optional double max_azimuth_degrees = 7;
+	optional double min_elevation_degrees = 8;
+	optional double max_elevation_degrees = 9;	
+}
+
+message Station {
+	optional string id = 1;
+	optional string secret = 2;
+	optional string userid = 3;
+
+	optional string name = 4;
+	optional double lat = 5;
+	optional double lng = 6;
+	optional double elevation = 7;
+
+	optional int64 created = 8;
+	optional int64 last_connect = 9;
+
+	optional bool scheduler_enabled = 13;
+
+	optional string locality = 10;
+
+	optional string notes = 11;
+
+	optional Capabilities capabilities = 12;
+}

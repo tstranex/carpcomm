@@ -1,0 +1,46 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{define "comments"}}
+
+<script type="text/javascript">
+function init_comments() {
+  $('#comments_submit_area').hide();
+  $('#comments_text').focus(function(){
+    $('#comments_submit_area').slideDown('fast');
+  });
+}
+$(init_comments);
+</script>
+
+<form action="/comments/post" method="POST">
+<input type="hidden" name="object_id" value="{{.Body.Comments.ObjectId}}">
+<div style="clear:both; overflow: hidden;">
+<img class="userPhoto" src="{{if .User.PhotoUrl}}{{.User.PhotoUrl}}{{else}}/images/unknown_avatar.png{{end}}" style="float: left;">
+<div style="float:left; width: 50em;">
+<textarea id="comments_text" name="text" rows="3" style="width: 100%; border-radius: 7px; padding: 0.75em; font-size: 90%;" maxlength="256" placeholder="Leave a note..." required></textarea>
+<div id="comments_submit_area">
+<button type="submit" {{if not .User.Id}}disabled{{end}}>Post</button>
+{{if not .User.Id}}
+Please <a href="javascript:login();">sign in</a> first.</span>
+{{end}}
+</div>
+</div>
+</div>
+</form>
+
+{{range .Body.Comments.C}}
+<div style="clear:both; margin-top: 1em; overflow: hidden;">
+<a href="/user/{{.User.Id}}"><img
+class="userPhoto" src="{{.User.PhotoUrl}}" style="float: left;"></a>
+<div style="float: left; width: 50em;">
+<a href="/user/{{.User.Id}}">{{.User.Name}}</a>
+<span style="font-size: 75%; color: #aaa;">· {{.Timestamp}}</span>
+<div style="margin-top: 0.25em;">{{.Text}}</div>
+</div>
+</div>
+{{end}}
+
+{{end}}

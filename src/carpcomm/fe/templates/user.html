@@ -1,0 +1,62 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}{{.Body.User.DisplayName}}{{if .Body.User.Callsign}} {{.Body.User.Callsign}}{{end}}{{end}}
+{{define "navigation"}}{{end}}
+
+{{define "extra_head"}}{{end}}
+
+{{define "body"}}
+
+{{with .Body}}{{if .IsOwner}}
+<form method="POST">
+Callsign:
+<input name="callsign" placeholder="e.g. HB9FFH" type="text"
+value="{{if .User.Callsign}}{{.User.Callsign}}{{end}}"
+maxlength="10" required>
+<button type="submit">Save</button>
+</form>
+<br>
+{{end}}{{end}}
+
+<img src="{{.Body.User.PhotoUrl}}" style="width: 128px; height: 128px;">
+{{if .Body.Stations}}
+<img src="http://maps.googleapis.com/maps/api/staticmap?zoom=1&markers={{range .Body.Stations}}{{.Lat}},{{.Lng}}|{{end}}&size=128x128&sensor=false&maptype=terrain">
+{{end}}
+
+{{if or .Body.HeardSatellites .Body.IsOwner}}
+<h4>Satellites received</h4>
+
+{{range .Body.HeardSatellites}}
+<a href="{{SatelliteViewURL .Id}}"><img src="{{if .Photo}}{{range .Photo}}{{.ThumbnailUrl}}{{end}}{{else}}/images/generic_satellite_64.png{{end}}" title="{{RenderSatelliteName .Name}}"></a>
+{{end}}
+{{if .Body.IsOwner}}
+{{if not .Body.HeardSatellites}}
+<p>You haven't submitted data from
+<a href="/satellite/list">any satellites</a> yet.</p>
+{{end}}
+{{end}}
+
+{{end}}
+
+{{if or .Body.Stations .Body.IsOwner}}
+<h4>Stations</h4>
+
+<ul>
+{{range .Body.Stations}}
+<li><a href="/station?id={{.Id}}">{{.Name}}</a></li>
+{{end}}
+</ul>
+
+{{if .Body.IsOwner}}
+{{if not .Body.Stations}}<p>You haven't created any stations yet.</p>{{end}}
+<p><a href="/station/add">Create a station</a></p>
+{{end}}
+
+{{end}}
+
+{{end}}

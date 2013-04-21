@@ -1,0 +1,3868 @@
+satellite {
+  id: "swisscube"
+  name <
+    lang: "en"
+    text: "SwissCube"
+  >
+  website: "http://swisscube.epfl.ch/"
+  wikipedia_url: "http://en.wikipedia.org/wiki/SwissCube-1"
+  organization: "École Polytechnique Fédérale de Lausanne"
+  callsign: "HB9EG/1"
+
+  photo <
+    url: "/images/swisscube.jpg"
+    thumbnail_url: "/images/swisscube_thumb64.jpg"
+  >
+
+  description <
+    text: "SwissCube is a 1U cubesat built by the Space Center at EPFL, Switzerland. It includes a camera intended to capture images of airglow, a weak light emission phenomenon in the upper atmosphere. The satellite has a Morse code beacon and a 1200 baud modem at 437.505 MHz."
+    lang: "en"
+  >
+  
+  tle: "SWISSCUBE\n1 35932U 09051B   12153.15748009  .00005321  00000-0  12986-2 0  5875\n2 35932  98.3384 256.1413 0008563 147.1867 212.9692 14.53018831142537"
+  celestrak_tle_label: "SWISSCUBE"
+
+  channels {
+    frequency_hz: 437505000.0
+    downlink: true
+    transmit_power_watts: 0.12
+    modulation: CW
+    notes: "11.8 WPM"
+    documentation_url: "http://swisscube-live.ch/Publish/S3-D-COM-1-3-Beacon_format.pdf"
+    cw_params {
+      dot_duration_s: 0.101
+    }
+  }
+  channels {
+    frequency_hz: 437505000.0
+    downlink: true
+    transmit_power_watts: 1.0
+    modulation: BFSK
+    baud: 1200.0
+    notes: "AX.25. Activated manually from the ground only when passing above Switzerland by day with fully charged batteries."
+  }
+  country_code: "CH"
+  launch_timestamp: 1251001260
+
+  schema <
+    datum <
+      key: "d:swisscube:bat1_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Battery 1 Voltage"
+	lang: "en"
+      >
+      confidence: 0.1
+      display_group: 0
+    >
+    datum <
+      key: "d:swisscube:bat2_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Battery 2 Voltage"
+	lang: "en"
+      >
+      confidence: 0.1
+      display_group: 0
+    >
+    datum <
+      key: "d:swisscube:bat1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Battery 1 Temperature"
+	lang: "en"
+      >
+      confidence: 2.0
+      display_group: 0
+    >
+
+    datum <
+      key: "d:swisscube:ads_power"
+      type: BOOL
+      name < text: "ADS Power" lang: "en" >
+      display_group: 1
+    >
+    datum <
+      key: "d:swisscube:payload_power"
+      type: BOOL
+      name < text: "Payload Power" lang: "en" >
+      display_group: 1
+    >
+    datum <
+      key: "d:swisscube:adcs_power"
+      type: BOOL
+      name < text: "ADCS Power" lang: "en" >
+      display_group: 1
+    >
+    datum <
+      key: "d:swisscube:cdms_power"
+      type: BOOL
+      name < text: "CDMS Power" lang: "en" >
+      display_group: 1
+    >
+    datum <
+      key: "d:swisscube:beacon_power"
+      type: BOOL
+      name < text: "Beacon Power" lang: "en" >
+      display_group: 1
+    >
+    datum <
+      key: "d:swisscube:com_power"
+      type: BOOL
+      name < text: "COM Power" lang: "en" >
+      display_group: 1
+    >
+
+    datum <
+      key: "d:swisscube:cell_x1_c"
+      type: INTERVAL
+      unit: AMPERE
+      name <
+        text: "X- Solar Cell Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 2
+    >
+    datum <
+      key: "d:swisscube:cell_x2_c"
+      type: INTERVAL
+      unit: AMPERE
+      name <
+        text: "X+ Solar Cell Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 2
+    >
+    datum <
+      key: "d:swisscube:cell_y1_c"
+      type: INTERVAL
+      unit: AMPERE
+      name <
+        text: "Y- Solar Cell Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 2
+    >
+    datum <
+      key: "d:swisscube:cell_y2_c"
+      type: INTERVAL
+      unit: AMPERE
+      name <
+        text: "Y+ Solar Cell Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 2
+    >
+    datum <
+      key: "d:swisscube:cell_z1_c"
+      type: INTERVAL
+      unit: AMPERE
+      name <
+        text: "Z- Solar Cell Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 2
+    >
+    datum <
+      key: "d:swisscube:cell_z2_c"
+      type: INTERVAL
+      unit: AMPERE
+      name <
+        text: "Z+ Solar Cell Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 2
+    >
+
+  >
+}
+
+satellite {
+  id: "tisat1"
+  name <
+    lang: "en"
+    text: "TIsat-1"
+  >
+  website: "http://www.spacelab.dti.supsi.ch/tiSat1.html"
+  callsign: "HB9DE"
+  country_code: "CH"
+  organization: "University of Applied Sciences and Arts of Southern Switzerland"
+
+  photo <
+    url: "/images/tisat1_small.jpg"
+    large_url: "/images/tisat1_large.jpg"
+    thumbnail_url: "/images/tisat1_thumb64.jpg"
+  >
+
+  tle: "TISAT 1                 \n1 36799U 10035E   12203.03170004  .00001634  00000-0  21206-3 0  1761\n2 36799  98.0614 279.6142 0016277  65.8289 294.4603 14.82067936109505"
+  celestrak_tle_label: "TISAT 1"
+
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 145980000.0
+    downlink: true
+    modulation: FM_AFSK
+    baud: 100
+    transmit_power_watts: 0.5
+    notes: "Differential Manchester encoding. Space = 1200 Hz, mark = 600 Hz. ALINCO DJC-6"
+    documentation_url: "http://www.spacelab.dti.supsi.ch/TIsat-1COMMdoc.pdf"
+  }
+  channels {
+    frequency_hz: 145980000.0
+    downlink: true
+    modulation: FM_ADPSK
+    baud: 1400
+    transmit_power_watts: 0.5
+    notes: "1400 Hz carrier. ALINCO DJC-6."
+    documentation_url: "http://www.spacelab.dti.supsi.ch/TIsat-1COMMdoc.pdf"
+  }
+  channels {
+    frequency_hz: 437305000.0
+    downlink: true
+    modulation: CW
+    transmit_power_watts: 0.4
+    notes: "16 WPM or 100 WPM"
+    documentation_url: "http://www.spacelab.dti.supsi.ch/TIsat-1COMMdoc.pdf"
+    cw_params {
+      dot_duration_s: 0.0852  # slow rate
+      # dot_duration_s: 0.013.6  # fast rate
+    }
+  }
+}
+
+satellite {
+  id: "masat1"
+  name <
+    lang: "hu"
+    text: "Masat-1"
+  >
+  website: "http://cubesat.bme.hu/en/"
+  callsign: "HA5MASAT"
+  organization: "Budapest University of Technology and Economics"
+  wikipedia_url: "http://en.wikipedia.org/wiki/MaSat-1"
+
+  photo <
+    url: "/images/masat1_small.jpg"
+    large_url: "/images/masat1_large.jpg"
+    thumbnail_url: "/images/masat1_thumb64.jpg"
+
+    internal_original_url: "http://cubesat.bme.hu/wp-content/uploads/2012/01/2011_11_17-Masat-1_Repulopeldany_1.jpg"
+  >
+
+  description <
+    text: "Masat-1 is a 1U cubesat built by students at Budapest University of Technology and Economics (BME). It includes a camera, a 2-axis attitude control system and various sensors (sun angle, gyroscope, magnetometer, accelerometer). It has a Morse code beacon and 625/1250 baud BGFSK downlink on 437.345 MHz."
+    lang: "en"
+  >
+
+  tle: "MASAT 1\n1 38081U 12006E   12152.98871236  .00017916  00000-0  44342-3 0  2609\n2 38081  69.4881 352.7312 0749214 268.3793  83.1501 14.13682993 15297"
+  celestrak_tle_label: "MASAT 1"
+  channels {
+    frequency_hz: 437345000.0
+    downlink: true
+    transmit_power_watts: 0.1
+    modulation: CW
+    notes: "120 char/min."
+    cw_params {
+      dot_duration_s: 0.043
+    }
+  }
+  channels {
+    frequency_hz: 437345000.0
+    downlink: true
+    transmit_power_watts: 0.4
+    modulation: BGFSK
+    baud: 625.0
+  }
+  channels {
+    frequency_hz: 437345000.0
+    downlink: true
+    transmit_power_watts: 0.4
+    modulation: BGFSK
+    baud: 1250.0
+  }
+  country_code: "HU"
+  launch_timestamp: 1329127200
+  oscar_id: "MO-72"
+
+  schema <
+    datum <
+      key: "d:masat1:bat_v"
+      type: DOUBLE
+      unit: VOLT
+      name < text: "Battery Voltage" lang: "en" >
+      confidence: 0.01
+    >
+    datum <
+      key: "d:masat1:bat_t"
+      type: DOUBLE
+      unit: KELVIN
+      name < text: "Battery Temperature" lang: "en" >
+      confidence: 1.0
+    >
+  >
+}
+
+satellite {
+  id: "rax2"
+  name <
+    lang: "en"
+    text: "RAX-2"
+  >
+  name <
+    lang: "en"
+    text: "Radio Aurora Explorer"
+  >
+  website: "http://rax.engin.umich.edu/"
+  callsign: "RAX-2"
+  tle: "RAX-2\n1 37853U 11061D   12152.55650693  .00004568  00000-0  36819-3 0  1912\n2 37853 101.7166 185.1679 0247363  38.3562 323.4920 14.79895900 31930"
+  celestrak_tle_label: "RAX-2"
+  channels {
+    frequency_hz: 437345000.0
+    downlink: true
+    transmit_power_watts: 0.5
+    modulation: FM_GMSK
+    baud: 9600.0
+    notes: "Transmit Interval: Every 20 seconds, Ant Polarization: RHCP (\342\211\24519 dBiC gain recommended for operations \342\211\2445\302\272 elevation)"
+
+    doppler_strategy: CONSTANT_BURST
+  }
+  country_code: "US"
+  launch_timestamp: 1319795400
+}
+
+# need to contact about photo
+satellite {
+  id: "itupsat1"
+  name <
+    lang: "en"
+    text: "ITUpSAT1"
+  >
+  name <
+    lang: "tr"
+    text: "İTÜpSAT1"
+  >
+  website: "http://usl.itu.edu.tr/en/"
+  organization: "Istanbul Technical University"
+  wikipedia_url: "http://en.wikipedia.org/wiki/ITUpSAT1"
+
+  photo <
+    url: "/images/itupsat1_small.jpg"
+    large_url: "/images/itupsat1_large.jpg"
+    thumbnail_url: "/images/itupsat1_thumb64.jpg"
+
+    internal_original_url: "http://usl.itu.edu.tr/tr/images/galeri/img_3370-qpr.jpg"
+  >
+
+  description <
+    lang: "en"
+    text: "ITUpSAT1 is a 1U cubesat built by the Space Systems Design and Test Laboratory at Istanbul Technical University, Turkey. Its primary purpose was to give students experience in designing a space mission. The satellite has a camera, an accelerometer, a magnetometer and a temperature sensor."
+  >
+
+  tle: "ITUPSAT 1\n1 35935U 09051E   12153.18298529  .00001961  00000-0  48744-3 0  9128\n2 35935  98.3443 256.7369 0009740 144.7756 215.3827 14.52863711142520"
+  celestrak_tle_label: "ITUPSAT 1"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 437325000.0
+    downlink: true
+    transmit_power_watts: 0.1
+    modulation: FM_CW
+  }
+  channels {
+    frequency_hz: 437325000.0
+    downlink: true
+    transmit_power_watts: 1.0
+    modulation: BGFSK
+    baud: 19200.0
+  }
+  country_code: "TR"
+  launch_timestamp: 1251001260
+}
+
+satellite {
+  id: "ao27"
+  name <
+    lang: "en"
+    text: "AO-27"
+  >
+  name <
+    lang: "en"
+    text: "AMRAD-OSCAR 27"
+  >
+  website: "http://www.ao27.org/AO27/index.shtml"
+  country_code: "US"
+  oscar_id: "AO-27"
+
+  tle: "EYESAT-1 (AO-27)\n1 22825U 93061C   12153.21676658  .00000135  00000-0  70068-4 0  1155\n2 22825  98.5742  96.2804 0008096 333.3955  26.6819 14.29460931974190"
+  celestrak_tle_label: "EYESAT-1 (AO-27)"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 436797000.0
+    downlink: true
+    notes: "Modulation and power are vary according to a schedule; see the website."
+    documentation_url: "http://www.ao27.org/AO27/tlm.shtml"
+  }
+  channels {
+    frequency_hz: 145850000.0
+    uplink: true
+  }
+  launch_timestamp: 748994400
+}
+
+satellite {
+  id: "horyu2"
+  name <
+    lang: "ja"
+    text: "HORYU-2"
+  >
+  name <
+    lang: "ja"
+    text: "鳳龍弐号"
+  >
+  website: "http://kitsat.ele.kyutech.ac.jp/"
+  callsign: "JG6YBW"
+  organization: "Kyushu Institute of Technology"
+
+  photo <
+    url: "/images/horyu2.jpg"
+    thumbnail_url: "/images/horyu2_thumb64.jpg"
+  >
+
+  description <
+    text: "HORYU-2 is a 30 cm cube satellite built by Kyushu Institute of Technology, Japan. It includes an experiment to generate 300 V power from its solar panels, a debris sensor and a camera. It has a Morse beacon and 1200 baud modem at 437.375 MHz."
+    lang: "en"
+  >
+
+  # From http://www.amsat.org/amsat/ftp/keps/current/nasa.all
+  tle: "HORYU-2\n1 38340U 12025D   12256.83470936  .00001221  00000-0  21104-3 0  1432\n2 38340 098.1799 196.7879 0013976 054.4372 305.8148 14.70163300 17351"
+  #amsat_tle_label: "HORYU-2"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 437375000.0
+    downlink: true
+    modulation: CW
+    notes: "20 wpm"
+    documentation_url: "http://kitsat.ele.kyutech.ac.jp/Documents/ground_station/explain_downlink_information_jap.pdf"
+    cw_params {
+      dot_duration_s: 0.057
+    }
+  }
+
+  channels {
+    frequency_hz: 437375000.0
+    downlink: true
+    transmit_power_watts: 1.0
+    modulation: BFSK
+    baud: 1200.0
+    notes: "AX.25"
+  }
+
+  country_code: "JP"
+  launch_timestamp: 1337272740
+
+  schema <
+
+    datum <
+      key: "d:horyu2:bat_top_t"
+      type: DOUBLE
+      unit: KELVIN
+      name < text: "Battery Top Temperature" lang: "en" >
+      name < text: "バッテリ温度①" lang: "ja" >
+      confidence: 2.0
+      display_group: 0
+    >
+
+    datum <
+      key: "d:horyu2:bat_bottom_t"
+      type: DOUBLE
+      unit: KELVIN
+      name < text: "Battery Bottom Temperature" lang: "en" >
+      name < text: "バッテリ温度②" lang: "ja" >
+      confidence: 2.0
+      display_group: 0
+    >
+
+    datum <
+      key: "d:horyu2:comm_t"
+      type: DOUBLE
+      unit: KELVIN
+      name < text: "Communications Temperature" lang: "en" >
+      name < text: "通信機温度" lang: "ja" >
+      confidence: 2.0
+      display_group: 0
+    >
+
+    datum <
+      key: "d:horyu2:bat_c"
+      type: DOUBLE
+      unit: AMPERE
+      name < text: "Battery Current" lang: "en" >
+      name < text: "バッテリ電流" lang: "ja" >
+      confidence: 0.025
+      display_group: 0
+    >
+
+    datum <
+      key: "d:horyu2:bat_v"
+      type: DOUBLE
+      unit: VOLT
+      name < text: "Battery Voltage" lang: "en" >
+      name < text: "バッテリ電圧" lang: "ja" >
+      confidence: 0.02
+      display_group: 0
+    >
+
+    datum <
+      key: "d:horyu2:debris_collision"
+      type: BOOL
+      name < text: "Debris Collision Detected" lang: "en" >
+      name < text: "デブリ = 当たり" lang: "ja" >
+      display_group: 1
+    >
+
+    datum <
+      key: "d:horyu2:mission_mode"
+      type: BOOL
+      name < text: "Mission Mode" lang: "en" >
+      name < text: "ミッション実行 = 実行中" lang: "ja" >
+      display_group: 1
+    >
+
+    datum <
+      key: "d:horyu2:reserve_command"
+      type: BOOL
+      name < text: "Reserve Command" lang: "en" >
+      name < text: "予約コマンド" lang: "ja" >
+      display_group: 1
+    >
+
+    datum <
+      key: "d:horyu2:clock_normal"
+      type: BOOL
+      name < text: "Clock State is Normal" lang: "en" >
+      name < text: "クロック状態 = 通常" lang: "ja" >
+      display_group: 2
+    >
+
+    datum <
+      key: "d:horyu2:flash_main_normal"
+      type: BOOL
+      name < text: "Main Flash is Normal" lang: "en" >
+      name < text: "FLASH－Main = 通常" lang: "ja" >
+      display_group: 2
+    >
+
+    datum <
+      key: "d:horyu2:flash_share_normal"
+      type: BOOL
+      name < text: "Share Flash is Normal" lang: "en" >
+      name < text: "FLASH－Share = 通常" lang: "ja" >
+      display_group: 2
+    >
+
+    datum <
+      key: "d:horyu2:flash_300_normal"
+      type: BOOL
+      name < text: "300 Flash is Normal" lang: "en" >
+      name < text: "FLASH－300 = 通常" lang: "ja" >
+      display_group: 2
+    >
+
+    datum <
+      key: "d:horyu2:switch_share_normal"
+      type: BOOL
+      name < text: "Share Switch is Normal" lang: "en" >
+      name < text: "スイッチ－シェア = 通常" lang: "ja" >
+      display_group: 2
+    >
+
+    datum <
+      key: "d:horyu2:switch_300_normal"
+      type: BOOL
+      name < text: "300 Switch is Normal" lang: "en" >
+      name < text: "スイッチ－300 = 通常" lang: "ja" >
+      display_group: 2
+    >
+
+    datum <
+      key: "d:horyu2:kill_switch_main"
+      type: BOOL
+      name < text: "Main Kill Switch Engaged" lang: "en" >
+      name < text: "キルスイッチ-Main = ON" lang: "ja" >
+      display_group: 2
+    >
+
+    datum <
+      key: "d:horyu2:kill_switch_comm"
+      type: BOOL
+      name < text: "Communications Kill Switch Engaged" lang: "en" >
+      name < text: "キルスイッチ-COM = ON" lang: "ja" >
+      display_group: 2
+    >
+
+  >
+}
+
+satellite {
+  id: "pwsat"
+  name <
+    lang: "pl"
+    text: "PW-Sat"
+  >
+  website: "http://www.pw-sat.pl/"
+  tle: "2012-006G\n1 38083U 12006G   12153.02376085  .00017916  00000-0  44783-3 0  3115\n2 38083  69.4906 352.4881 0744064 268.2041  83.3791 14.14578220 15301"
+  celestrak_tle_label: "2012-006G"
+  channels {
+    frequency_hz: 145900000.0
+    downlink: true
+    modulation: BPSK
+    baud: 1200.0
+    notes: "AX.25"
+  }
+  country_code: "PL"
+  launch_timestamp: 1329127200
+}
+
+satellite <
+  id: "xatcobeo"
+  name <
+    text: "Xatcobeo"
+    lang: "es"
+  >
+  website: "http://www.xatcobeo.com/"
+  organization: "University of Vigo"
+
+  tle: "XATCOBEO\n1 38082U 12006F   12287.74482187  .00049707  00000-0  11863-2 0  6176\n2 38082  69.4841  42.0301 0688612  96.6923 271.3076 14.27135083 34435"
+  celestrak_tle_label: "XATCOBEO"
+
+  channels <
+    frequency_hz: 437365000.0
+    downlink: true
+    modulation: FM_CW
+    notes: "20 WPM. 800 Hz."
+    documentation_url: "http://www.xatcobeo.com/cms/index.php?option=com_content&view=article&id=41&Itemid=16"
+  >
+  channels <
+    frequency_hz: 437365000.0
+    downlink: true
+    modulation: FM_AFSK
+    baud: 1200
+    transmit_power_watts: 0.5
+    documentation_url: "http://www.xatcobeo.com/cms/index.php?option=com_content&view=article&id=41&Itemid=16"
+  >
+>
+
+satellite {
+  id: "delfic3"
+  name <
+    lang: "nl"
+    text: "Delfi-C3"
+  >
+  website: "http://www.delfic3.nl/"
+  tle: "DELFI-C3 (DO-64)\n1 32789U 08021G   12153.19302242  .00002736  00000-0  32069-3 0  3237\n2 32789  97.8133 217.2143 0015896 109.0103 251.2914 14.85717177221507"
+  celestrak_tle_label: "DELFI-C3 (DO-64)"
+  channels {
+    frequency_hz: 145870000.0
+    downlink: true
+    transmit_power_watts: 0.4
+    modulation: BPSK
+    baud: 1200.0
+    notes: "AX.25, Primary telemetry downlink"
+  }
+  channels {
+    frequency_hz: 145930000.0
+    downlink: true
+    transmit_power_watts: 0.4
+    modulation: BPSK
+    baud: 1200.0
+    notes: "AX.25, Backup telemetry downlink"
+  }
+  country_code: "NL"
+  launch_timestamp: 1209354822
+  oscar_id: "DO-64"
+}
+
+satellite {
+  id: "almasat1"
+  name <
+    lang: "it"
+    text: "ALMASat-1"
+  >
+  website: "http://www.almasat.unibo.it/02_projects/almasat-1/almasat1.htm"
+  tle: "ALMASAT-1\n1 38078U 12006B   12153.07269308  .00008452  00000-0  23647-3 0  2584\n2 38078  69.4976 353.7514 0761624 268.8307  82.5577 14.08763657 15284"
+  celestrak_tle_label: "ALMASAT-1"
+  channels {
+    frequency_hz: 437465000.0
+    downlink: true
+    modulation: BFSK
+    baud: 1200.0
+  }
+  channels {
+    frequency_hz: 2407850000.0
+    downlink: true
+    modulation: GMSK
+    baud: 38400.0
+  }
+  country_code: "IT"
+  launch_timestamp: 1329127200
+}
+
+# decoder software: http://ssel.montana.edu/e1p/downloads/e1p_telemetry_decoder.msi
+# presentation: http://mstl.atl.calpoly.edu/~bklofas/Presentations/DevelopersWorkshop2011/22_Klumpar_Explorer1_PRIME.pdf
+satellite {
+  id: "hrbe"
+  name <
+    lang: "en"
+    text: "Hiscock Radiation Belt Explorer"
+  >
+  name <
+    lang: "en"
+    text: "Explorer-1 Prime"
+  >
+  website: "https://ssel.montana.edu/"
+  wikipedia_url: "http://en.wikipedia.org/wiki/Explorer-1%27"
+  country_code: "US"
+  launch_timestamp: 1319796000
+  organization: "Montana State University"
+
+  description <
+    lang: "en"
+    text: "The Hiscock Radiation Belt Explorer (originally called Explorer-1 Prime) is a 1U cubesat developed by Montana State University. Its mission is to demonstrate the use of cubesats for space weather observations. It has a Geiger–Müller tube for measuring the flux of electrons with energies greater than 60 keV. It transmits a 1200 baud packet telemetry beacon."
+  >
+
+  photo <
+    url: "/images/hrbe.jpg"
+    thumbnail_url: "/images/hrbe_thumb64.jpg"
+
+    internal_original_url: "http://mstl.atl.calpoly.edu/~bklofas/Presentations/DevelopersWorkshop2011/22_Klumpar_Explorer1_PRIME.pdf"
+  >
+
+  tle: "M-CUBED & EXP-1 PRIME\n1 37855U 11061F   12153.13592174  .00004658  00000-0  37052-3 0  1918\n2 37855 101.7196 186.2002 0248724  36.2016 325.5733 14.80132344 32013"
+  celestrak_tle_label: "M-CUBED & EXP-1 PRIME"
+
+  channels {
+    frequency_hz: 437505000.0
+    downlink: true
+    transmit_power_watts: 1.0
+    baud: 1200.0
+    modulation: LSB_BFSK
+    notes: "AX.25."
+
+    doppler_strategy: HRBE_LINEAR
+  }
+
+  authorized_station_id: "1086708795781846862"
+
+  schema <
+    datum <
+      key: "d:hrbe:bat1_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Battery 1 Current"
+	lang: "en"
+      >
+      confidence: 4e-5
+    >
+    datum <
+      key: "d:hrbe:bat2_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Battery 2 Current"
+	lang: "en"
+      >
+      confidence: 4e-5
+    >
+  >
+}
+
+satellite {
+  id: "srmsat"
+  name <
+    lang: "en"
+    text: "SRMSAT"
+  >
+  website: "http://srmsat.in/"
+  tle: "SRMSAT\n1 37841U 11058D   12153.16234580  .00000264  00000-0  00000+0 0  1587\n2 37841  19.9714  99.8799 0011603  16.2869 343.8056 14.10141278 32924"
+  celestrak_tle_label: "SRMSAT"
+  channels {
+    frequency_hz: 437425000.0
+    downlink: true
+    modulation: CW
+  }
+  country_code: "IN"
+  launch_timestamp: 1318397400
+}
+
+satellite {
+  id: "jugnu"
+  name <
+    lang: "hi"
+    text: "JUGNU"
+  >
+  name <
+    lang: "hi"
+    text: "\340\244\234\340\245\201\340\244\227\340\244\250\340\245\202"
+  >
+  website: "http://www.iitk.ac.in/me/jugnu/index.htm"
+  wikipedia_url: "http://en.wikipedia.org/wiki/Jugnu_(satellite)"
+  tle: "JUGNU\n1 37839U 11058B   12153.20035502  .00000619  00000-0  19019-3 0  1579\n2 37839  19.9577  95.0842 0019344  47.2190 312.9756 14.12057446 32981"
+  celestrak_tle_label: "JUGNU"
+  channels {
+    frequency_hz: 437275000.0
+    downlink: true
+    transmit_power_watts: 0.05
+    modulation: CW
+  }
+  country_code: "IN"
+  launch_timestamp: 1318397400
+}
+
+satellite {
+  id: "fastrac1"
+  name <
+    lang: "en"
+    text: "FASTRAC 1"
+  >
+  name <
+    lang: "en"
+    text: "Sara Lily"
+  >
+  website: "http://fastrac.ae.utexas.edu/"
+  callsign: "FAST1"
+  tle: "FAST1\n1 90025U 0        13051.42898468 +.00000519 +00000-0 +80704-4 0 00680\n2 90025 071.9723 124.0466 0018281 222.0544 137.9148 14.77376835011667"
+  disable_tracking: true
+  channels {
+    frequency_hz: 437345000.0
+    downlink: true
+    transmit_power_watts: 1.0
+    modulation: FM_AFSK
+    baud: 1200.0
+    notes: "AX.25"
+  }
+  channels {
+    frequency_hz: 145980000.0
+    uplink: true
+    baud: 1200.0
+  }
+  channels {
+    frequency_hz: 145825000.0
+    uplink: true
+    baud: 9600.0
+  }
+  country_code: "US"
+  launch_timestamp: 1291080060
+  oscar_id: "FO-69"
+}
+
+satellite {
+  id: "fastrac2"
+  name <
+    lang: "en"
+    text: "FASTRAC 2"
+  >
+  name <
+    lang: "en"
+    text: "Emma"
+  >
+  website: "http://fastrac.ae.utexas.edu/"
+  callsign: "FAST2"
+  tle: "FAST2\n1 90026U 0        13051.27387721 +.00000020 +00000-0 +10800-4 0 00710\n2 90026 071.9753 125.2665 0018795 219.1865 140.7787 14.77117187011718"
+  disable_tracking: true
+  channels {
+    frequency_hz: 145825000.0
+    downlink: true
+    transmit_power_watts: 1.0
+    modulation: FM_AFSK
+    baud: 1200.0
+    notes: "AX.25"
+  }
+  channels {
+    frequency_hz: 435025000.0
+    uplink: true
+    baud: 1200.0
+  }
+  channels {
+    frequency_hz: 437345000.0
+    uplink: true
+    baud: 9600.0
+  }
+  country_code: "US"
+  launch_timestamp: 1291080060
+  oscar_id: "FO-70"
+}
+
+satellite {
+  id: "prism"
+  name <
+    lang: "en"
+    text: "PRISM"
+  >
+  website: "http://www.space.t.u-tokyo.ac.jp/prism/"
+  tle: "PRISM\n1 33493U 09002B   12153.07671458  .00001945  00000-0  24084-3 0  7441\n2 33493  98.1686 293.2587 0018536 353.8224   6.2726 14.83820598181368"
+  celestrak_tle_label: "PRISM"
+  channels {
+    frequency_hz: 437425000.0
+    downlink: true
+    transmit_power_watts: 0.8
+    modulation: FM_AFSK
+    baud: 1200.0
+    notes: "AX.25"
+  }
+  channels {
+    frequency_hz: 437250000.0
+    downlink: true
+    transmit_power_watts: 0.08
+    modulation: CW
+    cw_params {
+      dot_duration_s: 0.099
+    }
+  }
+  channels {
+    frequency_hz: 437425000.0
+    downlink: true
+    transmit_power_watts: 2.0
+    modulation: GMSK
+    baud: 9600.0
+    notes: "AX.25"
+  }
+  country_code: "JP"
+  launch_timestamp: 1233226800
+}
+
+satellite {
+  id: "iss"
+  name <
+    lang: "en"
+    text: "ISS"
+  >
+  name <
+    lang: "en"
+    text: "International Space Station"
+  >
+  website: "http://issfanclub.com/"
+  tle: "ISS (ZARYA)\n1 25544U 98067A   12278.39705984  .00042166  00000-0  72511-3 0  4088\n2 25544  51.6452 298.6975 0017998 130.0276  16.5700 15.50510560794988"
+  celestrak_tle_label: "ISS (ZARYA)"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 145800000.0
+    downlink: true
+    notes: "Worldwide voice downlink"
+  }
+  channels {
+    frequency_hz: 145825000.0
+    uplink: true
+    downlink: true
+    notes: "Worldwide packet uplink/downlink"
+  }
+  channels {
+    frequency_hz: 145200000.0
+    uplink: true
+    notes: "Region 1 voice uplink"
+  }
+  channels {
+    frequency_hz: 144490000.0
+    uplink: true
+    notes: "Region 2 and 3 voice uplink"
+  }
+  channels {
+    frequency_hz: 437800000.0
+    uplink: true
+    notes: "Worldwide uplink for cross band voice repeater"
+  }
+  channels {
+    frequency_hz: 145800000.0
+    downlink: true
+    notes: "Worldwide SSTV downlink"
+  }
+}
+satellite {
+  id: "noaa15"
+  name <
+    lang: "en"
+    text: "NOAA 15"
+  >
+  website: "http://www.oso.noaa.gov/poesstatus/spacecraftStatusSummary.asp?spacecraft=15"
+  tle: "NOAA 15 [P]\n1 25338U 98030A   12152.83796575  .00000242  00000-0  10318-3 0  2809\n2 25338  98.6898 139.9034 0010985 151.2453 208.9819 14.25075110730535"
+  celestrak_tle_label: "NOAA 15 [P]"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 137770000.0
+    downlink: true
+    notes: "Beacon"
+  }
+  channels {
+    frequency_hz: 137500000.0
+    downlink: true
+    notes: "Automated Picture Transmission (APT)"
+  }
+  channels {
+    frequency_hz: 1702500000.0
+    downlink: true
+    notes: "High Resolution Picture Transmission (HRPT)"
+  }
+  country_code: "US"
+}
+
+satellite {
+  id: "noaa17"
+  name <
+    lang: "en"
+    text: "NOAA 17"
+  >
+  website: "http://www.oso.noaa.gov/poesstatus/spacecraftStatusSummary.asp?spacecraft=17"
+
+  tle: "NOAA 17 [P]\n1 27453U 02032A   12152.86673554  .00000225  00000-0  97125-4 0  7224\n2 27453  98.3376 180.7292 0011280 199.8970 160.2259 14.24438479516433"
+  celestrak_tle_label: "NOAA 17 [P]"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 137770000.0
+    downlink: true
+    notes: "Beacon"
+  }
+  channels {
+    frequency_hz: 137500000.0
+    downlink: true
+    notes: "Automated Picture Transmission (APT)"
+  }
+  channels {
+    frequency_hz: 1702500000.0
+    downlink: true
+    notes: "High Resolution Picture Transmission (HRPT)"
+  }
+  country_code: "US"
+}
+
+satellite {
+  id: "noaa18"
+  name <
+    lang: "en"
+    text: "NOAA 18"
+  >
+  website: "http://www.oso.noaa.gov/poesstatus/spacecraftStatusSummary.asp?spacecraft=18"
+  tle: "NOAA 18 [+]\n1 28654U 05018A   12152.90553951  .00000282  00000-0  15477-3 0  1987\n2 28654  99.0455 110.8604 0013833 197.4644 162.6526 14.11656240362269"
+  celestrak_tle_label: "NOAA 18 [+]"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 137770000.0
+    downlink: true
+    notes: "Beacon"
+  }
+  channels {
+    frequency_hz: 137912500.0
+    downlink: true
+    notes: "Automated Picture Transmission (APT)"
+  }
+  channels {
+    frequency_hz: 1698000000.0
+    downlink: true
+    notes: "High Resolution Picture Transmission (HRPT)"
+  }
+  country_code: "US"
+}
+
+satellite {
+  id: "noaa19"
+  name <
+    lang: "en"
+    text: "NOAA 19"
+  >
+  website: "http://www.oso.noaa.gov/poesstatus/spacecraftStatusSummary.asp?spacecraft=19"
+  tle: "NOAA 19 [+]\n1 33591U 09005A   12152.90980568  .00000066  00000-0  36748-4 0  3900\n2 33591  98.8638  92.9022 0015064  68.0751 292.2489 14.11341429170714"
+  celestrak_tle_label: "NOAA 19 [+]"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 137770000.0
+    downlink: true
+    notes: "Beacon"
+  }
+  channels {
+    frequency_hz: 137100000.0
+    downlink: true
+    notes: "Automated Picture Transmission (APT)"
+  }
+  channels {
+    frequency_hz: 1698000000.0
+    downlink: true
+    notes: "High Resolution Picture Transmission (HRPT)"
+  }
+  country_code: "US"
+}
+
+
+
+satellite {
+  id: "fspace1"
+  name <
+    lang: "en"
+    text: "FSpace F-1"
+  >
+  website: "http://fspace.edu.vn/?page_id=10"
+  callsign: "XV1VN"
+  country_code: "VN"
+  organization: "FPT University"
+  launch_timestamp: 1349364043
+
+  photo <
+    url: "/images/fspace1_small.jpg"
+    large_url: "/images/fspace1_large.jpg"
+    thumbnail_url: "/images/fspace1_thumb64.jpg"
+
+    internal_original_url: "http://farm8.staticflickr.com/7007/6418514683_514c638c99_z.jpg"
+    internal_permissions: "Received permission from Vu Trong Thu <thuvt@fpt.edu.vn> on 2012-06-21."
+  >
+
+  description <
+    text: "F-1 is a 1U cubesat built by the FSpace lab at FPT University in Hanoi, Vietnam. Its instruments include a camera, 3-axis magnetometer and temperature sensors. It transmits a Morse code beacon at 437.485 MHz and has a 1200 baud modem on 145.980 MHz."
+    lang: "en"
+  >
+
+  tle: "F-1\n1 38855U 98067CR  12287.13071136  .00039268  00000-0  64483-3 0    88\n2 38855  51.6484 255.3407 0014394 161.0888 199.0627 15.51904629  1195"
+  celestrak_tle_label: "F-1"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 437485000.0
+    downlink: true
+    transmit_power_watts: 0.3
+    modulation: CW
+    notes: "10 chars transmitted at 1 minute intervals"
+  }
+
+  channels {
+    frequency_hz: 145980000.0
+    downlink: true
+    transmit_power_watts: 1.0
+    modulation: FM_AFSK
+    baud: 1200.0
+    notes: "AX.25 packet sent every 30 seconds"
+  }
+
+  schema <
+
+    datum <
+      key: "d:fspace1:obc_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Inside OBC Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 0
+    >
+
+    datum <
+      key: "d:fspace1:out_y1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Outside Y- Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 0
+    >
+
+    datum <
+      key: "d:fspace1:bat_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Battery Voltage"
+	lang: "en"
+      >
+      confidence: 0.01
+      display_group: 0
+    >
+
+    datum <
+      key: "d:fspace1:cell_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Solar Cell Voltage"
+	lang: "en"
+      >
+      confidence: 0.1
+      display_group: 0
+    >
+
+
+    datum <
+      key: "d:fspace1:clock"
+      type: TIMESTAMP
+      name <
+        text: "Onboard Clock"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 1
+    >
+
+    datum <
+      key: "d:fspace1:reset_count"
+      type: INT64
+      name <
+        text: "OBC1 Reset Count"
+	lang: "en"
+      >
+      display_group: 1
+    >
+
+    datum <
+      key: "d:fspace1:out_x1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Outside X- Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 2
+    >
+
+    datum <
+      key: "d:fspace1:out_x2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Outside X+ Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 2
+    >
+
+    datum <
+      key: "d:fspace1:out_y2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Outside Y+ Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 2
+    >
+
+    datum <
+      key: "d:fspace1:out_z1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Outside Z- Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 2
+    >
+
+    datum <
+      key: "d:fspace1:out_z2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Outside Z+ Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 2
+    >
+
+    datum <
+      key: "d:fspace1:in_z1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Inside Z- Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 2
+    >
+
+    datum <
+      key: "d:fspace1:radio_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Inside Radio Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 2
+    >
+
+  >
+
+}
+
+satellite {
+  id: "techedsat"
+  name <
+    lang: "en"
+    text: "TechEdSat"
+  >
+  website: "http://techedsat.com/"
+  wikipedia_url: "http://en.wikipedia.org/wiki/TechEdSat"
+  country_code: "US"
+  callsign: "KJ6TVO"
+  organization: "San Jose State University"
+  launch_timestamp: 1349364043
+
+  description <
+    text: "TechEdSat is a 1U cubesat built by students at San Jose State University with mentorship from NASA Ames Research Center. It aims to demonstrate new technologies for future small satellite experiments such as ÅAC Microtec's Plug-and-Play power architecture. It will be launched from the International Space Station and is expected to de-orbit after 100 days."
+    lang: "en"
+  >
+
+  photo <
+    url: "/images/techedsat_small.jpg"
+    large_url: "/images/techedsat_large.jpg"
+    thumbnail_url: "/images/techedsat_thumb64.jpg"
+    attribution: "Photo by Aaron Cohen."
+
+    internal_original_url: "http://upload.wikimedia.org/wikipedia/en/d/da/TechEdSat_Engineering_Development_Unit.JPG"
+    internal_permissions: "Creative Commons Attribution-ShareAlike 3.0 via http://en.wikipedia.org/wiki/File:TechEdSat_Engineering_Development_Unit.JPG"
+  >
+
+  tle: "TECHEDSAT\n1 38854U 98067CQ  12287.13053952  .00039511  00000-0  64785-3 0    67\n2 38854  51.6482 255.3368 0014358 160.9248 199.2282 15.51943455  1308"
+  celestrak_tle_label: "TECHEDSAT"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 437465000.0
+    downlink: true
+    transmit_power_watts: 0.1
+    modulation: FM_AFSK
+    baud: 1200
+    notes: "AX.25"
+    documentation_url: "http://techedsat.com/index.php?option=com_content&view=article&id=32&Itemid=187"
+  }
+
+  schema <
+
+    datum {
+      key: "d:techedsat:now_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Temperature"
+        lang: "en"
+      }
+      confidence: 0.143
+      source_key: "Temp_now"
+      display_group: 0
+    }
+    datum {
+      key: "d:techedsat:now_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Current"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "Curr_now"
+      display_group: 0
+    }
+    datum {
+      key: "d:techedsat:bat_now_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Battery Voltage"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "VBUS_now"
+      display_group: 0
+    }
+
+    datum {
+      key: "d:techedsat:5v_now_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "5V Bus Voltage"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "5V_now"
+      display_group: 1
+    }
+    datum {
+      key: "d:techedsat:5v_min_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "5V Bus Voltage (min)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "5V_min"
+      display_group: 1
+    }
+    datum {
+      key: "d:techedsat:5v_max_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "5V Bus Voltage (max)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "5V_max"
+      display_group: 1
+    }
+    datum {
+      key: "d:techedsat:5v_avg_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "5V Bus Voltage (rolling average)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "5V_avg"
+      display_group: 1
+    }
+
+    datum {
+      key: "d:techedsat:3v3_now_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "3.3V Bus Voltage"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "3V3_now"
+      display_group: 2
+    }
+    datum {
+      key: "d:techedsat:3v3_min_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "3.3V Bus Voltage (min)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "3V3_min"
+      display_group: 2
+    }
+    datum {
+      key: "d:techedsat:3v3_max_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "3.3V Bus Voltage (max)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "3V3_max"
+      display_group: 2
+    }
+    datum {
+      key: "d:techedsat:3v3_avg_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "3.3V Bus Voltage (rolling average)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "3V3_avg"
+      display_group: 2
+    }
+
+    datum {
+      key: "d:techedsat:min_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Temperature (min)"
+        lang: "en"
+      }
+      confidence: 0.143
+      source_key: "Temp_min"
+      display_group: 3
+    }
+    datum {
+      key: "d:techedsat:max_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Temperature (max)"
+        lang: "en"
+      }
+      confidence: 0.143
+      source_key: "Temp_max"
+      display_group: 3
+    }
+    datum {
+      key: "d:techedsat:avg_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Temperature (rolling average)"
+        lang: "en"
+      }
+      confidence: 0.143
+      source_key: "Temp_avg"
+      display_group: 3
+    }
+
+    datum {
+      key: "d:techedsat:min_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Current (min)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "Curr_min"
+      display_group: 4
+    }
+    datum {
+      key: "d:techedsat:max_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Current (max)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "Curr_max"
+      display_group: 4
+    }
+    datum {
+      key: "d:techedsat:avg_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Current (rolling average)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "Curr_avg"
+      display_group: 4
+    }
+
+    datum {
+      key: "d:techedsat:bat_min_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Battery Voltage (min)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "VBUS_min"
+      display_group: 5
+    }
+    datum {
+      key: "d:techedsat:bat_max_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Battery Voltage (max)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "VBUS_max"
+      display_group: 5
+    }
+    datum {
+      key: "d:techedsat:bat_avg_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Battery Voltage (rolling average)"
+        lang: "en"
+      }
+      confidence: 0.0024
+      source_key: "VBUS_avg"
+      display_group: 5
+    }
+
+    datum {
+      key: "d:techedsat:bat_now_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Current"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "IBUS_now"
+      display_group: 6
+    }
+    datum {
+      key: "d:techedsat:bat_min_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Current (min)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "IBUS_min"
+      display_group: 6
+    }
+    datum {
+      key: "d:techedsat:bat_max_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Current (max)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "IBUS_max"
+      display_group: 6
+    }
+    datum {
+      key: "d:techedsat:bat_avg_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Current (rolling average)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "IBUS_avg"
+      display_group: 6
+    }
+
+    datum {
+      key: "d:techedsat:charge_now_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Charge Current"
+        lang: "en"
+      }
+      source_key: "ICH_now"
+      display_group: 7
+    }
+    datum {
+      key: "d:techedsat:charge_min_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Charge Current (min)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "ICH_min"
+      display_group: 7
+    }
+    datum {
+      key: "d:techedsat:charge_max_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Charge Current (max)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "ICH_max"
+      display_group: 7
+    }
+    datum {
+      key: "d:techedsat:charge_avg_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Charge Current (rolling average)"
+        lang: "en"
+      }
+      confidence: 8.5e-5
+      source_key: "ICH_avg"
+      display_group: 7
+    }
+
+    datum {
+      key: "d:techedsat:elapsed_s"
+      type: DOUBLE
+      unit: SECOND
+      name {
+        text: "Spacecraft Elapsed Time"
+        lang: "en"
+      }
+      source_key: "SCETTime"
+      confidence: 1.0
+      display_group: 8
+    }
+    datum {
+      key: "d:techedsat:nominal_mode_s"
+      type: DOUBLE
+      unit: SECOND
+      name {
+        text: "Time spent in Nominal Mode"
+        lang: "en"
+      }
+      confidence: 60.0
+      source_key: "NON_minutes"
+      display_group: 8
+    }
+    datum {
+      key: "d:techedsat:safe_mode_s"
+      type: DOUBLE
+      unit: SECOND
+      name {
+        text: "Time spent in Safe Mode"
+        lang: "en"
+      }
+      confidence: 60.0
+      source_key: "NOF_minutes"
+      display_group: 8
+    }
+    datum {
+      key: "d:techedsat:single_errors"
+      type: INT64
+      name {
+        text: "Safe Mode Processor Single Error Counter"
+        lang: "en"
+      }
+      source_key: "Single Errors"
+      display_group: 9
+    }
+    datum {
+      key: "d:techedsat:all_errors"
+      type: INT64
+      name {
+        text: "Safe Mode Processor All Error Counter"
+        lang: "en"
+      }
+      source_key: "All Errors"
+      display_group: 9
+    }
+    datum {
+      key: "d:techedsat:all_errors_2"
+      type: INT64
+      name {
+        text: "Safe Mode Processor All Error Counter 2"
+        lang: "en"
+      }
+      source_key: "All Errors 2"
+      display_group: 9
+    }
+
+    datum {
+      key: "d:techedsat:cell1_active"
+      type: BOOL
+      name < text: "Solar Cell 1 Active" lang: "en" >
+      source_key: "SA_Status"
+      display_group: 10
+    }
+    datum {
+      key: "d:techedsat:cell2_active"
+      type: BOOL
+      name < text: "Solar Cell 2 Active" lang: "en" >
+      source_key: "SA_Status"
+      display_group: 10
+    }
+    datum {
+      key: "d:techedsat:cell3_active"
+      type: BOOL
+      name < text: "Solar Cell 3 Active" lang: "en" >
+      source_key: "SA_Status"
+      display_group: 10
+    }
+    datum {
+      key: "d:techedsat:cell4_active"
+      type: BOOL
+      name < text: "Solar Cell 4 Active" lang: "en" >
+      source_key: "SA_Status"
+      display_group: 10
+    }
+    datum {
+      key: "d:techedsat:cell5_active"
+      type: BOOL
+      name < text: "Solar Cell 5 Active" lang: "en" >
+      source_key: "SA_Status"
+      display_group: 10
+    }
+
+  >
+
+}
+
+satellite {
+  id: "fitsat1"
+  name <
+    lang: "en"
+    text: "FITSAT-1"
+  >
+  name <
+    lang: "ja"
+    text: "NIWAKA"
+  >
+  website: "http://www.fit.ac.jp/~tanaka/fitsat.shtml"
+  country_code: "JP"
+  callsign: "NIWAKA"
+  organization: "Fukuoka Institute of Technology"
+  launch_timestamp: 1349364043
+
+  photo <
+    url: "/images/fitsat1_small.jpg"
+    large_url: "/images/fitsat1_large.jpg"
+    thumbnail_url: "/images/fitsat1_thumb64.jpg"
+    internal_original_url: "http://www.fit.ac.jp/~tanaka/FITSAT/Niwaka1n.jpg"
+  >
+
+  description <
+    lang: "en"
+    text: "FITSAT-1 is a 1U cubesat built at the Fukuoka Institute of Technology. It's primary mission is to demonstrate a high-speed 115.2 kbps transmitter on 5.8 GHz. It also includes high power LEDs which will be driven by 200W pulses and will hopefully be visible from the ground. It was launched from the International Space Station."
+  >
+
+  tle: "FITSAT-1 (NIWAKA)\n1 38853U 98067CP  12286.22958356  .00029686  00000-0  49381-3 0    64\n2 38853  51.6490 259.8208 0014708 158.0415 202.1209 15.51679488  1160"
+  celestrak_tle_label: "FITSAT-1 (NIWAKA)"
+
+  channels {
+    frequency_hz: 437250000.0
+    downlink: true
+    modulation: CW
+    documentation_url: "http://www.fit.ac.jp/~tanaka/fitsat.shtml"
+    cw_params <
+      dot_duration_s: 0.061
+    >
+  }
+  channels {
+    frequency_hz: 437445000.0
+    downlink: true
+    baud: 1200
+    notes: "AX.25"
+  }
+  channels {
+    frequency_hz: 5840000000.0
+    downlink: true
+    transmit_power_watts: 2.0
+    baud: 115200
+  }
+
+  schema <
+
+    datum <
+      key: "d:fitsat1:bat1_v"
+      source_key: "s14"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "1-Cell Battery Voltage" >
+      confidence: 0.02
+      display_group: 0
+    >
+    datum <
+      key: "d:fitsat1:bat1_c"
+      source_key: "s21"
+      type: DOUBLE
+      unit: AMPERE
+      name < lang: "en" text: "1-Cell Battery Current" >
+      confidence: 0.008
+      display_group: 0
+    >
+    datum <
+      key: "d:fitsat1:bat1_t"
+      source_key: "s42"
+      type: DOUBLE
+      unit: KELVIN
+      name < lang: "en" text: "1-Cell Battery Temperature" >
+      confidence: 1.8
+      display_group: 0
+    >
+
+    datum <
+      key: "d:fitsat1:bat3_v"
+      source_key: "s22"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "3-Cell Battery Voltage" >
+      confidence: 0.02
+      display_group: 1
+    >
+    datum <
+      key: "d:fitsat1:bat3_c"
+      source_key: "s23"
+      type: DOUBLE
+      unit: AMPERE
+      name < lang: "en" text: "3-Cell Battery Current" >
+      confidence: 0.2
+      display_group: 1
+    >
+    datum <
+      key: "d:fitsat1:bat3_t"
+      source_key: "s41"
+      type: DOUBLE
+      unit: KELVIN
+      name < lang: "en" text: "3-Cell Battery Temperature" >
+      confidence: 1.8
+      display_group: 1
+    >
+
+    datum <
+      key: "d:fitsat1:total_cell_v"
+      source_key: "s12"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "Total Solar Panel Voltage" >
+      confidence: 0.02
+      display_group: 4
+    >
+    datum <
+      key: "d:fitsat1:total_cell_c"
+      source_key: "s13"
+      type: DOUBLE
+      unit: AMPERE
+      name < lang: "en" text: "Total Solar Panel Current" >
+      confidence: 0.008
+      display_group: 4
+    >
+    datum <
+      key: "d:fitsat1:cell_x1_v"
+      source_key: "s33"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "Solar Cell X- Voltage" >
+      confidence: 0.035
+      display_group: 4
+    >
+    datum <
+      key: "d:fitsat1:cell_x2_v"
+      source_key: "s31"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "Solar Cell X+ Voltage" >
+      confidence: 0.035
+      display_group: 4
+    >
+    datum <
+      key: "d:fitsat1:cell_y1_v"
+      source_key: "s34"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "Solar Cell Y- Voltage" >
+      confidence: 0.035
+      display_group: 4
+    >
+    datum <
+      key: "d:fitsat1:cell_y2_v"
+      source_key: "s32"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "Solar Cell Y+ Voltage" >
+      confidence: 0.035
+      display_group: 4
+    >
+
+    datum <
+      key: "d:fitsat1:panel_z1_t"
+      source_key: "s44"
+      type: DOUBLE
+      unit: KELVIN
+      name < lang: "en" text: "Z- Panel Temperature" >
+      confidence: 1.8
+      display_group: 5
+    >
+    datum <
+      key: "d:fitsat1:panel_z2_t"
+      source_key: "s43"
+      type: DOUBLE
+      unit: KELVIN
+      name < lang: "en" text: "Z+ Panel Temperature" >
+      confidence: 1.8
+      display_group: 5
+    >
+    datum <
+      key: "d:fitsat1:2p5_bus_v"
+      source_key: "s24"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "2.5V Bus Voltage" >
+      confidence: 0.02
+      display_group: 5
+    >
+    datum <
+      key: "d:fitsat1:time_since_boot_s"
+      source_key: "s52-54"
+      type: DOUBLE
+      unit: SECOND
+      name < lang: "en" text: "Time since last reset" >
+      confidence: 1.0
+      display_group: 5
+    >
+
+    datum <
+      key: "d:fitsat1:rssi_437"
+      source_key: "s11"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "RSSI of Own 437 MHz Signal" >
+      confidence: 0.02
+      display_group: 6
+    >
+    datum <
+      key: "d:fitsat1:rssi_1200"
+      source_key: "s51"
+      type: DOUBLE
+      unit: VOLT
+      name < lang: "en" text: "RSSI of Own 1.2 GHz Signal" >
+      confidence: 0.018
+      display_group: 6
+    >
+
+  >
+
+}
+
+
+#satellite {
+#  id: "raiko"
+#  name: "雷鼓 / RAIKO"
+#  website: "http://www.astro.mech.tohoku.ac.jp/RAIKO/"
+#  country_code: "JP"
+#  expected_launch_time: "4 October 2012"
+#}
+
+satellite {
+  id: "wewish"
+  name <
+    text: "WE-WISH"
+    lang: "ja"
+  >
+  country_code: "JP"
+  website: "https://sites.google.com/site/jq1ziijq1zij/home/shou-xin-fang-fa"
+  callsign: "JQ1ZIJ"
+
+  tle: "WE-WISH\n1 38856U 98067CS  12287.19431678  .00055218  00000-0  88974-3 0    80\n2 38856  51.6474 255.0131 0018701 151.4653 208.7370 15.52198156  1201"
+  celestrak_tle_label: "WE-WISH"
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 437505000.0
+    transmit_power_watts: 0.1
+    downlink: true
+    notes: "SSTV"
+  }
+}
+
+
+# brcastel@calpoly.edu
+satellite {
+  id: "cp5"
+  name <
+    lang: "en"
+    text: "CP5"
+  >
+  website: "http://polysat.calpoly.edu/CP5.php"
+  country_code: "US"
+  organization: "California Polytechnic State University"
+  launch_timestamp: 1347590071  # approx
+
+  #photo <
+  #  url: "/images/cp5.png"
+  #  internal_original_url: "http://polysat.calpoly.edu/images/CP5_iso_large.png"
+  #>
+
+  description <
+    text: "CP5 is a 1U cubesat built by California Polytechnic State University at San Luis Obispo. Its main mission is to test a de-orbiting mechanism using a miniature depolyable solar sail. It transmits telemetry at 1200 baud on 437.405 MHz."
+    lang: "en"
+  >
+
+  tle: "CP5\n1 38763U 12048F   13047.18023845 +.00001824 +00000-0 +17661-3 0 00684\n2 38763 064.6743 284.3135 0214588 246.6058 111.2368 14.80447266011134"
+  celestrak_tle_label: "CP5"
+
+  channels {
+    frequency_hz: 437405000.0
+    downlink: true
+    modulation: LSB_BFSK
+    baud: 1200
+    notes: "LSB, NRZI, AX.25"
+    transmit_power_watts: 1.0
+  }
+}
+
+# CINEMA
+# http://mstl.atl.calpoly.edu/~bklofas/Presentations/DevelopersWorkshop2009/2_Science/4_Glaser-CINEMA.pdf
+# http://sprg.ssl.berkeley.edu/cinema/
+
+# contacts: http://lasp.colorado.edu/home/csswe/contact/
+satellite {
+  id: "csswe"
+  name <
+    lang: "en"
+    text: "CSSWE"
+  >
+  name <
+    lang: "en"
+    text: "Colorado Student Space Weather Experiment"
+  >
+  website: "http://lasp.colorado.edu/home/csswe/"
+  country_code: "US"
+  callsign: "CSSWE7"
+  organization: "University of Colorado"
+  launch_timestamp: 1347590071
+
+  photo <
+    url: "/images/csswe_small.jpg"
+    large_url: "/images/csswe_large.jpg"
+    thumbnail_url: "/images/csswe_thumb64.jpg"
+
+    internal_permissions: "Received permission from Lauren Blum <lauren.blum@colorado.edu> on 2012-07-29."
+    internal_original_url: "http://lasp.colorado.edu/home/csswe/files/2012/06/backgroundPic1.jpeg"
+  >
+
+  description <
+    text: "CSSWE is a 3U cubesat built by the Laboratory for Atmospheric and Space Physics at the University of Colorado. It includes an energetic particle telescope called REPTile which measures directional, differential flux of high-energy electrons and protons for space weather research. It transmits 9600 baud GMSK telemetry at 437.345 MHz."
+    lang: "en"
+  >
+
+  tle: "CSSWE\n1 38761U 12048D   13047.11981721 +.00001700 +00000-0 +16633-3 0 00660\n2 38761 064.6762 284.5466 0214720 246.2268 111.6252 14.80312351011029"
+  celestrak_tle_label: "CSSWE"
+
+  channels {
+    frequency_hz: 437345000.0
+    downlink: true
+    modulation: FM_GMSK
+    baud: 9600
+    notes: "AX.25. AstroDev Li-1 radio. 18 second period. Horizontal polarization."
+    transmit_power_watts: 0.5
+    documentation_url: "http://lasp.colorado.edu/home/csswe/data/telemetry/"
+
+    doppler_strategy: DISABLED
+  }
+
+  schema <
+    datum {
+      key: "d:csswe:batt_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Battery Voltage"
+        lang: "en"
+      }
+      confidence: 0.04
+      display_group: 0
+    }
+    datum {
+      key: "d:csswe:batt_charge_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Charge Current"
+        lang: "en"
+      }
+      confidence: 0.008
+      display_group: 0
+    }
+    datum {
+      key: "d:csswe:batt_discharge_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Battery Discharge Current"
+        lang: "en"
+      }
+      confidence: 0.008
+      display_group: 0
+    }
+
+    datum {
+      key: "d:csswe:3p3v_bus_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "3.3V Bus Voltage"
+        lang: "en"
+      }
+      confidence: 0.02
+      display_group: 1
+    }
+    datum {
+      key: "d:csswe:5v_bus_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "5V Bus Voltage"
+        lang: "en"
+      }
+      confidence: 0.02
+      display_group: 1
+    }
+    datum {
+      key: "d:csswe:3p3v_bus_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "3.3V Bus Current"
+        lang: "en"
+      }
+      confidence: 0.008
+      display_group: 1
+    }
+    datum {
+      key: "d:csswe:5v_bus_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "5V Bus Current"
+        lang: "en"
+      }
+      confidence: 0.008
+      display_group: 1
+    }
+
+    datum {
+      key: "d:csswe:pvx1_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Solar Cell X1 Voltage"
+        lang: "en"
+      }
+      confidence: 0.09
+      display_group: 2
+    }
+    datum {
+      key: "d:csswe:pvx2_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Solar Cell X2 Voltage"
+        lang: "en"
+      }
+      confidence: 0.09
+      display_group: 2
+    }
+    datum {
+      key: "d:csswe:pvy1_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Solar Cell Y1 Voltage"
+        lang: "en"
+      }
+      confidence: 0.09
+      display_group: 2
+    }
+    datum {
+      key: "d:csswe:pvy2_v"
+      type: DOUBLE
+      unit: VOLT
+      name {
+        text: "Solar Cell Y2 Voltage"
+        lang: "en"
+      }
+      confidence: 0.09
+      display_group: 2
+    }
+    datum {
+      key: "d:csswe:pvx1_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Solar Cell X1 Current"
+        lang: "en"
+      }
+      confidence: 0.008
+      display_group: 2
+    }
+    datum {
+      key: "d:csswe:pvx2_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Solar Cell X2 Current"
+        lang: "en"
+      }
+      confidence: 0.008
+      display_group: 2
+    }
+    datum {
+      key: "d:csswe:pvy1_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Solar Cell Y1 Current"
+        lang: "en"
+      }
+      confidence: 0.008
+      display_group: 2
+    }
+    datum {
+      key: "d:csswe:pvy2_c"
+      type: DOUBLE
+      unit: AMPERE
+      name {
+        text: "Solar Cell Y2 Current"
+        lang: "en"
+      }
+      confidence: 0.008
+      display_group: 2
+    }
+
+    datum {
+      key: "d:csswe:batt_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Battery Temperature"
+        lang: "en"
+      }
+      confidence: 1.0
+      display_group: 3
+    }
+    datum {
+      key: "d:csswe:cdh_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "CDH Temperature"
+        lang: "en"
+      }
+      confidence: 1.0
+      display_group: 3
+    }
+    datum {
+      key: "d:csswe:radio_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Radio Temperature"
+        lang: "en"
+      }
+      confidence: 1.0
+      display_group: 3
+    }
+    datum {
+      key: "d:csswe:pvx1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Solar Cell X1 Temperature"
+        lang: "en"
+      }
+      confidence: 1.0
+      display_group: 3
+    }
+    datum {
+      key: "d:csswe:pvx2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Solar Cell X2 Temperature"
+        lang: "en"
+      }
+      confidence: 1.0
+      display_group: 3
+    }
+    datum {
+      key: "d:csswe:pvy1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Solar Cell Y1 Temperature"
+        lang: "en"
+      }
+      confidence: 1.0
+      display_group: 3
+    }
+    datum {
+      key: "d:csswe:pvy2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name {
+        text: "Solar Cell Y2 Temperature"
+        lang: "en"
+      }
+      confidence: 1.0
+      display_group: 3
+    }
+
+    datum {
+      key: "d:csswe:cmds_since_boot"
+      type: INT64
+      name {
+        text: "Commands Since Boot"
+        lang: "en"
+      }
+      display_group: 4
+    }
+    datum {
+      key: "d:csswe:time_since_boot_s"
+      type: DOUBLE
+      unit: SECOND
+      name {
+        text: "Time Since Boot"
+        lang: "en"
+      }
+      confidence: 86400.0  # days
+      display_group: 4
+    }
+    datum {
+      key: "d:csswe:gpio_reptile_3p3v"
+      type: BOOL
+      name {
+        text: "GPIO: REPTile 3.3V"
+        lang: "en"
+      }
+      display_group: 4
+    }
+    datum {
+      key: "d:csswe:gpio_reptile_5p0v"
+      type: BOOL
+      name {
+        text: "GPIO: REPTile 5.0V"
+        lang: "en"
+      }
+      display_group: 4
+    }
+    datum {
+      key: "d:csswe:gpio_battery_heater"
+      type: BOOL
+      name {
+        text: "GPIO: Battery Heater"
+        lang: "en"
+      }
+      display_group: 4
+    }
+    datum {
+      key: "d:csswe:gpio_adm_resistor"
+      type: BOOL
+      name {
+        text: "GPIO: ADM Resistor"
+        lang: "en"
+      }
+      display_group: 4
+    }
+
+    datum {
+      key: "d:csswe:satellite_mode"
+      type: BOOL
+      name {
+        text: "Satellite Mode"
+        lang: "en"
+      }
+      display_group: 4
+    }
+  >
+
+}
+
+# b.malphrus@moreheadstate.edu
+# missing: baud rate
+# also: http://mstl.atl.calpoly.edu/~bklofas/Presentations/DevelopersWorkshop2012/Rose_Cosmic_X-ray.pdf
+satellite {
+  id: "cxbn"
+  name <
+    lang: "en"
+    text: "CXBN"
+  >
+  name <
+    lang: "en"
+    text: "Cosmic X-Ray Background Nanosatellite"
+  >
+  website: "http://universe.sonoma.edu/CXBNanosat/"
+  country_code: "US"
+  organization: "Morehead State University"
+  launch_timestamp: 1347590071
+
+  photo <
+    url: "/images/cxbn_small.jpg"
+    large_url: "/images/cxbn_large.jpg"
+    thumbnail_url: "/images/cxbn_thumb64.jpg"
+
+    internal_original_url: "http://universe.sonoma.edu/CXBNanosat/sites/default/files/project_files/users/kamal/cxbnMainLogoTxt.jpg"
+    internal_permissions: "Received permission from Benjamin Kevin Malphrus <b.malphrus@morehead-st.edu> on 2012-07-28."
+  >
+
+  description <
+    text: "CXBN is a 2U cubesat built by Morehead State University. It includes a CZT-based X-Ray detector which will be used to measure the cosmic X-ray background in the 30-50 keV range. It transmits a GMSK beacon at 437.525 MHz."
+    lang: "en"
+  >
+
+  tle: "CXBN\n1 38762U 12048E   13047.20037670 +.00001284 +00000-0 +13020-3 0 00648\n2 38762 064.6720 284.3948 0215470 246.6758 111.1569 14.80091852011035"
+  celestrak_tle_label: "CXBN"
+
+  disable_tracking: true
+
+  channels {
+    frequency_hz: 437525000.0
+    downlink: true
+    modulation: GMSK
+    baud: 9600
+    notes: "AX.25. AstroDev Li-1 radio."
+    transmit_power_watts: 1.4
+  }
+}
+
+# rramadas@usc.edu
+# rohan.ramadas@gmail.com
+# aeneas@astronautics.usc.edu
+satellite {
+  id: "aeneas"
+  name <
+    text: "Aeneas"
+    lang: "en"
+  >
+  website: "http://www.isi.edu/projects/serc/aeneas_amsat_tracking"
+  country_code: "US"
+  organization: "University of Southern California"
+  callsign: "KE6YFA"
+  launch_timestamp: 1347590071
+
+  description <
+    text: "Aeneas is a 3U cubesat built by the University of Southern California. It includes deployable 0.5 m mesh dish antenna with a WiFi transeiver which will be used to track cargo containers. It also includes deployable solar panels and a experimental rad-hard processor payload."
+    lang: "en"
+  >
+
+  tle: "Aeneas\n1 38760U 12048C   13047.63305898 +.00002073 +00000-0 +19753-3 0 00672\n2 38760 064.6720 282.7527 0213807 246.2736 111.5837 14.80718677011248"
+  celestrak_tle_label: "Aeneas"
+  disable_tracking: true
+
+  photo <
+    url: "/images/aeneas.jpg"
+    thumbnail_url: "/images/aeneas_thumb64.jpg"
+    attribution: "Rendering by John Razzano. Property of USC/ISI/SERC."
+    internal_original_url: "http://www.uk.amsat.org/9277/aeneas-university-of-southern-california"
+    internal_permissions: "Received permission from Tim Barrett <jtb@isi.edu> on 2012-07-30, provided credit and ownership is shown."
+  >
+
+  channels {
+    frequency_hz: 2425000000.0
+    downlink: true
+    transmit_power_watts: 1.0
+    modulation: WIFI
+    notes: "0.5 m deployable dish antenna"
+  }
+  channels {
+    frequency_hz: 437600000.0
+    downlink: true
+    baud: 1200
+    modulation: BFSK
+    notes: "AX.25. Beacon every 10 seconds when active."
+    transmit_power_watts: 0.9
+    documentation_url: "http://www.isi.edu/projects/serc/aeneas_telemetry_data_qsl_card"
+  }
+
+  schema <
+    datum <
+      key: "d:aeneas:gyro1_r"
+      type: DOUBLE
+      unit: RADIAN_PER_SECOND
+      name < text: "Gyro A Rate" lang: "en" >
+      confidence: 1e-4
+      display_group: 0
+    >
+    datum <
+      key: "d:aeneas:gyro2_r"
+      type: DOUBLE
+      unit: RADIAN_PER_SECOND
+      name < text: "Gyro B Rate" lang: "en" >
+      confidence: 1e-4
+      display_group: 0
+    >
+    datum <
+      key: "d:aeneas:gyro3_r"
+      type: DOUBLE
+      unit: RADIAN_PER_SECOND
+      name < text: "Gyro C Rate" lang: "en" >
+      confidence: 1e-4
+      display_group: 0
+    >
+
+    datum <
+      key: "d:aeneas:gyro1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name < text: "Gyro A Temperature" lang: "en" >
+      confidence: 0.1
+      display_group: 1
+    >
+    datum <
+      key: "d:aeneas:gyro2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name < text: "Gyro B Temperature" lang: "en" >
+      confidence: 0.1
+      display_group: 1
+    >
+    datum <
+      key: "d:aeneas:gyro3_t"
+      type: DOUBLE
+      unit: KELVIN
+      name < text: "Gyro C Temperature" lang: "en" >
+      confidence: 0.1
+      display_group: 1
+    >
+
+    datum <
+      key: "d:aeneas:num_reboots"
+      type: INT64
+      name < text: "Reboot Count" lang: "en" >
+      display_group: 2
+    >
+  >
+}
+
+satellite <
+  id: "cute17apd2"
+  name <
+    text: "Cute-1.7 + APD II"
+    lang: "en"
+  >
+  website: "http://lss.mes.titech.ac.jp/ssp/cute1.7/index_e.html"
+  wikipedia_url: "http://en.wikipedia.org/wiki/CUTE-1.7"
+  country_code: "JP"
+  organization: "Tokyo Institute of Technology"
+  callsign: "JQ1YTC"
+  launch_timestamp: 1209354780
+  oscar_id: "CO-65"
+
+  tle: "CUTE-1.7+APD II (CO-65) \n1 32785U 08021C   12265.04917636  .00000672  00000-0  88552-4 0  4204\n2 32785  97.7886 323.7907 0015836 106.8773 253.4187 14.83191744237978"
+  celestrak_tle_label: "CUTE-1.7+APD II (CO-65)"
+
+  channels <
+    frequency_hz: 437275000.0
+    downlink: true
+    modulation: CW
+    documentation_url: "http://lss.mes.titech.ac.jp/ssp/cute1.7/cwtelemetry_e.html"
+    cw_params <
+      dot_duration_s: 0.0766
+    >
+  >
+  channels <
+    frequency_hz: 437475000.0
+    downlink: true
+    modulation: FM_AFSK
+    baud: 1200
+    documentation_url: "http://lss.mes.titech.ac.jp/ssp/cute1.7/fmtelemetry_e.html"
+    notes: "AX.25/SRLL"
+  >
+  channels <
+    frequency_hz: 437475000.0
+    downlink: true
+    modulation: FM_GMSK
+    baud: 9600
+    notes: "AX.25/SRLL"
+  >
+  channels <
+    frequency_hz: 1267600000.0
+    uplink: true
+    modulation: FM_GMSK
+    baud: 9600
+    notes: "AX.25/SRLL"
+  >
+>
+
+satellite <
+  id: "proiteres"
+  name <
+    text: "PROITERES"
+    lang: "en"
+  >
+  website: "http://www.oit.ac.jp/elc/~satellite/index-e.html"
+  country_code: "JP"
+  organization: "Osaka Institute of Technology"
+  callsign: "JL3YZK"
+  launch_timestamp: 1347164580
+
+  tle: "PROITERES\n1 38756U 12047B   12265.10454728  .00000303  00000-0  54317-4 0   485\n2 38756  98.2852 330.8318 0011553 241.0758 118.9301 14.73874483  1758"
+  celestrak_tle_label: "PROITERES"
+  disable_tracking: true
+
+  channels <
+    frequency_hz: 437485000.0
+    downlink: true
+    modulation: CW
+  >
+  channels <
+    frequency_hz: 437485000.0
+    downlink: true
+    modulation: FM_AFSK
+    baud: 1200
+    notes: "AX.25"
+  >
+>
+
+satellite <
+  id: "funcube1"
+  name <
+    text: "FUNcube-1"
+    lang: "en"
+  >
+  website: "http://funcube.org.uk/"
+  country_code: "GB"
+  expected_launch_time: "Early 2013"
+
+  description <
+    lang: "en"
+    text: "FUNcube-1 is a 1U cubesat built by AMSAT-UK in collaboration with ISIS. It aims to motivate and educate school students about radio, space, physics and electronics. It carries a materials science experiment and a UHF to VHF linear transponder."
+  >
+
+  channels <
+    downlink: true
+    frequency_hz: 145935000.0
+    modulation: BPSK
+    notes: "Beacon"
+  >
+  channels <
+    downlink: true
+    frequency_hz: 145960000.0
+    notes: "Inverting transponder: 145.950–145.970 MHz downlink, 435.150–435.130 MHz uplink."
+  >
+  channels <
+    uplink: true
+    frequency_hz: 435140000.0
+    notes: "Inverting transponder: 145.950–145.970 MHz downlink, 435.150–435.130 MHz uplink."
+  >
+>
+
+satellite <
+  id: "ukube1"
+  name <
+    text: "UKube-1"
+    lang: "en"
+  >
+  website: "http://www.bis.gov.uk/ukspaceagency/missions/ukube-pilot-programme"
+  country_code: "GB"
+  expected_launch_time: "June 2013"
+  organization: "University of Strathcylde"
+  organization: "UK Space Agency"
+
+  description <
+    lang: "en"
+    text: "UKube-1 is a 3U cubesat built as a collaboration between the UK Space Agency, the University of Strathclyde and several industrial partners. It the UK Space Agency's pilot program to design and launch a cubesat mission and to demonstrate new technologies in space." 
+  >
+
+  channels <
+    downlink: true
+    frequency_hz: 145840000.0
+    baud: 9600
+    notes: "Telemetry. BPSK or GMSK."
+  >
+  channels <
+    downlink: true
+    frequency_hz: 145925000.0
+    notes: "FUNcube beacon"
+  >
+  channels <
+    downlink: true
+    frequency_hz: 145950000.0
+    notes: "FUNcube transponder: 145.940–145.960 MHz downlink, 435.060–435.040 MHz uplink."
+  >
+  channels <
+    uplink: true
+    frequency_hz: 435050000.0
+    notes: "FUNcube transponder: 145.940–145.960 MHz downlink, 435.060–435.040 MHz uplink."
+  >
+  channels <
+    downlink: true
+    frequency_hz: 437475000.0
+    transmit_power_watts: 0.011
+    notes: "myPocketQub. 100 kHz spread spectrum."
+  >
+  channels <
+    downlink: true
+    frequency_hz: 2401500000.0
+    baud: 1048576
+    transmit_power_watts: 1.0
+    notes: "QPSK or OQPSK"
+  >
+>
+
+satellite <
+  id: "seeds"
+  name <
+    text: "SEEDS"
+    lang: "ja"
+  >
+  website: "http://cubesat.aero.cst.nihon-u.ac.jp/english/main_e.html"
+  country_code: "JP"
+  callsign: "JQ1YGU"
+  organization: "Nihon University"
+  oscar_id: "CO-66"
+
+  tle: "SEEDS II (CO-66)\n1 32791U 08021J   12287.76212536  .00001363  00000-0  17050-3 0  4247\n2 32791  97.7873 346.0601 0016308  37.6912 322.5377 14.83793585241325"
+  celestrak_tle_label: "SEEDS II (CO-66)"
+
+  channels <
+    downlink: true
+    frequency_hz: 437485000.0
+    modulation: CW
+    transmit_power_watts: 0.09
+    documentation_url: "http://cubesat.aero.cst.nihon-u.ac.jp/english/telemetry_e.html"
+  >
+  channels <
+    downlink: true
+    frequency_hz: 437485000.0
+    modulation: FM_AFSK
+    baud: 1200
+    transmit_power_watts: 0.45
+    notes: "AX.25. 1.75 kHz deviation."
+  >
+>
+
+# AubieSat-1
+# FO-29
+# NO-44
+
+# http://mstl.atl.calpoly.edu/~bklofas/Presentations/SummerWorkshop2011/Sebrits_ZACUBE-01.pdf
+# http://leonsteenkamp.wordpress.com/2012/07/21/no-no-no-it-goes-like-this/
+satellite <
+  id: "zacube01"
+  name <
+    text: "ZACUBE-01"
+    lang: "en"
+  >
+  website: "http://active.cput.ac.za/fsati/public/index.asp?pageid=746"
+  country_code: "ZA"
+  organization: "Cape Peninsula University of Technology"
+  expected_launch_time: "November 2012"
+
+  description <
+    lang: "en"
+    text: "ZACUBE-01 is a 1U cubesat built at the Cape Peninsula University of Technology. It carries an HF beacon payload which will be used for characterization of the Hermanus Magnetic Observatory radar antenna array in Antarctica. It also has a camera."
+  >
+
+  photo <
+    url: "/images/zacube01_small.jpg"
+    large_url: "/images/zacube01_large.jpg"
+    thumbnail_url: "/images/zacube01_thumb64.jpg"
+  >
+
+  channels <
+    downlink: true
+    frequency_hz: 14099000.0
+    notes: "HF beacon"
+  >
+  channels <
+    downlink: true
+    frequency_hz: 437345000.0
+    transmit_power_watts: 2.0
+    notes: "1200 or 9600 baud. Sometimes used as a beacon."
+  >
+  channels <
+    uplink: true
+    frequency_hz: 145860000.0
+  >
+>
+
+# http://leonsteenkamp.wordpress.com/2012/07/21/no-no-no-it-goes-like-this/
+satellite <
+  id: "zacube02"
+  name <
+    text: "ZACUBE-02"
+    lang: "en"
+  >
+  website: "http://active.cput.ac.za/fsati/public/index.asp?pageid=746"
+  country_code: "ZA"
+  organization: "Cape Peninsula University of Technology"
+  expected_launch_time: "October 2013"
+
+  description <
+    lang: "en"
+    text: "ZACUBE-01 is a 3U cubesat built at the Cape Peninsula University of Technology. It carries a camera, an L-band to S-band transponder, a store and forward system on UHF and an HF beacon payload. The HF beacon will be used for characterization of the Hermanus Magnetic Observatory radar antenna array in Antarctica. It uses a three-axis attitude control system developed by the University of Stellenbosch."
+  >
+
+  channels <
+    downlink: true
+    frequency_hz: 14099000.0
+    notes: "HF beacon"
+  >
+  channels <
+    downlink: true
+    frequency_hz: 437345000.0
+    notes: "Store and forward system."
+  >
+  channels <
+    downlink: true
+    frequency_hz: 2405000000.0
+    baud: 115200
+    notes: "Transponder downlink."
+  >
+  channels <
+    uplink: true
+    frequency_hz: 437525000.0
+    notes: "Store and forward system."
+  >
+  channels <
+    uplink: true
+    frequency_hz: 1260250000.0
+    baud: 115200
+    notes: "Transponder uplink."
+  >
+>
+
+satellite <
+  id: "dynacube"
+  name <
+    text: "DynaCube"
+    lang: "en"
+  >
+  website: "http://www.deneldynamics.co.za/"
+  country_code: "ZA"
+  organization: "Denel Dyanmics"
+
+  channels <
+    downlink: true
+    frequency_hz: 145980000.0
+    modulation: CW
+  >
+  channels <
+    downlink: true
+    frequency_hz: 145840000.0
+    modulation: GMSK
+    baud: 1200
+  >
+>
+
+satellite <
+  id: "snaps"
+  name <
+    lang: "en"
+    text: "SNAPS"
+  >
+  country_code: "US"
+  organization: "Stanford University"
+  website: "http://engineering.stanford.edu/organization/space-systems-development-laboratory"
+
+  expected_launch_time: "April 2013"
+
+  authorized_station_id: "3832850040487219575"
+
+  channels <
+    downlink: true
+    frequency_hz: 433000000
+    modulation: FM_GMSK
+    baud: 9600
+    doppler_strategy: SNAPS_FCD_OFFSET
+  >
+>
+
+satellite <
+  id: "kicksat"
+  name <
+    lang: "en"
+    text: "KickSat"
+  >
+  country_code: "US"
+  organization: "Cornell University"
+  website: "http://www.kicksat.net/"
+
+  authorized_station_id: "3552960912698878420"
+
+  channels <
+    downlink: true
+    frequency_hz: 437240000
+    transmit_power_watts: 0.01
+    notes: "CDMA from Sprites"
+  >
+  channels <
+    downlink: true
+    notes: "KickSat cubesat"
+    frequency_hz: 2400000000 # 2401.2-2436.2 MHz
+  >
+
+>
+
+satellite <
+  id: "ardusat1"
+  name <
+    text: "ArduSat-1"
+    lang: "en"
+  >
+  country_code: "US"
+  website: "http://www.nanosatisfi.com/"
+  expected_launch_time: "July 2013"
+  organization: "Nanosatisfi"
+
+  authorized_station_id: "2797669771208581789"
+
+  channels <
+    downlink: true
+    frequency_hz: 437000000
+    transmit_power_watts: 3.0
+    modulation: FM_MSK
+    baud: 9600
+    notes: "CCSDS packet encoding."
+  >
+  channels <
+    downlink: true
+    frequency_hz: 437000000
+    modulation: CW
+  >
+>
+
+# http://www.nanosat.jp/images/3rd/pdf/%5BNSS-03-0409%5D_TURKSAT-3USAT_A_3U_COMMUNICATION.pdf
+satellite <
+  id: "turksat3usat"
+  name <
+    text: "TURKSAT-3USAT"
+    lang: "en"
+  >
+  website: "http://www.tamsat.org.tr/tr/turksat-3usat-is-almost-ready/"
+  country_code: "TR"
+  organization: "Istanbul Technical University"
+  organization: "TAMSAT"
+  expected_launch_time: "May 2013"
+
+  channels <
+    downlink: true
+    frequency_hz: 437225000
+    modulation: CW
+  >
+  channels <
+    downlink: true
+    frequency_hz: 435225000
+    notes: "Linear transponder downlink."
+  >
+  channels <
+    uplink: true
+    frequency_hz: 145965000
+    notes: "Linear transponder uplink."
+  >
+>
+
+satellite <
+  id: "strand1"
+  name <
+    text: "STRaND-1"
+    lang: "en"
+  >
+  organization: "University of Surrey"
+  organization: "Surrey Satellite Technology Limited"
+  country_code: "GB"
+  website: "http://www.sstl.co.uk/Missions/STRaND-1"
+  launch_timestamp: 1330173060
+  wikipedia_url: "http://en.wikipedia.org/wiki/STRaND-1" 
+
+  authorized_station_id: "2614719242791743440"
+  authorized_station_id: "1086708795781846862"
+ 
+  description <
+    lang: "en"
+    text: "STRaND-1 is a 3U cubesat built by researchers at the University of Surrey and SSTL. It is the first satellite operated by a smartphone, the Google Nexus One. It will also test new Resistojet and Pulsed Plasma Thruster propulsion technologies."
+  >
+
+  photo <
+    url: "/images/strand1_small.jpg"
+    large_url: "/images/strand1_large.jpg"
+    thumbnail_url: "/images/strand1_thumb64.jpg"
+    internal_original_url: "http://cdn2.ubergizmo.com/wp-content/uploads/2013/02/strand1.jpg"
+  >
+
+  tle: "STRAND 1\n1 39090U 13009E   13059.14487521  .00003821  00000-0  13758-2 0   119\n2 39090  98.6327 249.4709 0008223 266.9814  93.0162 14.34284730   360"
+  celestrak_tle_label: "STRAND 1"
+
+  channels <
+    downlink: true
+    frequency_hz: 437568000
+    baud: 9600
+    modulation: FM_GMSK
+    notes: "HDLC frames. Baud may be 9.6k or 19.2k."
+  >
+
+  schema <
+    datum <
+      key: "d:strand1:bat0_charge"
+      type: BOOL
+      name <
+        text: "Battery 0 Charging"
+	lang: "en"
+      >
+      display_group: 0
+    >
+    datum <
+      key: "d:strand1:bat0_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Battery 0 Current"
+	lang: "en"
+      >
+      confidence: 0.0035
+      display_group: 0
+    >
+    datum <
+      key: "d:strand1:bat0_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Battery 0 Voltage"
+	lang: "en"
+      >
+      confidence: 0.01
+      display_group: 0
+    >
+    datum <
+      key: "d:strand1:bat0_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Battery 0 Temperature"
+	lang: "en"
+      >
+      confidence: 0.2
+      display_group: 0
+    >
+
+    datum <
+      key: "d:strand1:bat1_charge"
+      type: BOOL
+      name <
+        text: "Battery 1 Charging"
+	lang: "en"
+      >
+      display_group: 0
+    >
+    datum <
+      key: "d:strand1:bat1_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Battery 1 Current"
+	lang: "en"
+      >
+      confidence: 0.0035
+      display_group: 0
+    >
+    datum <
+      key: "d:strand1:bat1_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Battery 1 Voltage"
+	lang: "en"
+      >
+      confidence: 0.01
+      display_group: 0
+    >
+    datum <
+      key: "d:strand1:bat1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Battery 1 Temperature"
+	lang: "en"
+      >
+      confidence: 0.2
+      display_group: 0
+    >
+
+    datum <
+      key: "d:strand1:time_since_last_obc_packet"
+      type: DOUBLE
+      unit: SECOND
+      name <
+        text: "Time Since Last OBC I2C Message"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 1
+    >
+    datum <
+      key: "d:strand1:packet_up_count"
+      type: INT64
+      name <
+        text: "Uplink Packets Count"
+	lang: "en"
+      >
+      display_group: 1
+    >
+    datum <
+      key: "d:strand1:packet_down_count"
+      type: INT64
+      name <
+        text: "Downlink Packets Count"
+	lang: "en"
+      >
+      display_group: 1
+    >
+    datum <
+      key: "d:strand1:packet_up_dropped_count"
+      type: INT64
+      name <
+        text: "Dropped Uplink Packets Count"
+	lang: "en"
+      >
+      display_group: 1
+    >
+    datum <
+      key: "d:strand1:packet_down_dropped_count"
+      type: INT64
+      name <
+        text: "Dropped Downlink Packets Count"
+	lang: "en"
+      >
+      display_group: 1
+    >
+
+    datum <
+      key: "d:strand1:cell_x1_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "X- Solar Panel Current"
+	lang: "en"
+      >
+      confidence: 0.006
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_x2_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "X+ Solar Panel Current"
+	lang: "en"
+      >
+      confidence: 0.006
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_y1_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Y- Solar Panel Current"
+	lang: "en"
+      >
+      confidence: 0.006
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_y2_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Y+ Solar Panel Current"
+	lang: "en"
+      >
+      confidence: 0.006
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_z1_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Z- Solar Panel Current"
+	lang: "en"
+      >
+      confidence: 0.006
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_z2_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Z+ Solar Panel Current"
+	lang: "en"
+      >
+      confidence: 0.006
+      display_group: 2
+    >
+
+    datum <
+      key: "d:strand1:cell_x1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "X- Solar Panel Temperature"
+	lang: "en"
+      >
+      confidence: 0.2
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_x2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "X+ Solar Panel Temperature"
+	lang: "en"
+      >
+      confidence: 0.2
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_y1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Y- Solar Panel Temperature"
+	lang: "en"
+      >
+      confidence: 0.2
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_y2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Y+ Solar Panel Temperature"
+	lang: "en"
+      >
+      confidence: 0.2
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_z1_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Z- Solar Panel Temperature"
+	lang: "en"
+      >
+      confidence: 0.2
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_z2_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Z+ Solar Panel Temperature"
+	lang: "en"
+      >
+      confidence: 0.2
+      display_group: 2
+    >
+
+    datum <
+      key: "d:strand1:cell_x_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "X Solar Panel Voltage"
+	lang: "en"
+      >
+      confidence: 0.04
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_y_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Y Solar Panel Voltage"
+	lang: "en"
+      >
+      confidence: 0.04
+      display_group: 2
+    >
+    datum <
+      key: "d:strand1:cell_z_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Z Solar Panel Voltage"
+	lang: "en"
+      >
+      confidence: 0.04
+      display_group: 2
+    >
+
+    datum <
+      key: "d:strand1:bat_bus_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Battery Bus Current"
+	lang: "en"
+      >
+      confidence: 0.005
+      display_group: 3
+    >
+   datum <
+      key: "d:strand1:5v_bus_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "5V Bus Current"
+	lang: "en"
+      >
+      confidence: 0.006
+      display_group: 3
+    >
+    datum <
+      key: "d:strand1:3p3v_bus_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "3.3V Bus Current"
+	lang: "en"
+      >
+      confidence: 0.004
+      display_group: 3
+    >
+
+    datum <
+      key: "d:strand1:switch0_on"
+      type: BOOL
+      name <
+        text: "Switch 0 On"
+	lang: "en"
+      >
+      display_group: 4
+    >
+    datum <
+      key: "d:strand1:switch1_on"
+      type: BOOL
+      name <
+        text: "Switch 1 On"
+	lang: "en"
+      >
+      display_group: 4
+    >
+    datum <
+      key: "d:strand1:switch2_on"
+      type: BOOL
+      name <
+        text: "Switch 2 On"
+	lang: "en"
+      >
+      display_group: 4
+    >
+    datum <
+      key: "d:strand1:switch3_on"
+      type: BOOL
+      name <
+        text: "Switch 3 On"
+	lang: "en"
+      >
+      display_group: 4
+    >
+    datum <
+      key: "d:strand1:switch4_on"
+      type: BOOL
+      name <
+        text: "Switch 4 On"
+	lang: "en"
+      >
+      display_group: 4
+    >
+    datum <
+      key: "d:strand1:switch5_on"
+      type: BOOL
+      name <
+        text: "Switch 5 On"
+	lang: "en"
+      >
+      display_group: 4
+    >
+    datum <
+      key: "d:strand1:switch6_on"
+      type: BOOL
+      name <
+        text: "Switch 6 On"
+	lang: "en"
+      >
+      display_group: 4
+    >
+    datum <
+      key: "d:strand1:switch7_on"
+      type: BOOL
+      name <
+        text: "Switch 7 On"
+	lang: "en"
+      >
+      display_group: 4
+    >
+
+    datum <
+      key: "d:strand1:switch0_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Switch 0 Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 5
+    >
+    datum <
+      key: "d:strand1:switch1_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Switch 1 Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 5
+    >
+    datum <
+      key: "d:strand1:switch2_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Switch 2 Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 5
+    >
+    datum <
+      key: "d:strand1:switch3_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Switch 3 Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 5
+    >
+    datum <
+      key: "d:strand1:switch4_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Switch 4 Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 5
+    >
+    datum <
+      key: "d:strand1:switch5_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Switch 5 Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 5
+    >
+    datum <
+      key: "d:strand1:switch6_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Switch 6 Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 5
+    >
+    datum <
+      key: "d:strand1:switch7_c"
+      type: DOUBLE
+      unit: AMPERE
+      name <
+        text: "Switch 7 Current"
+	lang: "en"
+      >
+      confidence: 0.001
+      display_group: 5
+    >
+
+    datum <
+      key: "d:strand1:switch0_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Switch 0 Voltage"
+	lang: "en"
+      >
+      confidence: 0.003
+      display_group: 6
+    >
+    datum <
+      key: "d:strand1:switch1_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Switch 1 Voltage"
+	lang: "en"
+      >
+      confidence: 0.003
+      display_group: 6
+    >
+    datum <
+      key: "d:strand1:switch2_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Switch 2 Voltage"
+	lang: "en"
+      >
+      confidence: 0.003
+      display_group: 6
+    >
+    datum <
+      key: "d:strand1:switch3_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Switch 3 Voltage"
+	lang: "en"
+      >
+      confidence: 0.003
+      display_group: 6
+    >
+    datum <
+      key: "d:strand1:switch4_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Switch 4 Voltage"
+	lang: "en"
+      >
+      confidence: 0.003
+      display_group: 6
+    >
+    datum <
+      key: "d:strand1:switch5_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Switch 5 Voltage"
+	lang: "en"
+      >
+      confidence: 0.003
+      display_group: 6
+    >
+    datum <
+      key: "d:strand1:switch6_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Switch 6 Voltage"
+	lang: "en"
+      >
+      confidence: 0.003
+      display_group: 6
+    >
+    datum <
+      key: "d:strand1:switch7_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Switch 7 Voltage"
+	lang: "en"
+      >
+      confidence: 0.003
+      display_group: 6
+    >
+
+    datum <
+      key: "d:strand1:obc_clock"
+      type: TIMESTAMP
+      name <
+        text: "OBC Clock"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 7
+    >
+
+    datum <
+      key: "d:strand1:magnetometer_1x"
+      type: INT64
+      name <
+        text: "Magnetometer X"
+	lang: "en"
+      >
+      display_group: 8
+    >
+    datum <
+      key: "d:strand1:magnetometer_1y"
+      type: INT64
+      name <
+        text: "Magnetometer Y"
+	lang: "en"
+      >
+      display_group: 8
+    >
+    datum <
+      key: "d:strand1:magnetometer_2z"
+      type: INT64
+      name <
+        text: "Magnetometer Z"
+	lang: "en"
+      >
+      display_group: 8
+    >
+  >
+>
+
+satellite <
+  id: "picodragon"
+  name <
+    text: "PicoDragon"
+    lang: "en"
+  >
+  website: "http://vnsc.org.vn/"
+  country_code: "VN"
+  expected_launch_time: "Mid 2013"
+
+  channels <
+    downlink: true
+    frequency_hz: 437250000
+    modulation: CW
+    transmit_power_watts: 0.1
+  >
+  channels <
+    downlink: true
+    frequency_hz: 437250000
+    modulation: BFSK
+    transmit_power_watts: 0.8
+    baud: 1200
+    notes: "AX.25."
+  >
+>
+
+satellite <
+  id: "chargersat1"
+  name <
+    text: "ChargerSat-1"
+    lang: "en"
+  >
+  country_code: "US"
+  website: "http://space.uah.edu/chargersat1/"
+  organization: "University of Alabama in Huntsville"
+
+  expected_launch_time: "Mid 2013"
+
+  channels <
+    downlink: true
+    frequency_hz: 437000000
+    modulation: FM_GMSK
+    transmit_power_watts: 1.0
+    notes: "G3RUH"
+  >
+>
+
+satellite <
+  id: "aausat3"
+  name <
+    text: "AAUSAT3"
+    lang: "en"
+  >
+  country_code: "DK"
+  website: "http://www.space.aau.dk/aausat3/"
+  organization: "Aalborg University"
+  callsign: "OZ3CUB"
+  launch_timestamp: 1330173060
+  wikipedia_url: "http://en.wikipedia.org/wiki/AAUSAT3"
+
+  description <
+    lang: "en"
+    text: "AAUSAT3 is a 1U cubesat built by students at Aalborg University. It's mission is to test Automatic Identification System (AIS) receivers for tracking ships."
+  >
+
+  photo <
+    url: "/images/aausat3_small.jpg"
+    large_url: "/images/aausat3_large.jpg"
+    thumbnail_url: "/images/aausat3_thumb64.jpg"
+    internal_original_url: "http://www.space.aau.dk/aausat3/picts/a3/1209210003020.jpg"
+  >
+
+  tle: "AAUSAT3\n1 39087U 13009B   13058.93613239  .00005282  00000-0  19072-2 0   149\n2 39087  98.6318 249.2594 0011719 270.3270  89.6518 14.33945642   322"
+  celestrak_tle_label: "AAUSAT3"
+
+  channels <
+    downlink: true
+    frequency_hz: 437450000
+    modulation: CW
+    notes: "30 WPM"
+  >
+  channels <
+    downlink: true
+    frequency_hz: 437450000
+    modulation: BFSK
+    baud: 2400
+    notes: "Baud may go up to 25k. Not AX.25."
+  >
+
+  schema <
+    datum <
+      key: "d:aausat3:bat_v"
+      type: DOUBLE
+      unit: VOLT
+      name <
+        text: "Battery Voltage"
+	lang: "en"
+      >
+      confidence: 0.1
+      display_group: 0
+    >
+    datum <
+      key: "d:aausat3:beacon_t"
+      type: DOUBLE
+      unit: KELVIN
+      name <
+        text: "Temperature"
+	lang: "en"
+      >
+      confidence: 1.0
+      display_group: 0
+    >
+  >
+>
+
+satellite <
+  id: "aalto1"
+  name <
+    lang: "en"
+    text: "Aalto-1"
+  >
+  website: "http://aalto-1.tkk.fi"
+  organization: "Aalto University"
+
+  description <
+    text: "Aalto-1 is the first Finnish nanosatellite. It is a 3U cubesat several payloads: an imaging spectrometer, radiation monitor and electrostatic plasma brake. It will be 3-axis stabilized."
+    lang: "en"
+  >
+
+  authorized_station_id: "5766389120884814618"
+  
+  channels {
+    frequency_hz: 437000000.0
+    downlink: true
+    modulation: CW
+    notes: "11.8 WPM. Exact frequency TBD."
+  }
+  channels {
+    frequency_hz: 437000000.0
+    downlink: true
+    modulation: BFSK
+    baud: 9600
+    notes: "Exact frequency TBD."
+  }
+  channels {
+    frequency_hz: 437000000.0
+    downlink: true
+    transmit_power_watts: 1.5
+    modulation: GMSK
+    baud: 1048576
+    notes: "Exact frequency TBD."
+  }
+>

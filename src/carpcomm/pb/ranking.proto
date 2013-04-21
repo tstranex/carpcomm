@@ -1,0 +1,18 @@
+package pb;
+
+import "carpcomm/pb/stream.proto";
+
+message ContactCount {
+	optional pb.Contact.Blob.Format format = 1;
+	optional int32 count = 2;
+}
+
+message Ranking {
+	optional string user_id = 1;
+	optional int32 score = 2;
+	repeated ContactCount counts = 3; 
+}
+
+message RankingList {
+	repeated Ranking ranking = 1;
+}

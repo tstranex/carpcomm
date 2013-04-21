@@ -1,0 +1,33 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{define "contact_list"}}
+
+{{if .}}{{else}}
+<p>No contacts have been made yet.</p>
+{{end}}
+
+<ul>
+{{range .}}
+<li>
+  {{RenderTimestamp .StartTimestamp}}
+  {{if HasIQBlob .}}‧ <a href="/contact/iq?id={{.Id}}">IQ data</a>
+  ‧ <a href="/contact/spectrogram?id={{.Id}}">Spectrogram</a>{{end}}
+  {{if .SatelliteId}}‧ <a href="{{SatelliteViewURL .SatelliteId}}">
+    {{SatelliteShortName .SatelliteId}}</a>{{end}}
+  {{$contact := .}}
+  {{range .Blob}}
+  {{if IsFrameBlob .}}
+  <div>Packet: <pre class="packet">{{RenderPacket .InlineData}}</pre></div>
+  {{end}}
+  {{if IsMorseBlob .}}{{if ShouldShowMorse $contact}}
+  <div>Morse: <code>{{RenderMorse .InlineData}}</code></div>
+  {{end}}{{end}}
+  {{end}}
+</li>
+{{end}}
+</ul>
+
+{{end}}

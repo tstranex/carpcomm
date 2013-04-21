@@ -1,0 +1,83 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}Station Console: {{.Body.S.Name}}{{end}}
+{{define "navigation"}}{{end}}
+
+{{define "extra_head"}}
+<script type="text/javascript" src="/base64.js"></script>
+<script type="text/javascript" src="/receiver.js"></script>
+
+<style>
+#waterfall {
+  border: 1px solid black;
+}
+
+#waterfall_panel.unstarted {
+  display: none;
+}
+
+#tnc_panel.unstarted {
+  display: none;
+}
+
+.motor_moving {
+  color: red;
+}
+</style>
+{{end}}
+
+{{define "body"}}
+
+<select id="satellite_id" onchange="satellite_changed();">
+<option value="">Satellite: unknown</option>
+{{range .Body.Satellites}}<option value="{{.Id}}">{{.Name}}</option>{{end}}
+</select>
+
+<h4>Receiver</h4>
+
+Set frequency: <input id="hardware_tuner" type="text" size="7"> MHz
+<input type="button" value="Set" onclick="button_set_frequency();">
+
+<h4>Waterfall</h4>
+
+<input id="startstop" type="button" onclick="startstop();"><br>
+
+<div id="waterfall_panel" class="unstarted">
+  <canvas id="waterfall" width="1024" height="256"></canvas>
+</div>
+
+<div id="motor_section" style="display:none;">
+<h4>Motor</h4>
+
+Azimuth: <input id="azimuth" type="text" value="" size="3">°
+&nbsp;
+Elevation: <input id="elevation" type="text" value="" size="3">°
+&nbsp;
+<input type="button" value="Set" onclick="motorStart();">
+<input type="button" value="Halt" onclick="motorStop();">
+</div>
+
+<h4>TNC</h4>
+
+<input id="tnc_startstop" type="button" onclick="tnc_startstop();">
+<br>
+<p id="tnc_contacts_message" style="display:none;">Find received frames on
+<a href="{{StationContactsUrl .Body.S.Id}}" target="_blank">your station
+contacts page</a>.</p>
+<pre id="tnc_panel" class="unstarted"></pre>
+
+<script type="text/javascript">
+$(function() {
+setupReceiver({{.Body.S.Id}});
+});
+
+var globalSatelliteIdToFrequency = {
+{{range .Body.Satellites}}'{{.Id}}':{{.FrequencyHz}},{{end}}
+};
+</script>
+{{end}}

@@ -1,0 +1,46 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}Sign in{{end}}
+{{define "navigation"}}{{end}}
+
+{{define "extra_head"}}
+<style>
+.loginBlock {
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 1em;
+  display: inline-block;
+  text-decoration: none;
+  background-color: #FED3AD;
+  background: -webkit-linear-gradient(top, #FFF0E4 0%, #FED3AD 100%);
+}
+
+.loginBlock:hover {
+  background-color: #fdb677;
+  background: -webkit-linear-gradient(top, #FED3AD 0%, #fdb677 100%);
+}
+
+.loginBlock img {
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+</style>
+{{end}}
+
+{{define "body"}}
+
+<a href="{{.Body}}" class="loginBlock">
+  <img src="http://www.google.com/images/logos/google_logo_41.png">
+  Sign in with your Google account
+</a>
+
+<p>Don't have a Google account?
+<a href="https://accounts.google.com/NewAccount">Create one here.</a></p>
+
+{{end}}

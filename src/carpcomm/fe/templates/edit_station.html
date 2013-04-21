@@ -1,0 +1,242 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}Edit Station: {{.Body.Name}}{{end}}
+{{define "navigation"}}{{end}}
+
+{{define "extra_head"}}
+<style>
+.section {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.left {
+  width: 8em;
+  float: left;
+}
+label {
+  display: block;
+}
+
+.capability_section {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 3em;
+  margin-right: 1em;
+}
+
+.capability_section input {
+  width: 7em;
+}
+
+.validationError {
+  display: none;
+  color: red;
+  font-weight: bold;
+}
+
+input:invalid {
+  background-color: #fdb677;
+}
+
+#map_canvas {
+  width: 35em;
+  height: 25em;
+  margin-top: 0.5em;
+}
+</style>
+
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAZRfpBqCiLGLmM--v2YNrLZa9t487pnUk&sensor=false">
+</script>
+<script type="text/javascript">
+
+var SLIDE_SPEED = 100;
+
+function updateSection(checkbox_id, section_id, instant) {
+  var checked = $('#' + checkbox_id + ':checked').get().length > 0;
+  var section = $('#' + section_id);
+  var inputs = $('#' + section_id + ' > label > input');
+  if (checked) {
+    inputs.attr('required', true);
+    if (instant) {
+      section.show();
+    } else {
+      section.slideDown(SLIDE_SPEED);
+    }
+  } else {
+    inputs.attr('required', false);
+    if (instant) {
+      section.hide();
+    } else {
+      section.slideUp(SLIDE_SPEED);
+    }
+  }
+}
+
+function update(instant) {
+  updateSection('has_vhf', 'vhf_capabilities', instant);
+  updateSection('has_uhf', 'uhf_capabilities', instant);
+}
+
+function initMap() {
+  var myOptions = {
+    center: new google.maps.LatLng(0.0, 0.0),
+    zoom: 3,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+  var map = new google.maps.Map(document.getElementById("map_canvas"),
+    myOptions);
+
+  var lat = document.getElementById('latitude');
+  var lng = document.getElementById('longitude');
+  var marker = new google.maps.Marker({
+    draggable: true,
+    map: map,
+    position: new google.maps.LatLng(lat.value, lng.value),
+  });
+  google.maps.event.addDomListener(marker, 'position_changed', function() {
+    var p = marker.getPosition();
+    lat.value = p.lat().toFixed(3);
+    lng.value = p.lng().toFixed(3);
+  });
+}
+
+function validateForm() {
+  var lat = document.getElementById('latitude');
+  var lng = document.getElementById('longitude');
+  if (!lat.value || !lng.value) {
+    window.location.hash = 'drag_marker';
+    $('#drag_marker_error').show();
+    return false;
+  }
+  return true;
+}
+
+function setup() {
+  update(true);
+  $('#has_vhf').change(function() {update(false);});
+  $('#has_uhf').change(function() {update(false);});
+  initMap();
+}
+
+$(setup);
+
+</script>
+{{end}}
+
+{{define "body"}}
+{{with .Body}}
+
+<form method="POST" onsubmit="return validateForm()">
+
+<h4>Name</h4>
+
+<div class="section">
+<input value="{{.Name}}" name="name" size="64" required>
+</div>
+
+<h4>Location</h4>
+
+<div class="section">
+  </label></p>
+  <input type="hidden" name="latitude" id="latitude"
+	 value="{{if .Lat}}{{.Lat}}{{end}}">
+  <input type="hidden" name="longitude" id="longitude"
+	 value="{{if .Lng}}{{.Lng}}{{end}}">
+
+  <a name="drag_marker">Drag the marker:</a>
+  <span class="validationError" id="drag_marker_error">
+    <br>Please drag the map marker to the station location:
+  </span>
+  <div id="map_canvas"></div>
+  <p><label>
+      Elevation: <input name="elevation" size="10" type="number"
+			value="{{if .Elevation}}{{.Elevation}}{{else}}{{end}}">
+      metres
+  </label></p>
+</div>
+
+<h4>Capabilities</h4>
+<div class="section">
+
+<label><input type="checkbox" name="has_vhf" id="has_vhf"
+	      {{if .Capabilities.VhfLimits}}checked{{end}}>
+  2 m band (144 MHz, VHF) </label>
+<div id="vhf_capabilities" class="capability_section">
+<label><span class="left">Min. azimuth:</span>
+  <input name="vhf_min_azimuth" size="10"
+	 type="number" min="0" max="360" step="0.1"
+	 value="{{if .Capabilities.VhfLimits}}{{roundn 1 .Capabilities.VhfLimits.MinAzimuthDegrees}}{{end}}">
+  ° (clockwise of true north)</label>
+<label><span class="left">Max. azimuth:</span>
+  <input name="vhf_max_azimuth" size="10"
+	 type="number" min="0" max="360" step="0.1"
+	 value="{{if .Capabilities.VhfLimits}}{{roundn 1 .Capabilities.VhfLimits.MaxAzimuthDegrees}}{{end}}">
+  ° (clockwise of true north)</label>
+<label><span class="left">Min. elevation:</span>
+  <input name="vhf_min_elevation" size="10"
+	 type="number" min="0" max="90" step="0.1"
+	 value="{{if .Capabilities.VhfLimits}}{{roundn 1 .Capabilities.VhfLimits.MinElevationDegrees}}{{end}}">
+  ° (above horizontal)</label>
+<label><span class="left">Max. elevation:</span>
+  <input name="vhf_max_elevation" size="10"
+	 type="number" min="0" max="90" step="0.1"
+	 value="{{if .Capabilities.VhfLimits}}{{roundn 1 .Capabilities.VhfLimits.MaxElevationDegrees}}{{end}}">
+  ° (above horizontal)</label>
+</div>
+
+<label><input type="checkbox" name="has_uhf" id="has_uhf"
+	      {{if .Capabilities.UhfLimits}}checked{{end}}>
+  70 cm band (437 MHz, UHF) </label>
+<div id="uhf_capabilities" class="capability_section">
+<label><span class="left">Min. azimuth:</span>
+  <input name="uhf_min_azimuth" size="10"
+	 type="number" min="0" max="360" step="0.1"
+	 value="{{if .Capabilities.UhfLimits}}{{roundn 1 .Capabilities.UhfLimits.MinAzimuthDegrees}}{{end}}">
+  ° (clockwise of true north)</label>
+<label><span class="left">Max. azimuth:</span>
+  <input name="uhf_max_azimuth" size="10"
+	 type="number" min="0" max="360" step="0.1"
+	 value="{{if .Capabilities.UhfLimits}}{{roundn 1 .Capabilities.UhfLimits.MaxAzimuthDegrees}}{{end}}">
+  ° (clockwise of true north)</label>
+<label><span class="left">Min. elevation:</span>
+  <input name="uhf_min_elevation" size="10"
+	 type="number" min="0" max="90" step="0.1"
+	 value="{{if .Capabilities.UhfLimits}}{{roundn 1 .Capabilities.UhfLimits.MinElevationDegrees}}{{end}}">
+  ° (above horizontal)</label>
+<label><span class="left">Max. elevation:</span>
+  <input name="uhf_max_elevation" size="10"
+	 type="number" min="0" max="90" step="0.1"
+	 value="{{if .Capabilities.UhfLimits}}{{roundn 1 .Capabilities.UhfLimits.MaxElevationDegrees}}{{end}}">
+  ° (above horizontal)</label>
+</div>
+
+</div>
+
+<h4>Automatic control</h4>
+
+<label><input type="checkbox" name="scheduler_enabled" id="scheduler_enabled"
+	      {{if .SchedulerEnabled}}checked{{end}}>
+  Enable automatic control </label>
+
+<h4>Notes</h4>
+
+<div class="section">
+<input value="{{derefstr .Notes}}" size="64" name="notes">
+</div>
+
+<h4>Save</h4>
+<div class="section">
+<input type="submit" value="Save">
+</div>
+
+</form>
+
+{{end}}
+{{end}}

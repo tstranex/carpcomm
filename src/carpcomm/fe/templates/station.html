@@ -1,0 +1,217 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}Station: {{.Body.S.Name}}{{end}}
+{{define "navigation"}}{{end}}
+
+{{define "extra_head"}}
+<style>
+.section {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+.left {
+  width: 5em;
+  float: left;
+}
+
+.status_online {
+  color: green;
+}
+.status_offline {
+  color: red;
+}
+
+#credentials {
+  display: none;
+  margin-left: 1em;
+}
+
+table {
+    width: 100%;
+    border-collapse:collapse;
+}
+th {
+    text-align: left;
+    border-bottom: 1px solid black;
+}
+td {
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.packet {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 1em;
+}
+</style>
+
+<script type="text/javascript">
+function deleteStation(id) {
+  if (!confirm('Are you sure you want to delete this station?')) {
+    return;
+  }
+  window.location.href = '/station/delete?id=' + encodeURIComponent(id);
+}
+
+function showCredentials() {
+  $('#credentials').slideToggle(100);
+}
+</script>
+
+{{end}}
+
+{{define "body"}}
+{{with .Body}}
+
+<h4>Status</h4>
+
+<div class="section">
+  {{if .IsOnline}}
+  <span class="status_online">Online</span><br>
+  {{if .IsOwner}}
+  <a href="/station/console?id={{.S.Id}}">Go to station console</a>
+  {{end}}
+  {{else}}
+  <span class="status_offline">Offline</span>
+  {{end}}
+
+  {{if .IsOwner}}
+  <br>
+  {{if .S.SchedulerEnabled}}
+  Automatic control: enabled
+  {{else}}
+  Automatic control: disabled
+  {{end}}
+  {{end}}
+</div>
+
+{{if .IsOwner}}
+<h4>Admin</h4>
+<div class="section">
+
+<ul>
+  <li><a href="/station/edit?id={{.S.Id}}">Edit</a></li>
+  <li><a href="javascript:deleteStation('{{.S.Id}}')">Delete</a></li>
+  <li><a href="javascript:showCredentials();">Get login info</a>
+<div id="credentials">
+<code>id: {{.S.Id}}</code><br>
+<code>secret: {{.S.Secret}}</code>
+</div>
+</li>
+</ul>
+
+</div>
+
+{{end}}
+
+{{if derefstr .S.Notes }}
+<h4>Notes</h4>
+<div class="section">
+<p>{{.S.Notes}}</p>
+</div>
+{{end}}
+
+
+{{if .Operator.Name}}
+<h4>Operator</h4>
+<div class="section">
+<a href="/user/{{.Operator.Id}}"><img
+src="{{.Operator.PhotoUrl}}" class="userPhoto"></a>
+<a href="/user/{{.Operator.Id}}">{{.Operator.Name}}</a>
+</div>
+{{end}}
+
+{{if .Contacts}}
+<h4>Contacts</h4>
+<div class="section">
+{{template "contact_list" .Contacts}}
+<a href="/station/contacts?id={{.S.Id}}">Show more</a>
+</div>
+{{end}}
+
+<h4>Pass predictions</h4>
+<div class="section">
+
+<p>Current time: {{.CurrentTime}}</p>
+<table>
+<thead>
+  <tr>
+    <th>Satellite</th>
+    <th>Start Time</th>
+    <th>Duration</th>
+    <th>Start Azimuth</th>
+    <th>End Azimuth</th>
+    <th>Max Altitude</th>
+  </tr>
+</thead>
+{{range .NextPasses}}
+<tr>
+  <td>
+    <a href="{{SatelliteViewURL .SatelliteId}}">{{.SatelliteName}}</a>
+  </td>
+  <td>{{.StartTime}}</td>
+  <td>{{.Duration}}</td>
+  <td>{{roundn 1 .StartAzimuth}}°</td>
+  <td>{{roundn 1 .EndAzimuth}}°</td>
+  <td>{{roundn 1 .MaxAltitude}}°</td>
+</tr>
+{{end}}
+</table>
+
+</div>
+
+
+<h4>Capabilities</h4>
+<ul>
+
+{{if .S.Capabilities.VhfLimits}}
+<li>2 m band (144 MHz, VHF)
+<ul>
+  <li>Min. azimuth:
+    {{roundn 0 .S.Capabilities.VhfLimits.MinAzimuthDegrees}} °</li>
+  <li>Max. azimuth:
+    {{roundn 0 .S.Capabilities.VhfLimits.MaxAzimuthDegrees}} °</li>
+  <li>Min. elevation:
+    {{roundn 0 .S.Capabilities.VhfLimits.MinElevationDegrees}} °</li>
+  <li>Max. elevation:
+    {{roundn 0 .S.Capabilities.VhfLimits.MaxElevationDegrees}} °</li>
+</ul>
+</li>
+{{end}}
+
+{{if .S.Capabilities.UhfLimits}}
+<li>70 cm band (437 MHz, UHF)
+<ul>
+  <li>Min. azimuth:
+    {{roundn 0 .S.Capabilities.UhfLimits.MinAzimuthDegrees}} °</li>
+  <li>Max. azimuth:
+    {{roundn 0 .S.Capabilities.UhfLimits.MaxAzimuthDegrees}} °</li>
+  <li>Min. elevation:
+    {{roundn 0 .S.Capabilities.UhfLimits.MinElevationDegrees}} °</li>
+  <li>Max. elevation:
+    {{roundn 0 .S.Capabilities.UhfLimits.MaxElevationDegrees}} °</li>
+</ul>
+</li>
+{{end}}
+
+</ul>
+
+<h4>Location</h4>
+
+<div class="section">
+  {{if .IsOwner}}<p>{{.S.Lat}}, {{.S.Lng}}<br>
+    Elevation: {{if .S.Elevation}}{{.S.Elevation}} m{{else}}unknown{{end}}</p>{{end}}
+  <img src="http://maps.googleapis.com/maps/api/staticmap?center={{.S.Lat}},{{.S.Lng}}&zoom=2&markers={{.S.Lat}},{{.S.Lng}}&size=400x200&sensor=false&maptype=terrain">
+</div>
+
+{{end}}
+{{end}}

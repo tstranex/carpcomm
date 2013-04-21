@@ -1,0 +1,71 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}Rankings{{end}}
+{{define "navigation"}}{{end}}
+
+{{define "extra_head"}}
+<style>
+.score {
+  font-size: 200%;
+  color: #fa7b0a;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+.count {
+  text-align: center;
+}
+.rank {
+  padding-right: 1em;
+}
+
+table {
+  border-collapse: collapse;
+}
+.tablehead {
+  border-bottom: 1px solid #0e58ad;
+  text-align: center;
+  width: 4em;
+}
+tbody td {
+  padding-bottom: 0.5em;
+}
+</style>
+{{end}}
+
+{{define "body"}}
+
+
+<table>
+<thead>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td class="tablehead">Frame</td>
+    <td class="tablehead">Morse</td>
+    <td class="tablehead">IQ</td>
+  </tr>
+</thead>
+<tbody>
+{{range .Body}}
+<tr>
+  <td class="rank">{{.Rank}}</td>
+  <td>
+    <img src="{{.User.PhotoUrl}}" class="userPhoto">
+    {{.User.Name}}
+  </td>
+  <td class="score">{{.Score}}</td>
+  <td class="count">{{.FrameCount}}</td>
+  <td class="count">{{.MorseCount}}</td>
+  <td class="count">{{.IQCount}}</td>
+</tr>
+{{end}}
+</tbody>
+<table>
+
+{{end}}

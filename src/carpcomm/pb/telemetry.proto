@@ -1,0 +1,65 @@
+package pb;
+
+import "carpcomm/pb/text.proto";
+
+message TelemetryDatumSchema {
+	optional string key = 1;
+
+	// Corresponding key in a source schema, if available.
+	optional string source_key = 7;
+
+	enum Type {
+	     BOOL = 1;
+	     DOUBLE = 2;
+	     INTERVAL = 3;
+	     INT64 = 4;
+	     TIMESTAMP = 5;
+	}
+	optional Type type = 2;
+
+	enum Unit {
+	     KELVIN = 1;
+	     VOLT = 2;
+	     AMPERE = 3;
+	     WATT = 4;
+	     HERTZ = 5;
+	     RADIAN_PER_SECOND = 6;
+	     SECOND = 7;
+	}
+	optional Unit unit = 3;
+
+	repeated TextWithLang name = 4;
+
+	// The true value lies in [v-uncertainty, v+uncertainty] with 95%
+	// confidence.
+	optional double confidence = 5;
+
+	// Group used for rendering.
+	optional int32 display_group = 6;
+}
+
+message TelemetrySchema {
+	repeated TelemetryDatumSchema datum = 1;
+}
+
+message TelemetryDatum {
+	optional string key = 1;
+
+	optional int64 timestamp = 2;
+
+	// For BOOLEAN:
+	optional bool boolean = 3;
+
+	// For DOUBLE:
+	optional double double = 4;
+
+	// For INTERVAL:
+	optional double interval_min = 5;
+	optional double interval_max = 6;
+
+	// For INT64:
+	optional int64 int64 = 7;
+
+	// For TIMESTAMP:
+	optional int64 unix_timestamp = 8;
+}

@@ -1,0 +1,28 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}Contacts: {{.Body.Title}}{{end}}
+{{define "navigation"}}{{end}}
+
+{{define "extra_head"}}
+<style>
+.packet {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 1em;
+}
+li {
+  padding-bottom: 1em;
+}
+</style>
+{{end}}
+
+{{define "body"}}
+
+{{template "contact_list" .Body.C}}
+
+{{end}}

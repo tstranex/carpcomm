@@ -1,0 +1,13 @@
+package pb;
+
+message Comment {
+	optional string id = 1;
+
+	optional string user_id = 2;
+
+	// e.g. /satellite/swisscube
+	optional string object_id = 3;
+
+	optional int64 timestamp = 4;
+	optional string text = 5;
+}

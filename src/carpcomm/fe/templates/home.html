@@ -1,0 +1,65 @@
+{{/*
+Author: Timothy Stranex <tstranex@carpcomm.com>
+Copyright 2013 Timothy Stranex
+*/}}
+
+{{template "page" .}}
+
+{{define "title"}}Home{{end}}
+{{define "navigation"}}{{end}}
+
+{{define "extra_head"}}
+<style>
+#map_canvas {
+  margin-left: auto;
+  margin-right: auto;
+  width:75%;
+  height:20em
+}
+</style>
+
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBmFB8Yrd4BZ7YjHO8OZiwt4KQJ9P19FM4&sensor=false"></script>
+<script type="text/javascript">
+function initialize() {
+  var myOptions = {
+    center: new google.maps.LatLng(47.369757, 8.540497),
+    zoom: 1,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+  var map = new google.maps.Map(document.getElementById("map_canvas"),
+    myOptions);
+  var kml = new google.maps.KmlLayer('http://carpcomm.com/station/map.kml');
+  kml.setMap(map);
+}
+$(initialize);
+</script>
+{{end}}
+
+{{define "body"}}
+
+{{if .Body.Stations}}
+
+<h4>Your stations</h4>
+<ul>
+{{range .Body.Stations}}
+  <li><a href="/station?id={{.Id}}">{{.Name}}</a></li>
+{{end}}
+</ul>
+<p><a href="/station/add">Create a new station</a></p>
+
+{{else}}
+
+<h2>Welcome to the Carpcomm Space Network!</h2>
+<p><a href="/station/add">Register your station details</a> to get started.</p>
+
+{{end}}
+
+<h4>Network weather</h4>
+
+<p>{{.Body.NumStations}} stations registered<br>
+{{.Body.NumOnlineStations}} stations online now</p>
+
+<div id="map_canvas"></div>
+
+{{end}}
