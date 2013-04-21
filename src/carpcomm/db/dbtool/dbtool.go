@@ -193,7 +193,14 @@ func lookup(domain* db.Domain) {
 		if err != nil {
 			log.Fatalf("Error looking up station: %s", err.Error());
 		}
-		proto.MarshalText(os.Stdout, s);
+		proto.MarshalText(os.Stdout, s)
+	} else if *table == "contact" {
+		contactdb := domain.NewContactDB()
+		s, err := contactdb.Lookup(*id)
+		if err != nil {
+			log.Fatalf("Error looking up contact: %s", err.Error());
+		}
+		proto.MarshalText(os.Stdout, s)
 	} else {
 		log.Fatalf("Unknown table: %s", *table)
 	}
@@ -219,6 +226,25 @@ func store(domain* db.Domain) {
 		}
 
 		log.Printf("Stored station.")
+	} else if *table == "contact" {
+		bytes, err := ioutil.ReadAll(os.Stdin)
+		if err != nil {
+			log.Fatalf("Error reading proto: %s", err.Error());
+		}
+
+		var s pb.Contact
+		err = proto.UnmarshalText((string)(bytes), &s)
+		if err != nil {
+			log.Fatalf("Error parsing proto: %s", err.Error());
+		}
+
+		contactdb := domain.NewContactDB()
+		err = contactdb.Store(&s)
+		if err != nil {
+			log.Fatalf("Error storing contact: %s", err.Error());
+		}
+
+		log.Printf("Stored contact.")
 	} else {
 		log.Fatalf("Unknown table: %s", *table)
 	}
