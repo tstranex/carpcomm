@@ -151,14 +151,15 @@ func (table *SDBTable) setProto(id, column string, p proto.Message) error {
 }
 
 func (table *SDBTable) delete(id, column string) error {
-	item := table.domain.Item(id)
-	_, err := item.DeleteAttrNames([]string{column})
-	return err
+	//item := table.domain.Item(id)
+	//_, err := item.DeleteAttrNames([]string{column})
+	//return err
+	return nil
 }
 
 func (table *SDBTable) search(query, column string, t reflect.Type) (
 	[]proto.Message, error) {
-	resp, err := table.domain.Select(query, true, nil)
+	resp, err := table.domain.Select(query, true)//, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -198,11 +199,13 @@ type Iterator struct {
 }
 
 func (it *Iterator) fetch() error {
-	var nextToken *string = nil
+	/*
+var nextToken *string = nil
 	if it.resp != nil {
 		nextToken = &it.resp.NextToken
 	}
-	resp, err := it.table.domain.Select(it.query, it.consistent, nextToken)
+*/
+	resp, err := it.table.domain.Select(it.query, it.consistent)//, nextToken)
 	if err != nil {
 		it.fetchError = err
 		return err
@@ -213,7 +216,8 @@ func (it *Iterator) fetch() error {
 }
 
 func (it *Iterator) Done() bool {
-	return it.resp.NextToken == "" && it.i == len(it.resp.Items)
+	//return it.resp.NextToken == "" && it.i == len(it.resp.Items)
+	return it.i == len(it.resp.Items)
 }
 
 func (it *Iterator) Get() ([]byte, error) {
